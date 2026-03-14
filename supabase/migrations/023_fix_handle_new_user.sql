@@ -1,0 +1,28 @@
+-- Fix handle_new_user trigger:
+-- 1. Fully qualify the table as public.profiles to avoid any search_path issues
+-- 2. Set an explicit search_path on the function (best practice for security definer)
+-- 3. Use ON CONFLICT DO NOTHING to gracefully handle any duplicate edge cases
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, full_name)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'full_name', '')
+  )
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+END;
+$$;
+
+-- Re-attach the trigger (idempotent)
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
