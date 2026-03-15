@@ -85,9 +85,9 @@ export function BusinessCard({ business }: BusinessCardProps) {
 
           <div className="flex items-center gap-2 mt-3 flex-wrap">
             {category && (
-              <Badge variant="category">
-                {category.icon} {category.label.en}
-              </Badge>
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                {category.label.en}
+              </span>
             )}
             {business.google_maps_url && (
               <a

@@ -14,6 +14,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   // ?next= lets other pages redirect here and bounce back after login
   const nextPath = searchParams.get('next') ?? lp(locale, '/dashboard');
+  const emailConfirmed = searchParams.get('confirmed') === 'true';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +24,16 @@ export default function LoginPage() {
   const [signupConfirmed, setSignupConfirmed] = useState(false);
 
   const supabase = createBrowserClient();
+
+  // Clear any stale session on mount — prevents "database error finding user"
+  // when a previous session references a deleted or invalid auth user
+  useState(() => {
+    supabase.auth.getUser().then(({ error }) => {
+      if (error && (error.message.includes('database') || error.message.includes('finding user'))) {
+        supabase.auth.signOut();
+      }
+    });
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +45,8 @@ export default function LoginPage() {
       if (error) { setError(error.message); setLoading(false); return; }
       router.push(nextPath);
     } else {
+      // Clear any stale session before signing up
+      await supabase.auth.signOut();
       const callbackUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(nextPath)}`;
       const { error } = await supabase.auth.signUp({
         email,
@@ -75,12 +88,21 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href={lp(locale, '/')} className="font-heading font-extrabold text-2xl text-primary">
-            InfoSylvita
+            Peptide Alliance
           </Link>
           <h1 className="text-2xl font-heading font-bold text-text mt-4">
             {mode === 'login' ? 'Welcome back' : 'Create your account'}
           </h1>
         </div>
+
+        {/* Email confirmed success banner */}
+        {emailConfirmed && (
+          <div className="mb-6 rounded-2xl border border-accent/40 bg-accent/10 px-5 py-4 text-center">
+            <p className="text-2xl mb-2">✅</p>
+            <p className="font-semibold text-text text-sm">Email confirmed!</p>
+            <p className="text-muted text-sm mt-1">Your account is active. Sign in below to get started.</p>
+          </div>
+        )}
 
         <div className="bg-card rounded-2xl border border-muted/10 p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-4">

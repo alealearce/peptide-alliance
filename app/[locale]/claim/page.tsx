@@ -343,7 +343,7 @@ export default function ClaimPage() {
           <div className="space-y-3">
             <Link href={loginUrl}>
               <Button className="w-full">
-                {locale === 'es' ? 'Crear cuenta / Iniciar sesión' : 'Create Account / Sign In'}
+                {locale === 'es' ? 'Iniciar sesión / Crear cuenta' : 'Sign In / Create Account'}
               </Button>
             </Link>
             <p className="text-xs text-muted">

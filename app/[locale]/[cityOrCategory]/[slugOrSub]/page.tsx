@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { BusinessCard } from '@/components/directory/BusinessCard';
-import { Badge } from '@/components/ui/Badge';
 import { LeadForm } from '@/components/business/LeadForm';
 import { ClaimButton } from '@/components/business/ClaimButton';
 import { PhotoGalleryDisplay } from '@/components/business/PhotoGallery';
@@ -13,7 +12,7 @@ import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
 import { getCategoryBySlug, getCategorySlug, CATEGORIES } from '@/lib/config/categories';
 import type { Business } from '@/lib/supabase/types';
 import type { Metadata } from 'next';
-import { Phone, Globe, MapPin, Clock, Instagram, Facebook, Linkedin, ExternalLink } from 'lucide-react';
+import { Phone, Globe, MapPin, Clock, Instagram, Facebook, Linkedin, ExternalLink, Mail, CheckCircle, Star, Award, Shield, FlaskConical, Building2, Package, Microscope, Truck, Factory } from 'lucide-react';
 import { SITE } from '@/lib/config/site';
 
 interface Props {
@@ -229,8 +228,57 @@ async function SubcategoryPageContent({
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// Business Detail
+// Business Detail — Landing Page Style
 // ══════════════════════════════════════════════════════════════════════════════
+
+// Category accent colours (tailwind-safe strings)
+const CATEGORY_STYLES: Record<string, { gradient: string; accent: string; iconBg: string }> = {
+  peptide_brands:          { gradient: 'from-blue-950 via-blue-900 to-blue-800',       accent: 'text-blue-300',   iconBg: 'bg-blue-500/20' },
+  clinics:                 { gradient: 'from-emerald-950 via-emerald-900 to-teal-800', accent: 'text-emerald-300', iconBg: 'bg-emerald-500/20' },
+  compounding_pharmacies:  { gradient: 'from-violet-950 via-violet-900 to-purple-800', accent: 'text-violet-300',  iconBg: 'bg-violet-500/20' },
+  research_labs:           { gradient: 'from-cyan-950 via-cyan-900 to-sky-800',        accent: 'text-cyan-300',    iconBg: 'bg-cyan-500/20' },
+  wholesale_suppliers:     { gradient: 'from-orange-950 via-orange-900 to-amber-800',  accent: 'text-orange-300',  iconBg: 'bg-orange-500/20' },
+  manufacturers:           { gradient: 'from-rose-950 via-rose-900 to-red-800',        accent: 'text-rose-300',    iconBg: 'bg-rose-500/20' },
+};
+
+const CATEGORY_HIGHLIGHTS: Record<string, { icon: React.ReactNode; label: string }[]> = {
+  peptide_brands: [
+    { icon: <FlaskConical className="w-5 h-5" />, label: 'Third-Party Tested' },
+    { icon: <Shield className="w-5 h-5" />, label: 'Certificate of Analysis' },
+    { icon: <CheckCircle className="w-5 h-5" />, label: '99%+ Purity Standards' },
+    { icon: <Package className="w-5 h-5" />, label: 'Domestic US / CA Shipping' },
+  ],
+  clinics: [
+    { icon: <CheckCircle className="w-5 h-5" />, label: 'Physician-Supervised' },
+    { icon: <Shield className="w-5 h-5" />, label: 'Personalized Protocols' },
+    { icon: <Star className="w-5 h-5" />, label: 'Hormone Optimization' },
+    { icon: <Award className="w-5 h-5" />, label: 'Functional Medicine' },
+  ],
+  compounding_pharmacies: [
+    { icon: <Shield className="w-5 h-5" />, label: 'PCAB Accredited' },
+    { icon: <FlaskConical className="w-5 h-5" />, label: 'Sterile Compounding' },
+    { icon: <CheckCircle className="w-5 h-5" />, label: 'Ships Nationwide' },
+    { icon: <Award className="w-5 h-5" />, label: 'Custom Formulations' },
+  ],
+  research_labs: [
+    { icon: <Microscope className="w-5 h-5" />, label: 'HPLC / LC-MS Testing' },
+    { icon: <Shield className="w-5 h-5" />, label: 'GLP/GCP Compliant' },
+    { icon: <FlaskConical className="w-5 h-5" />, label: 'Custom Synthesis' },
+    { icon: <Award className="w-5 h-5" />, label: 'COA Reporting' },
+  ],
+  wholesale_suppliers: [
+    { icon: <Truck className="w-5 h-5" />, label: 'Bulk Pricing Available' },
+    { icon: <Package className="w-5 h-5" />, label: 'Fast Fulfillment' },
+    { icon: <Shield className="w-5 h-5" />, label: 'cGMP Quality Standards' },
+    { icon: <CheckCircle className="w-5 h-5" />, label: 'B2B Supply Chain' },
+  ],
+  manufacturers: [
+    { icon: <Factory className="w-5 h-5" />, label: 'GMP Certified Facility' },
+    { icon: <FlaskConical className="w-5 h-5" />, label: 'Custom API Synthesis' },
+    { icon: <Shield className="w-5 h-5" />, label: 'FDA Registered' },
+    { icon: <Building2 className="w-5 h-5" />, label: 'Full CMC Support' },
+  ],
+};
 
 async function BusinessDetailContent({
   biz,
@@ -242,353 +290,480 @@ async function BusinessDetailContent({
   const t = await getTranslations('business');
   const supabaseDetail = await createClient();
 
-  // Fetch business photos
-  const { data: photos } = await supabaseDetail
-    .from('business_photos')
-    .select('*')
-    .eq('business_id', biz.id)
-    .order('sort_order');
+  const [{ data: photos }, { data: relatedBizs }, { data: reviews }] = await Promise.all([
+    supabaseDetail.from('business_photos').select('*').eq('business_id', biz.id).order('sort_order'),
+    supabaseDetail.from('businesses').select('*').eq('category', biz.category).eq('is_active', true).neq('id', biz.id).order('trust_score', { ascending: false }).limit(3),
+    supabaseDetail.from('reviews').select('*').eq('business_id', biz.id).order('created_at', { ascending: false }),
+  ]);
 
-  // Fetch related businesses in same city
-  const { data: relatedBizs } = await supabaseDetail
-    .from('businesses')
-    .select('*')
-    .eq('city_slug', biz.city_slug ?? citySlug)
-    .eq('is_active', true)
-    .neq('id', biz.id)
-    .order('is_verified', { ascending: false })
-    .order('rating', { ascending: false, nullsFirst: false })
-    .limit(3);
-
-  // Fetch reviews
-  const { data: reviews } = await supabaseDetail
-    .from('reviews')
-    .select('*')
-    .eq('business_id', biz.id)
-    .order('created_at', { ascending: false });
-
-  // Fetch reviewer names
+  // Reviewer names
   const reviewerIds = (reviews ?? []).map((r: { user_id: string }) => r.user_id);
   let reviewerNames: Record<string, string> = {};
   if (reviewerIds.length > 0) {
-    const { data: profiles } = await supabaseDetail
-      .from('profiles')
-      .select('id, full_name')
-      .in('id', reviewerIds);
+    const { data: profiles } = await supabaseDetail.from('profiles').select('id, full_name').in('id', reviewerIds);
     reviewerNames = (profiles ?? []).reduce((acc: Record<string, string>, p: { id: string; full_name: string | null }) => {
       acc[p.id] = p.full_name ?? 'Anonymous';
       return acc;
-    }, {} as Record<string, string>);
+    }, {});
   }
 
   const cat = CATEGORIES.find((c) => c.id === biz.category);
   const catLabel = cat ? cat.label.en : biz.category;
   const catSlug = cat ? getCategorySlug(cat.id) : biz.category;
   const description = biz.description_en;
-
   const isExpired = biz.expires_at ? new Date(biz.expires_at) < new Date() : false;
+  const style = CATEGORY_STYLES[biz.category] ?? CATEGORY_STYLES.peptide_brands;
+  const highlights = CATEGORY_HIGHLIGHTS[biz.category] ?? [];
+
+  const socialLinks = [
+    biz.instagram && { href: biz.instagram.startsWith('http') ? biz.instagram : `https://instagram.com/${biz.instagram.replace('@', '')}`, icon: <Instagram className="w-4 h-4" />, label: biz.instagram.startsWith('@') ? biz.instagram : `@${biz.instagram}` },
+    biz.tiktok && { href: biz.tiktok.startsWith('http') ? biz.tiktok : `https://tiktok.com/${biz.tiktok.replace('@', '')}`, icon: <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.83a8.24 8.24 0 004.76 1.5v-3.4a4.85 4.85 0 01-1-.24z"/></svg>, label: biz.tiktok.startsWith('@') ? biz.tiktok : `@${biz.tiktok}` },
+    biz.facebook && { href: biz.facebook.startsWith('http') ? biz.facebook : `https://facebook.com/${biz.facebook}`, icon: <Facebook className="w-4 h-4" />, label: 'Facebook' },
+    biz.linkedin && { href: biz.linkedin.startsWith('http') ? biz.linkedin : `https://linkedin.com/company/${biz.linkedin}`, icon: <Linkedin className="w-4 h-4" />, label: 'LinkedIn' },
+  ].filter(Boolean) as { href: string; icon: React.ReactNode; label: string }[];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      {/* Silent view tracker */}
+    <>
       <ViewTracker businessId={biz.id} />
 
-      {/* LocalBusiness JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            '@id': `${BASE}/${citySlug}/${biz.slug}#business`,
-            name: biz.name,
-            description: description ?? undefined,
-            url: `${BASE}/${citySlug}/${biz.slug}`,
-            ...(biz.phone ? { telephone: biz.phone } : {}),
-            ...((() => {
-              const links: string[] = [];
-              if (biz.website) links.push(biz.website);
-              if (biz.instagram) links.push(biz.instagram.startsWith('http') ? biz.instagram : `https://instagram.com/${biz.instagram.replace('@', '')}`);
-              if (biz.facebook) links.push(biz.facebook.startsWith('http') ? biz.facebook : `https://facebook.com/${biz.facebook}`);
-              if (biz.tiktok) links.push(biz.tiktok.startsWith('http') ? biz.tiktok : `https://tiktok.com/${biz.tiktok.replace('@', '')}`);
-              if (biz.linkedin) links.push(biz.linkedin.startsWith('http') ? biz.linkedin : `https://linkedin.com/company/${biz.linkedin}`);
-              return links.length > 0 ? { sameAs: links } : {};
-            })()),
-            ...(biz.logo_url ? { image: biz.logo_url } : {}),
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: biz.city,
-              addressRegion: biz.province,
-              addressCountry: biz.country ?? 'US',
-              ...(biz.address ? { streetAddress: biz.address } : {}),
-            },
-            ...(biz.latitude && biz.longitude ? {
-              geo: { '@type': 'GeoCoordinates', latitude: biz.latitude, longitude: biz.longitude },
-            } : {}),
-            ...(biz.rating ? {
-              aggregateRating: { '@type': 'AggregateRating', ratingValue: biz.rating, reviewCount: biz.review_count ?? 1 },
-            } : {}),
-          }),
-        }}
-      />
-      {/* BreadcrumbList JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
-              { '@type': 'ListItem', position: 2, name: biz.city, item: `${BASE}/${citySlug}` },
-              ...(cat ? [{ '@type': 'ListItem', position: 3, name: catLabel, item: `${BASE}/${catSlug}` }] : []),
-              { '@type': 'ListItem', position: cat ? 4 : 3, name: biz.name },
-            ],
-          }),
-        }}
-      />
+      {/* ── JSON-LD ─────────────────────────────────────────────────────── */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'LocalBusiness',
+        '@id': `${BASE}/${citySlug}/${biz.slug}#business`,
+        name: biz.name, description: description ?? undefined,
+        url: `${BASE}/${citySlug}/${biz.slug}`,
+        ...(biz.phone ? { telephone: biz.phone } : {}),
+        ...(biz.logo_url ? { image: biz.logo_url } : {}),
+        address: { '@type': 'PostalAddress', addressLocality: biz.city, addressRegion: biz.province, addressCountry: biz.country ?? 'US', ...(biz.address ? { streetAddress: biz.address } : {}) },
+        ...(biz.rating ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: biz.rating, reviewCount: biz.review_count ?? 1 } } : {}),
+      }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+          { '@type': 'ListItem', position: 2, name: catLabel, item: `${BASE}/${catSlug}` },
+          { '@type': 'ListItem', position: 3, name: biz.name },
+        ],
+      }) }} />
 
-      {/* Expired banner */}
+      {/* ── Expired Banner ──────────────────────────────────────────────── */}
       {isExpired && (
-        <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
-          <p className="font-semibold">This listing has expired</p>
-          <p className="mt-0.5 text-amber-700">
-            It no longer appears in active listings, but this page stays live for SEO.
-          </p>
+        <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 text-sm text-amber-800 text-center">
+          This listing has expired — it no longer appears in active search results.
         </div>
       )}
 
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-muted mb-6">
-        <Link href="/" className="hover:text-primary">Home</Link>
-        <span>/</span>
-        <Link href={`/${citySlug}`} className="hover:text-primary">{biz.city}</Link>
-        <span>/</span>
-        {cat && (
-          <>
-            <Link href={`/${catSlug}`} className="hover:text-primary">{catLabel}</Link>
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════════════════════════════════ */}
+      <div className={`bg-gradient-to-br ${style.gradient} text-white`}>
+        {/* Breadcrumb */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <div className="flex items-center gap-2 text-xs text-white/50">
+            <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
             <span>/</span>
-          </>
-        )}
-        <span className="text-text truncate max-w-[200px]">{biz.name}</span>
-      </div>
+            <Link href={`/${catSlug}`} className="hover:text-white/80 transition-colors">{catLabel}</Link>
+            <span>/</span>
+            <span className="text-white/70 truncate max-w-[200px]">{biz.name}</span>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* ── Left Column: Main Info ──────────────────────────────────────── */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Title block */}
-          <div>
-            <div className="flex items-start gap-4 flex-wrap">
-              {biz.logo_url && (
-                <img
-                  src={biz.logo_url}
-                  alt={`${biz.name} logo`}
-                  className="w-20 h-20 rounded-2xl object-cover border border-muted/10 flex-shrink-0 bg-muted/5"
-                />
+        {/* Hero Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
+
+            {/* Left: Info */}
+            <div className="flex-1 min-w-0">
+              {/* Tier + Category badges */}
+              <div className="flex items-center gap-2 flex-wrap mb-4">
+                {biz.subscription_tier === 'industry_leader' && (
+                  <span className="inline-flex items-center gap-1.5 bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                    <Award className="w-3.5 h-3.5" /> Industry Leader
+                  </span>
+                )}
+                {biz.subscription_tier === 'featured' && (
+                  <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                    <Star className="w-3.5 h-3.5" /> Featured
+                  </span>
+                )}
+                {biz.is_verified && (
+                  <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    <CheckCircle className="w-3.5 h-3.5" /> Verified
+                  </span>
+                )}
+                <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${style.iconBg} ${style.accent}`}>
+                  {catLabel}
+                </span>
+              </div>
+
+              {/* Name */}
+              <h1 className="text-3xl md:text-5xl font-heading font-extrabold text-white leading-tight mb-3">
+                {biz.name}
+              </h1>
+
+              {/* Subcategory */}
+              {biz.subcategory && (
+                <p className={`text-base font-medium mb-3 ${style.accent}`}>{biz.subcategory}</p>
               )}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div>
-                    <h1 className="text-3xl md:text-4xl font-heading font-extrabold text-text">
-                      {biz.name}
-                    </h1>
-                    <p className="text-muted mt-1 flex items-center gap-1">
-                      <MapPin className="w-4 h-4" />
-                      {biz.address ?? `${biz.city}, ${biz.province}`}
-                    </p>
+
+              {/* Location */}
+              <p className="flex items-center gap-2 text-white/70 text-sm mb-2">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
+                {biz.address ?? `${biz.city}, ${biz.province}, ${biz.country}`}
+              </p>
+
+              {/* Service area */}
+              {biz.service_area && biz.service_area !== 'local' && (
+                <p className="flex items-center gap-2 text-white/60 text-xs mb-6">
+                  <Truck className="w-3.5 h-3.5 flex-shrink-0" />
+                  {biz.service_area === 'national' ? 'Ships / Serves Nationally' : biz.service_area === 'online_only' ? 'Online Only' : 'Regional Service'}
+                </p>
+              )}
+
+              {/* Rating */}
+              {biz.rating && (
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className={`w-4 h-4 ${i < Math.round(biz.rating!) ? 'text-amber-400 fill-amber-400' : 'text-white/20'}`} />
+                    ))}
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {biz.is_verified && (
-                      <Badge variant="verified">{t('verified')}</Badge>
-                    )}
-                    {cat && (
-                      <Badge variant="category">{catLabel}</Badge>
-                    )}
+                  <span className="text-white font-semibold text-sm">{biz.rating.toFixed(1)}</span>
+                  <span className="text-white/50 text-sm">({biz.review_count} reviews)</span>
+                </div>
+              )}
+
+              {/* CTA Buttons */}
+              <div className="flex items-center gap-3 flex-wrap">
+                {biz.phone && (
+                  <a
+                    href={`tel:${biz.phone}`}
+                    className="inline-flex items-center gap-2 bg-white text-gray-900 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-white/90 transition-colors shadow-lg"
+                  >
+                    <Phone className="w-4 h-4" />
+                    {biz.phone}
+                  </a>
+                )}
+                {biz.website && (
+                  <a
+                    href={biz.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-white/20 transition-colors"
+                  >
+                    <Globe className="w-4 h-4" />
+                    Visit Website
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {biz.email && (
+                  <a
+                    href={`mailto:${biz.email}`}
+                    className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-white/20 transition-colors"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Email
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Logo */}
+            <div className="flex-shrink-0">
+              {biz.logo_url ? (
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-3xl bg-white/10 blur-2xl scale-110" />
+                  <img
+                    src={biz.logo_url}
+                    alt={`${biz.name} logo`}
+                    className="relative w-36 h-36 md:w-48 md:h-48 rounded-3xl object-cover border-2 border-white/20 shadow-2xl bg-white"
+                  />
+                </div>
+              ) : (
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-3xl bg-white/10 blur-2xl scale-110" />
+                  <div className={`relative w-36 h-36 md:w-48 md:h-48 rounded-3xl ${style.iconBg} border-2 border-white/10 flex items-center justify-center shadow-2xl overflow-hidden`}>
+                    <img
+                      src="/images/mascots/peptidealliancelogo.png"
+                      alt="Peptide Alliance"
+                      className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-90"
+                    />
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
+        </div>
 
-          {/* Description */}
-          {description && (
-            <div className="prose prose-sm max-w-none text-text/80 leading-relaxed">
-              <p>{description}</p>
-            </div>
-          )}
-
-          {/* Long Description */}
-          {biz.long_description_en && (
-            <div className="prose prose-sm max-w-none text-text/70 leading-relaxed">
-              {biz.long_description_en.split('\n').map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          )}
-
-          {/* Photo Gallery */}
-          {photos && photos.length > 0 && (
-            <div>
-              <h2 className="font-heading font-bold text-lg text-text mb-3">Photos</h2>
-              <PhotoGalleryDisplay photos={photos} />
-            </div>
-          )}
-
-          {/* Contact Details */}
-          <div className="bg-card rounded-2xl border border-muted/10 p-6 space-y-4">
-            <h2 className="font-heading font-bold text-lg text-text">{t('contact')}</h2>
-
-            {biz.phone && (
-              <a href={`tel:${biz.phone}`} className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <Phone className="w-5 h-5 text-primary" />
-                <span>{biz.phone}</span>
-              </a>
-            )}
-            {biz.website && (
-              <a href={biz.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <Globe className="w-5 h-5 text-primary" />
-                <span className="truncate">{biz.website.replace(/^https?:\/\//, '')}</span>
-              </a>
-            )}
-            {biz.google_maps_url && (
-              <a href={biz.google_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span className="flex items-center gap-1">
-                  View on Google Maps
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </span>
-              </a>
-            )}
-            {biz.instagram && (
-              <a href={biz.instagram.startsWith('http') ? biz.instagram : `https://instagram.com/${biz.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <Instagram className="w-5 h-5 text-primary" />
-                <span>{biz.instagram.startsWith('@') ? biz.instagram : `@${biz.instagram}`}</span>
-              </a>
-            )}
-            {biz.tiktok && (
-              <a href={biz.tiktok.startsWith('http') ? biz.tiktok : `https://tiktok.com/${biz.tiktok.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.83a8.24 8.24 0 004.76 1.5v-3.4a4.85 4.85 0 01-1-.24z"/></svg>
-                <span>{biz.tiktok.startsWith('@') ? biz.tiktok : `@${biz.tiktok}`}</span>
-              </a>
-            )}
-            {biz.facebook && (
-              <a href={biz.facebook.startsWith('http') ? biz.facebook : `https://facebook.com/${biz.facebook}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <Facebook className="w-5 h-5 text-primary" />
-                <span className="truncate">{biz.facebook.replace(/^https?:\/\/(www\.)?facebook\.com\//, '')}</span>
-              </a>
-            )}
-            {biz.linkedin && (
-              <a href={biz.linkedin.startsWith('http') ? biz.linkedin : `https://linkedin.com/company/${biz.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-text hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5 text-primary" />
-                <span className="truncate">{biz.linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\//, '')}</span>
-              </a>
-            )}
-            {biz.hours && (
-              <div className="flex items-start gap-3 text-muted text-sm">
-                <Clock className="w-5 h-5 mt-0.5 text-primary flex-shrink-0" />
-                <pre className="font-body whitespace-pre-wrap">{JSON.stringify(biz.hours, null, 2)}</pre>
-              </div>
-            )}
-          </div>
-
-          {/* Keywords */}
-          {biz.keywords && biz.keywords.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {biz.keywords.map((kw, i) => (
-                <span key={i} className="inline-block bg-primary/5 text-primary text-xs font-medium px-3 py-1 rounded-full">
-                  {kw}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Reviews Section */}
-          <div className="space-y-4">
-            <h2 className="font-heading font-bold text-lg text-text">Reviews</h2>
-
-            {reviews && reviews.length > 0 ? (
-              <div className="space-y-4">
-                {reviews.map((review: { id: string; user_id: string; rating: number; comment: string | null; owner_reply: string | null; created_at: string }) => (
-                  <div key={review.id} className="bg-card rounded-xl border border-muted/10 p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm text-text">
-                          {reviewerNames[review.user_id] ?? 'Anonymous'}
-                        </span>
-                        <span className="text-xs text-muted">
-                          {new Date(review.created_at).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-0.5">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <span key={i} className={`text-lg ${i < review.rating ? 'text-amber-400' : 'opacity-20'}`}>
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    {review.comment && (
-                      <p className="text-sm text-text/80">{review.comment}</p>
-                    )}
-                    {review.owner_reply && (
-                      <div className="mt-3 ml-4 pl-3 border-l-2 border-primary/30">
-                        <p className="text-xs font-semibold text-primary mb-1">Business Reply</p>
-                        <p className="text-sm text-text/70">{review.owner_reply}</p>
-                      </div>
-                    )}
+        {/* Highlights Bar */}
+        {highlights.length > 0 && (
+          <div className="border-t border-white/10 bg-black/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+              <div className="flex items-center gap-6 overflow-x-auto scrollbar-none flex-wrap">
+                {highlights.map((h, i) => (
+                  <div key={i} className={`flex items-center gap-2 text-sm font-medium whitespace-nowrap ${style.accent}`}>
+                    {h.icon}
+                    {h.label}
                   </div>
                 ))}
               </div>
-            ) : (
-              <p className="text-sm text-muted text-center py-4">
-                No reviews yet. Be the first!
-              </p>
-            )}
-
-            <ReviewForm businessId={biz.id} locale="en" />
-          </div>
-
-          {/* Claim button for unclaimed listings */}
-          {!biz.claimed_by && (
-            <ClaimButton locale="en" businessId={biz.id} businessName={biz.name} />
-          )}
-        </div>
-
-        {/* ── Right Column: Lead Form + Newsletter ────────────────────────── */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-24 flex flex-col gap-6">
-            <div className="bg-card rounded-2xl border border-muted/10 p-6">
-              <h2 className="font-heading font-bold text-xl text-text mb-4">
-                {t('sendMessage')}
-              </h2>
-              <LeadForm businessId={biz.id} businessName={biz.name} />
             </div>
-            <NewsletterSignup />
           </div>
-        </div>
+        )}
       </div>
 
-      {/* ── More businesses in this city ─────────────────────────────────── */}
-      {relatedBizs && relatedBizs.length > 0 && (
-        <div className="mt-12 border-t border-muted/10 pt-10">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-heading font-bold text-xl text-text">
-              More businesses in {biz.city}
-            </h2>
-            <Link
-              href={`/${citySlug}`}
-              className="text-primary text-sm font-semibold hover:underline"
-            >
-              View all →
-            </Link>
+      {/* ══════════════════════════════════════════════════════════════════
+          BODY
+      ══════════════════════════════════════════════════════════════════ */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+          {/* ── Left / Main Column ──────────────────────────────────────── */}
+          <div className="lg:col-span-2 space-y-10">
+
+            {/* About */}
+            {(description || biz.long_description_en) && (
+              <section>
+                <h2 className="text-xl font-heading font-bold text-text mb-4 flex items-center gap-2">
+                  <span className="w-1 h-6 rounded-full bg-primary inline-block" />
+                  About {biz.name}
+                </h2>
+                {description && (
+                  <p className="text-text/80 leading-relaxed text-base mb-4">{description}</p>
+                )}
+                {biz.long_description_en && (
+                  <div className="space-y-3 text-text/70 leading-relaxed text-sm">
+                    {biz.long_description_en.split('\n').filter(Boolean).map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Keywords / Tags */}
+            {biz.keywords && biz.keywords.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {biz.keywords.map((kw, i) => (
+                  <span key={i} className="inline-block bg-primary/8 text-primary text-xs font-medium px-3 py-1.5 rounded-full border border-primary/15">
+                    {kw}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Photo Gallery */}
+            {photos && photos.length > 0 && (
+              <section>
+                <h2 className="text-xl font-heading font-bold text-text mb-4 flex items-center gap-2">
+                  <span className="w-1 h-6 rounded-full bg-primary inline-block" />
+                  Gallery
+                </h2>
+                <PhotoGalleryDisplay photos={photos} />
+              </section>
+            )}
+
+            {/* Quick Info Grid */}
+            <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {biz.address && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5 flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Address</p>
+                    <p className="text-sm text-text">{biz.address}</p>
+                    {biz.google_maps_url && (
+                      <a href={biz.google_maps_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary mt-1 hover:underline">
+                        View on Maps <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+              {biz.phone && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5 flex items-start gap-3">
+                  <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Phone</p>
+                    <a href={`tel:${biz.phone}`} className="text-sm text-text hover:text-primary transition-colors font-medium">{biz.phone}</a>
+                  </div>
+                </div>
+              )}
+              {biz.email && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5 flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Email</p>
+                    <a href={`mailto:${biz.email}`} className="text-sm text-text hover:text-primary transition-colors break-all">{biz.email}</a>
+                  </div>
+                </div>
+              )}
+              {biz.website && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5 flex items-start gap-3">
+                  <Globe className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Website</p>
+                    <a href={biz.website} target="_blank" rel="noopener noreferrer" className="text-sm text-text hover:text-primary transition-colors break-all">
+                      {biz.website.replace(/^https?:\/\//, '')}
+                    </a>
+                  </div>
+                </div>
+              )}
+              {biz.hours && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5 flex items-start gap-3 sm:col-span-2">
+                  <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-1">Hours</p>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-1">
+                      {Object.entries(biz.hours).map(([day, hours]) => (
+                        <div key={day} className="flex justify-between gap-4 text-sm">
+                          <span className="text-muted capitalize">{day}</span>
+                          <span className="text-text font-medium">{hours as string}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {/* Social Links */}
+            {socialLinks.length > 0 && (
+              <section>
+                <h2 className="text-xl font-heading font-bold text-text mb-4 flex items-center gap-2">
+                  <span className="w-1 h-6 rounded-full bg-primary inline-block" />
+                  Follow &amp; Connect
+                </h2>
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map((link, i) => (
+                    <a
+                      key={i}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-card border border-muted/10 text-text hover:text-primary hover:border-primary/30 text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
+                    >
+                      {link.icon}
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Reviews */}
+            <section>
+              <h2 className="text-xl font-heading font-bold text-text mb-4 flex items-center gap-2">
+                <span className="w-1 h-6 rounded-full bg-primary inline-block" />
+                Reviews
+                {biz.review_count > 0 && (
+                  <span className="text-sm font-normal text-muted">({biz.review_count})</span>
+                )}
+              </h2>
+
+              {reviews && reviews.length > 0 ? (
+                <div className="space-y-4 mb-6">
+                  {reviews.map((review: { id: string; user_id: string; rating: number; comment: string | null; owner_reply: string | null; created_at: string }) => (
+                    <div key={review.id} className="bg-card rounded-2xl border border-muted/10 p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                            {(reviewerNames[review.user_id] ?? 'A')[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm text-text">{reviewerNames[review.user_id] ?? 'Anonymous'}</p>
+                            <p className="text-xs text-muted">{new Date(review.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'text-amber-400 fill-amber-400' : 'text-muted/20'}`} />
+                          ))}
+                        </div>
+                      </div>
+                      {review.comment && <p className="text-sm text-text/80 leading-relaxed">{review.comment}</p>}
+                      {review.owner_reply && (
+                        <div className="mt-3 ml-2 pl-4 border-l-2 border-primary/30 bg-primary/3 rounded-r-lg py-2">
+                          <p className="text-xs font-bold text-primary mb-1">Response from {biz.name}</p>
+                          <p className="text-sm text-text/70">{review.owner_reply}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-card rounded-2xl border border-muted/10 border-dashed p-8 text-center mb-6">
+                  <Star className="w-8 h-8 text-muted/30 mx-auto mb-2" />
+                  <p className="text-sm text-muted">No reviews yet. Be the first to share your experience!</p>
+                </div>
+              )}
+
+              <ReviewForm businessId={biz.id} locale="en" />
+            </section>
+
+            {/* Claim CTA */}
+            {!biz.claimed_by && (
+              <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-2xl p-6">
+                <h3 className="font-heading font-bold text-text mb-1">Is this your business?</h3>
+                <p className="text-sm text-muted mb-4">Claim this listing to update your information, respond to reviews, and unlock premium features.</p>
+                <ClaimButton locale="en" businessId={biz.id} businessName={biz.name} />
+              </div>
+            )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {relatedBizs.map((rb: Business) => (
-              <BusinessCard key={rb.id} business={rb} />
-            ))}
+
+          {/* ── Right / Sticky Sidebar ──────────────────────────────────── */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 flex flex-col gap-6">
+              {/* Lead Form */}
+              <div className="bg-card rounded-2xl border border-muted/10 p-6 shadow-sm">
+                <h2 className="font-heading font-bold text-xl text-text mb-1">{t('sendMessage')}</h2>
+                <p className="text-xs text-muted mb-4">Get in touch with {biz.name} directly</p>
+                <LeadForm businessId={biz.id} businessName={biz.name} />
+              </div>
+
+              {/* Trust Score */}
+              {biz.trust_score > 0 && (
+                <div className="bg-card rounded-2xl border border-muted/10 p-5">
+                  <h3 className="font-semibold text-sm text-text mb-3 flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-primary" />
+                    Trust Score
+                  </h3>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 bg-muted/10 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70"
+                        style={{ width: `${biz.trust_score}%` }}
+                      />
+                    </div>
+                    <span className="text-lg font-bold text-text w-10 text-right">{biz.trust_score}</span>
+                  </div>
+                  <p className="text-xs text-muted mt-2">Based on verification, reviews & industry standing</p>
+                </div>
+              )}
+
+              <NewsletterSignup />
+            </div>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* ── Related Businesses ──────────────────────────────────────────── */}
+        {relatedBizs && relatedBizs.length > 0 && (
+          <div className="mt-16 pt-10 border-t border-muted/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-heading font-bold text-xl text-text">
+                More {catLabel}
+              </h2>
+              <Link href={`/${catSlug}`} className="text-primary text-sm font-semibold hover:underline">
+                View all →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedBizs.map((rb: Business) => (
+                <BusinessCard key={rb.id} business={rb} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

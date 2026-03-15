@@ -10,7 +10,7 @@ import { createBrowserClient } from '@/lib/supabase/client';
 import { lp } from '@/lib/utils/locale';
 import type { Business, Lead, Review } from '@/lib/supabase/types';
 import type { User } from '@supabase/supabase-js';
-import { Mail, Phone, Clock, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Mail, Phone, Clock, Instagram, Facebook, Linkedin, Building2, ShieldCheck, TrendingUp, Star } from 'lucide-react';
 import { PhotoGalleryUpload } from '@/components/business/PhotoGallery';
 import { ReviewManagement } from '@/components/business/ReviewManagement';
 
@@ -319,14 +319,58 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
           </div>
         </div>
       ) : (
-        <div className="text-center py-16 text-muted">
-          <p className="text-5xl mb-4">🏢</p>
-          <p className="font-semibold text-lg">No businesses claimed yet.</p>
-          <p className="mt-2 text-sm">
-            <a href={lp(locale, '/claim')} className="text-primary hover:underline">
-              Claim your first listing →
+        <div className="py-12">
+          {/* Hero empty state */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
+              <Building2 className="w-10 h-10 text-primary" />
+            </div>
+            <h2 className="text-2xl font-heading font-bold text-text mb-3">
+              Claim your listing on the directory
+            </h2>
+            <p className="text-muted max-w-md mx-auto mb-8 text-sm leading-relaxed">
+              Get your peptide business, clinic, or lab in front of thousands of buyers and practitioners
+              actively searching the directory every day.
+            </p>
+            <a
+              href={lp(locale, '/claim')}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors shadow-md"
+            >
+              <Building2 className="w-4 h-4" />
+              Claim your first listing
             </a>
-          </p>
+          </div>
+
+          {/* Benefits grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="bg-card border border-muted/10 rounded-2xl p-5 text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent/20 mb-3">
+                <ShieldCheck className="w-5 h-5 text-accent" />
+              </div>
+              <p className="font-semibold text-text text-sm">Get Verified</p>
+              <p className="text-muted text-xs mt-1 leading-relaxed">
+                Build trust with the Verified badge and stand out from unverified listings.
+              </p>
+            </div>
+            <div className="bg-card border border-muted/10 rounded-2xl p-5 text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky/20 mb-3">
+                <TrendingUp className="w-5 h-5 text-sky" />
+              </div>
+              <p className="font-semibold text-text text-sm">Capture Leads</p>
+              <p className="text-muted text-xs mt-1 leading-relaxed">
+                Receive direct inquiries from buyers and practitioners to your inbox.
+              </p>
+            </div>
+            <div className="bg-card border border-muted/10 rounded-2xl p-5 text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/20 mb-3">
+                <Star className="w-5 h-5 text-gold" />
+              </div>
+              <p className="font-semibold text-text text-sm">Industry Leader</p>
+              <p className="text-muted text-xs mt-1 leading-relaxed">
+                Upgrade to the top tier for homepage spotlight and priority placement.
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>

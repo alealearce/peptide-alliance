@@ -59,7 +59,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/en/login`);
   }
 
-  // Redirect to the intended destination (e.g. /en/reset-password)
+  // For signup email confirmation, send to login with a confirmed banner
+  if (type === 'email' || type === 'signup') {
+    return NextResponse.redirect(`${origin}/en/login?confirmed=true`);
+  }
+
+  // For all other flows (password reset, magic link), redirect to the intended destination
   const redirectUrl = next.startsWith('/') ? `${origin}${next}` : next;
   return NextResponse.redirect(redirectUrl);
 }

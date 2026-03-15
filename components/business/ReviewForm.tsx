@@ -109,7 +109,7 @@ export function ReviewForm({ businessId, locale }: ReviewFormProps) {
         {isEs ? 'Deja una reseña' : 'Leave a Review'}
       </p>
 
-      {/* Pupusa rating selector */}
+      {/* Star rating selector */}
       <div className="flex items-center gap-1">
         {Array.from({ length: 5 }).map((_, i) => (
           <button
@@ -117,16 +117,25 @@ export function ReviewForm({ businessId, locale }: ReviewFormProps) {
             onClick={() => setRating(i + 1)}
             onMouseEnter={() => setHoverRating(i + 1)}
             onMouseLeave={() => setHoverRating(0)}
-            className={`text-2xl transition-transform hover:scale-110 ${
-              i < (hoverRating || rating) ? '' : 'opacity-20 grayscale'
-            }`}
+            className="transition-transform hover:scale-110 focus:outline-none"
+            aria-label={`${i + 1} star${i + 1 !== 1 ? 's' : ''}`}
           >
-            🫓
+            <svg
+              className={`w-7 h-7 transition-colors ${
+                i < (hoverRating || rating)
+                  ? 'text-amber-400 fill-amber-400'
+                  : 'text-muted/30 fill-muted/10'
+              }`}
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
           </button>
         ))}
         {rating > 0 && (
           <span className="text-xs text-muted ml-2">
-            {rating}/5 {isEs ? 'pupusas' : 'pupusas'}
+            {['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][rating]}
           </span>
         )}
       </div>
