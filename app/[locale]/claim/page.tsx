@@ -401,7 +401,7 @@ export default function ClaimPage() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="e.g. La Cocina de Mamá"
+                placeholder="e.g. Peptide Clinic Vancouver"
                 className="pl-10"
               />
             </div>
