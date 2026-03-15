@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       subscription_tier: 'free' as const,
       review_count: 0,
       trust_score: 50,
-      description: description || null,
+      description_en: description || null,
       logo_url: logo_url || null,
       instagram: instagram || null,
       tiktok: tiktok || null,

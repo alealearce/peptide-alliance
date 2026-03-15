@@ -451,7 +451,7 @@ export default function AdminClient({ blogDrafts: init_drafts, pendingBizs: init
                       <tr key={b.id} className="hover:bg-muted/3 transition-colors">
                         <td className="px-4 py-3">
                           <p className="font-semibold text-text text-xs">{b.name}</p>
-                          {b.is_verified && <span className="text-[10px] text-emerald-600 font-semibold">✓ Verified</span>}
+                          {b.is_verified && <span className="text-[10px] text-emerald-600 font-semibold">Verified</span>}
                         </td>
                         <td className="px-4 py-3 text-xs text-muted capitalize whitespace-nowrap">{b.category.replace(/_/g, ' ')}</td>
                         <td className="px-4 py-3 text-xs text-muted whitespace-nowrap">{b.city}, {b.province}</td>

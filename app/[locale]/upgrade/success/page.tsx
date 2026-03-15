@@ -86,14 +86,12 @@ export default async function UpgradeSuccessPage({
               height={120}
               className="object-contain drop-shadow-lg"
             />
-            <span className="absolute -top-2 -right-2 text-2xl">🎉</span>
-            <span className="absolute -bottom-1 -left-3 text-xl">✨</span>
           </div>
         </div>
 
         {isFeatured && (
           <div className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full border border-amber-300 mb-4">
-            ⭐ Featured Listing Active
+            Featured Listing Active
           </div>
         )}
 

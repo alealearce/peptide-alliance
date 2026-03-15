@@ -93,11 +93,11 @@ export function PhotoGalleryUpload({ businessId, currentLogoUrl, locale }: LogoU
           </p>
 
           {error && (
-            <p className="text-xs text-red-500 mt-1">⚠️ {error}</p>
+            <p className="text-xs text-red-500 mt-1">{error}</p>
           )}
           {!error && logoUrl && !uploading && (
             <p className="text-xs text-green-600 mt-1">
-              {isEs ? '✓ Logo guardado' : '✓ Logo saved'}
+              {isEs ? 'Logo guardado' : 'Logo saved'}
             </p>
           )}
         </div>

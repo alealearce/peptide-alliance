@@ -5,11 +5,11 @@ import { CheckCircle2 } from 'lucide-react';
 
 type SuggestionType = 'city' | 'category' | 'business_type' | 'other';
 
-const TYPES: { id: SuggestionType; label: { en: string; es: string }; emoji: string }[] = [
-  { id: 'city',          label: { en: 'City',          es: 'Ciudad'          }, emoji: '🏙️' },
-  { id: 'category',      label: { en: 'Category',      es: 'Categoría'       }, emoji: '📂' },
-  { id: 'business_type', label: { en: 'Business Type', es: 'Tipo de Negocio' }, emoji: '🏪' },
-  { id: 'other',         label: { en: 'Other',         es: 'Otro'            }, emoji: '💬' },
+const TYPES: { id: SuggestionType; label: { en: string; es: string } }[] = [
+  { id: 'city',          label: { en: 'City',          es: 'Ciudad'          } },
+  { id: 'category',      label: { en: 'Category',      es: 'Categoría'       } },
+  { id: 'business_type', label: { en: 'Business Type', es: 'Tipo de Negocio' } },
+  { id: 'other',         label: { en: 'Other',         es: 'Otro'            } },
 ];
 
 export function SuggestionWidget() {
@@ -79,7 +79,6 @@ export function SuggestionWidget() {
                 : 'bg-bg text-muted border-muted/20 hover:border-primary/40 hover:text-text'
             }`}
           >
-            <span>{t.emoji}</span>
             {t.label[locale]}
           </button>
         ))}

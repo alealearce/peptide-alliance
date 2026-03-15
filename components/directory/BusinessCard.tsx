@@ -104,12 +104,12 @@ export function BusinessCard({ business }: BusinessCardProps) {
             )}
             {isIndustryLeader && (
               <Badge variant="industry_leader" className="ml-auto">
-                🏆 Industry Leader
+                Industry Leader
               </Badge>
             )}
             {isFeatured && !isIndustryLeader && (
               <Badge variant="featured" className="ml-auto">
-                ⭐ Featured
+                Featured
               </Badge>
             )}
           </div>

@@ -26,7 +26,7 @@ export const CATEGORIES: Category[] = [
     id:    'peptide_brands',
     slug:  { en: 'peptide-brands' },
     label: { en: 'Peptide Brands' },
-    icon:  '💊',
+    icon:  '',
     color: 'bg-sky-50',
     subcategories: [
       { id: 'research-peptides',        label: { en: 'Research Peptides' } },
@@ -39,7 +39,7 @@ export const CATEGORIES: Category[] = [
     id:    'clinics',
     slug:  { en: 'clinics' },
     label: { en: 'Clinics' },
-    icon:  '🏥',
+    icon:  '',
     color: 'bg-emerald-50',
     subcategories: [
       { id: 'peptide-therapy',     label: { en: 'Peptide Therapy' } },
@@ -53,7 +53,7 @@ export const CATEGORIES: Category[] = [
     id:    'compounding_pharmacies',
     slug:  { en: 'compounding-pharmacies' },
     label: { en: 'Compounding Pharmacies' },
-    icon:  '⚗️',
+    icon:  '',
     color: 'bg-violet-50',
     subcategories: [
       { id: 'sterile-compounding',   label: { en: 'Sterile Compounding' } },
@@ -65,7 +65,7 @@ export const CATEGORIES: Category[] = [
     id:    'research_labs',
     slug:  { en: 'research-labs' },
     label: { en: 'Research Labs' },
-    icon:  '🔬',
+    icon:  '',
     color: 'bg-amber-50',
     subcategories: [
       { id: 'third-party-testing', label: { en: 'Third-Party Testing' } },
@@ -77,7 +77,7 @@ export const CATEGORIES: Category[] = [
     id:    'wholesale_suppliers',
     slug:  { en: 'wholesale-suppliers' },
     label: { en: 'Wholesale Suppliers' },
-    icon:  '📦',
+    icon:  '',
     color: 'bg-orange-50',
     subcategories: [
       { id: 'raw-materials',       label: { en: 'Raw Materials' } },
@@ -89,7 +89,7 @@ export const CATEGORIES: Category[] = [
     id:    'manufacturers',
     slug:  { en: 'manufacturers' },
     label: { en: 'Manufacturers' },
-    icon:  '🏭',
+    icon:  '',
     color: 'bg-teal-50',
     subcategories: [
       { id: 'gmp-manufacturing',      label: { en: 'GMP Manufacturing' } },

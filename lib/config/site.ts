@@ -117,17 +117,17 @@ export const COPY = {
     heading: 'Why The Peptide Alliance?',
     reasons: [
       {
-        icon:  '✓',
+        icon:  '',
         title: 'Verified Sources',
         body:  'Every listing is reviewed and verified by our team before publication.',
       },
       {
-        icon:  '🔬',
+        icon:  '',
         title: 'Trust Score',
         body:  'Proprietary trust scoring based on certifications, lab results, and community reviews.',
       },
       {
-        icon:  '🏥',
+        icon:  '',
         title: 'Industry Coverage',
         body:  'From peptide brands to clinics, compounding pharmacies to research labs — the full supply chain.',
       },

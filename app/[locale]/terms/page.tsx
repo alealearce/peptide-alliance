@@ -100,7 +100,7 @@ function TermsEn() {
 
           <div className="mt-4 bg-white rounded-xl border border-primary/10 p-4 text-sm">
             <p className="font-semibold text-text mb-1">
-              ⚠️ By submitting a claim, you agree to these Terms of Service in full.
+              By submitting a claim, you agree to these Terms of Service in full.
             </p>
             <p className="text-muted mb-0">
               Claiming a listing confirms that you are an authorised representative of the business. Fraudulent claims — including claiming a business you do not own or operate — may result in permanent account termination and legal action.
@@ -347,7 +347,7 @@ function TermsEs() {
 
           <div className="mt-4 bg-white rounded-xl border border-primary/10 p-4 text-sm">
             <p className="font-semibold text-text mb-1">
-              ⚠️ Al enviar un reclamo, aceptas estos Términos de Servicio en su totalidad.
+              Al enviar un reclamo, aceptas estos Términos de Servicio en su totalidad.
             </p>
             <p className="text-muted mb-0">
               Reclamar un listado confirma que eres un representante autorizado del negocio. Los reclamos fraudulentos — incluyendo reclamar un negocio que no posees ni operas — pueden resultar en la terminación permanente de la cuenta y acciones legales.

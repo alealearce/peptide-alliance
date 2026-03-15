@@ -64,9 +64,8 @@ export default function LoginPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md text-center">
-          <div className="text-6xl mb-6">📬</div>
           <h1 className="text-2xl font-heading font-bold text-text mb-3">
-            Check your inbox!
+            Check your inbox
           </h1>
           <p className="text-muted mb-2">We sent a confirmation link to</p>
           <p className="font-semibold text-text mb-6">{email}</p>
@@ -98,7 +97,6 @@ export default function LoginPage() {
         {/* Email confirmed success banner */}
         {emailConfirmed && (
           <div className="mb-6 rounded-2xl border border-accent/40 bg-accent/10 px-5 py-4 text-center">
-            <p className="text-2xl mb-2">✅</p>
             <p className="font-semibold text-text text-sm">Email confirmed!</p>
             <p className="text-muted text-sm mt-1">Your account is active. Sign in below to get started.</p>
           </div>

@@ -96,7 +96,6 @@ export default function ResetPasswordPage() {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md text-center space-y-4">
-          <div className="text-5xl">✅</div>
           <h1 className="text-2xl font-heading font-bold text-text">Password updated!</h1>
           <p className="text-muted">
             Your password has been changed. Redirecting you to your dashboard…

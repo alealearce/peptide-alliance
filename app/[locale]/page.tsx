@@ -98,7 +98,6 @@ export default async function HomePage() {
       ) : (
         <section className="bg-white/60 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-4xl mb-4">🔬</p>
             <h2 className="text-xl font-heading font-bold text-text mb-2">
               {tHome('featuredTitle')}
             </h2>

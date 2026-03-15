@@ -378,7 +378,7 @@ export default function ClaimPage() {
                     : 'border-muted/30 text-muted'
                 }`}
               >
-                {i < stepIndex ? '✓' : i + 1}
+                {i + 1}
               </div>
               {i < currentSteps.length - 1 && (
                 <div className={`w-16 h-0.5 ${i < stepIndex ? 'bg-primary' : 'bg-muted/20'}`} />
@@ -427,7 +427,6 @@ export default function ClaimPage() {
             </div>
             {results.length === 0 ? (
               <div className="text-center py-6 space-y-4">
-                <p className="text-5xl">🔍</p>
                 <p className="text-muted text-sm">
                   {locale === 'es'
                     ? 'No encontramos ese negocio en nuestro directorio.'
@@ -712,8 +711,8 @@ export default function ClaimPage() {
                   onChange={(e) => setNewBiz((p) => ({ ...p, keywords: e.target.value }))}
                   placeholder={
                     locale === 'es'
-                      ? 'Ej. panadería latina, pasteles colombianos'
-                      : 'e.g. Latin bakery, Colombian pastries'
+                      ? 'Ej. BPC-157, terapia con péptidos, TB-500'
+                      : 'e.g. BPC-157, peptide therapy, TB-500, longevity clinic'
                   }
                   className="mt-1"
                 />
@@ -746,7 +745,7 @@ export default function ClaimPage() {
                         </>
                       ) : (
                         <>
-                          ✨ {locale === 'es' ? 'Que Sylvita lo escriba' : 'Let Sylvita write it'}
+                          {locale === 'es' ? 'PeptideBot lo escribe' : 'Write with PeptideBot'}
                         </>
                       )}
                     </button>
@@ -766,8 +765,8 @@ export default function ClaimPage() {
                 {newBiz.name && newBiz.city && newBiz.category && !newBiz.description && (
                   <p className="text-xs text-muted mt-1">
                     {locale === 'es'
-                      ? '💡 Haz clic en "Que Sylvita lo escriba" para generar una descripción con IA.'
-                      : '💡 Click "Let Sylvita write it" above to generate a description with AI.'}
+                      ? 'Haz clic en "PeptideBot lo escribe" para generar una descripción con IA.'
+                      : 'Click "Write with PeptideBot" above to generate a description with AI.'}
                   </p>
                 )}
               </label>

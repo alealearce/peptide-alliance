@@ -18,7 +18,7 @@ export function ClaimButton({ locale, businessId }: Props) {
         href={lp(locale, `/claim?biz=${businessId}`)}
         className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-accent/90 transition-colors text-sm"
       >
-        🏷️ Claim This Listing
+        Claim This Listing
       </Link>
     </div>
   );

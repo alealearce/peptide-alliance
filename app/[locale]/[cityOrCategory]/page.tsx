@@ -515,7 +515,6 @@ async function CityPageContent({
         </>
       ) : (
         <div className="text-center py-20 text-muted">
-          <p className="text-5xl mb-4">🏙️</p>
           <p className="text-lg font-semibold">{t('noResults')}</p>
           <p className="text-sm mt-2">
             Be the first to add your business in {cityName}.

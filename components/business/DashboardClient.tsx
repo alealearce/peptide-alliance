@@ -240,7 +240,7 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
 
               <div className="flex items-center gap-3">
                 <Button onClick={handleSave} disabled={saving}>
-                  {saving ? 'Saving…' : saved ? `✓ ${t('saved')}` : t('save')}
+                  {saving ? 'Saving…' : saved ? t('saved') : t('save')}
                 </Button>
                 {!activeBiz.is_verified && (
                   <Button variant="ghost" size="sm" onClick={() => router.push(lp(locale, '/upgrade'))}>

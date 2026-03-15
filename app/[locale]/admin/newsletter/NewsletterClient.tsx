@@ -87,7 +87,6 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
   if (sentCount !== null) {
     return (
       <div className="max-w-lg mx-auto py-24 px-4 text-center">
-        <div className="text-7xl mb-6">🎉</div>
         <h1 className="text-3xl font-bold text-text mb-3">Newsletter Sent!</h1>
         <p className="text-muted text-lg mb-8">
           Successfully delivered to <strong className="text-text">{sentCount}</strong> subscribers.
@@ -225,8 +224,8 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
               className="w-full bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition-colors text-base flex items-center justify-center gap-2"
             >
               {sending
-                ? <><span className="animate-spin">⏳</span> Sending…</>
-                : `✅ Approve & Send to ${subscriberCount} subscribers`}
+                ? 'Sending…'
+                : `Approve & Send to ${subscriberCount} subscribers`}
             </button>
             <p className="text-xs text-muted text-center mt-2">
               Sends both the English and Spanish versions to the matching subscribers.

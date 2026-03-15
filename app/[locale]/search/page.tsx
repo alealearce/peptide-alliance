@@ -226,7 +226,7 @@ export default async function SearchPage({ searchParams }: Props) {
                   : 'border-muted/30 text-muted hover:border-primary hover:text-primary'
               }`}
             >
-              ✅ {t('verified')}
+              {t('verified')}
             </Link>
           </div>
         </aside>
@@ -290,7 +290,6 @@ export default async function SearchPage({ searchParams }: Props) {
             </>
           ) : (
             <div className="text-center py-24 text-muted">
-              <p className="text-5xl mb-4">🔍</p>
               <p className="text-lg font-semibold">{t('noResults')}</p>
             </div>
           )}
