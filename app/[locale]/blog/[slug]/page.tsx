@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { lp } from '@/lib/utils/locale';
 import { createAdminClient } from '@/lib/supabase/server';
 import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
 import type { Metadata } from 'next';
@@ -125,9 +124,9 @@ export default async function BlogPostPage({
 
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted mb-6">
-        <Link href={lp(locale, '/')} className="hover:text-primary">Home</Link>
+        <Link href="/" className="hover:text-primary">Home</Link>
         <span>/</span>
-        <Link href={lp(locale, '/blog')} className="hover:text-primary">Blog</Link>
+        <Link href="/blog" className="hover:text-primary">Blog</Link>
         <span>/</span>
         <span className="truncate max-w-[200px] text-text">{title}</span>
       </div>
@@ -136,7 +135,7 @@ export default async function BlogPostPage({
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         {post.category && (
           <Link
-            href={lp(locale, `/blog?category=${post.category}`)}
+            href={`/blog?category=${post.category}`}
             className="text-xs font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full hover:bg-primary/20 transition-colors"
           >
             {post.category}
@@ -211,10 +210,10 @@ export default async function BlogPostPage({
       {/* Back to blog */}
       <div className="mt-8 pt-8 border-t border-muted/10">
         <Link
-          href={lp(locale, '/blog')}
+          href="/blog"
           className="text-primary font-semibold hover:underline"
         >
-          ← {l === 'es' ? 'Volver al Blog' : 'Back to Blog'}
+          ← Back to Blog
         </Link>
       </div>
     </main>
