@@ -181,7 +181,7 @@ function buildBoostEmail({
         <p style="margin:8px 0 0;color:#6B7280">With a Featured listing, your business would appear first.</p>
       </div>
       <p>🔍 Top of search results &nbsp; ⭐ Homepage featured &nbsp; ✅ Verified badge</p>
-      <a href="${upgradeUrl}" style="display:inline-block;background:#2B5EBE;color:white;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">Try Premium Free for 14 Days →</a>
+      <a href="${upgradeUrl}" style="display:inline-block;background:#2B5EBE;color:white;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">Upgrade Your Listing →</a>
       <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Connecting the Latin community across Canada</p>
     </div>`,
   };

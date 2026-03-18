@@ -85,12 +85,6 @@ export function PricingCard({
         </span>
       )}
 
-      {!isIndustryLeader && (
-        <span className="inline-block self-start bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-          {t('trialBadge')}
-        </span>
-      )}
-
       <h3 className="text-2xl font-heading font-extrabold text-text mb-1">
         {tierName}
       </h3>
@@ -123,7 +117,7 @@ export function PricingCard({
           className="w-full justify-center bg-gold hover:bg-gold/90 text-white"
           size="lg"
         >
-          {loading ? '...' : 'Contact Us'}
+          {loading ? '...' : 'Get Started'}
         </Button>
       ) : (
         <Button
@@ -133,7 +127,7 @@ export function PricingCard({
           className="w-full justify-center"
           size="lg"
         >
-          {loading ? '...' : t('startTrial')}
+          {loading ? '...' : 'Get Started'}
         </Button>
       )}
     </div>

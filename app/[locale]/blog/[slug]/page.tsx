@@ -4,10 +4,21 @@ import { lp } from '@/lib/utils/locale';
 import { createAdminClient } from '@/lib/supabase/server';
 import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
 import type { Metadata } from 'next';
+import { SITE } from '@/lib/config/site';
+import { getPeptideBySlug } from '@/lib/config/peptides';
+
+// Map blog categories → relevant peptide slugs for cross-linking
+const CATEGORY_PEPTIDES: Record<string, string[]> = {
+  'Peptide Education':  ['bpc-157', 'tb-500', 'cjc-1295', 'ipamorelin', 'sermorelin', 'epithalon'],
+  'Industry News':      ['semaglutide', 'tirzepatide', 'tesamorelin', 'thymosin-alpha-1', 'bpc-157', 'cjc-1295'],
+  'Source Reviews':     ['bpc-157', 'tb-500', 'semaglutide', 'tirzepatide', 'cjc-1295', 'ipamorelin'],
+  'Research Updates':   ['bpc-157', 'tb-500', 'thymosin-alpha-1', 'ss-31', 'epithalon', 'ghk-cu'],
+};
+const DEFAULT_PEPTIDES = ['bpc-157', 'cjc-1295', 'ipamorelin', 'semaglutide', 'tb-500', 'epithalon'];
 
 export const revalidate = 86400;
 
-const BASE = 'https://infosylvita.com';
+const BASE = SITE.url;
 
 export async function generateMetadata({
   params: { locale, slug },
@@ -23,31 +34,24 @@ export async function generateMetadata({
     .single();
 
   if (!data) return {};
-  const l = locale as 'en' | 'es';
-  const isEs = l === 'es';
-  const metaTitle = (isEs ? data.meta_title_es : data.meta_title_en) ?? (isEs ? data.title_es : data.title_en) ?? undefined;
-  const metaDesc = (isEs ? data.meta_description_es : data.meta_description_en) ?? undefined;
+  const metaTitle = data.meta_title_en ?? data.title_en ?? undefined;
+  const metaDesc = data.meta_description_en ?? undefined;
 
   return {
     title: metaTitle,
     description: metaDesc,
     alternates: {
-      canonical: isEs ? `${BASE}/es/blog/${slug}` : `${BASE}/blog/${slug}`,
-      languages: {
-        'en': `${BASE}/blog/${slug}`,
-        'es': `${BASE}/es/blog/${slug}`,
-        'x-default': `${BASE}/blog/${slug}`,
-      },
+      canonical: `${BASE}/blog/${slug}`,
     },
     openGraph: {
       title: metaTitle,
       description: metaDesc,
-      url: isEs ? `${BASE}/es/blog/${slug}` : `${BASE}/blog/${slug}`,
-      siteName: 'InfoSylvita',
-      locale: isEs ? 'es_CA' : 'en_CA',
+      url: `${BASE}/blog/${slug}`,
+      siteName: SITE.name,
+      locale: 'en_US',
       type: 'article',
       publishedTime: data.published_at ?? undefined,
-      images: [{ url: `${BASE}/opengraph-image`, width: 1200, height: 630, alt: metaTitle ?? 'InfoSylvita Blog' }],
+      images: [{ url: `${BASE}/opengraph-image`, width: 1200, height: 630, alt: metaTitle ?? `${SITE.name} Blog` }],
     },
   };
 }
@@ -67,32 +71,33 @@ export default async function BlogPostPage({
 
   if (!post) notFound();
 
-  const l = locale as 'en' | 'es';
-  const title = l === 'es' ? post.title_es : post.title_en;
-  const content = l === 'es' ? post.content_es : post.content_en;
+  const title   = post.title_en;
+  const content = post.content_en;
   const date = post.published_at
-    ? new Date(post.published_at).toLocaleDateString(l === 'es' ? 'es-CA' : 'en-CA', {
+    ? new Date(post.published_at).toLocaleDateString('en-CA', {
         year: 'numeric', month: 'long', day: 'numeric',
       })
     : '';
 
   // JSON-LD Article schema
+  const postUrl = `${BASE}/blog/${slug}`;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     datePublished: post.published_at,
-    url: locale === 'en' ? `https://infosylvita.com/blog/${slug}` : `https://infosylvita.com/es/blog/${slug}`,
-    inLanguage: locale === 'es' ? 'es' : 'en',
+    url: postUrl,
+    inLanguage: 'en',
     publisher: {
       '@type': 'Organization',
-      name: 'InfoSylvita',
-      url: 'https://infosylvita.com',
-      logo: { '@type': 'ImageObject', url: 'https://infosylvita.com/icon.png' },
+      name: SITE.name,
+      url: BASE,
+      logo: { '@type': 'ImageObject', url: `${BASE}/icon.png` },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': locale === 'en' ? `https://infosylvita.com/blog/${slug}` : `https://infosylvita.com/es/blog/${slug}`,
+      '@id': postUrl,
     },
   };
 
@@ -100,8 +105,8 @@ export default async function BlogPostPage({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: locale === 'en' ? 'https://infosylvita.com' : 'https://infosylvita.com/es' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: locale === 'en' ? 'https://infosylvita.com/blog' : 'https://infosylvita.com/es/blog' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE}/blog` },
       { '@type': 'ListItem', position: 3, name: title },
     ],
   };
@@ -170,6 +175,39 @@ export default async function BlogPostPage({
         <NewsletterSignup />
       </div>
 
+      {/* Related Peptides cross-link section */}
+      {(() => {
+        const slugs = (CATEGORY_PEPTIDES[post.category ?? ''] ?? DEFAULT_PEPTIDES).slice(0, 6);
+        const peptides = slugs.map(s => getPeptideBySlug(s)).filter(Boolean);
+        if (peptides.length === 0) return null;
+        return (
+          <div className="mt-12 pt-10 border-t border-muted/10">
+            <h2 className="text-lg font-heading font-bold text-text mb-4">
+              Explore the Peptide Database
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {peptides.map((p) => (
+                <Link
+                  key={p!.slug}
+                  href={`/peptides/${p!.slug}`}
+                  className="group flex flex-col gap-1 bg-card rounded-xl border border-muted/10 px-4 py-3 hover:border-primary/30 hover:shadow-sm transition-all"
+                >
+                  <span className="font-semibold text-sm text-text group-hover:text-primary transition-colors">
+                    {p!.name}
+                  </span>
+                  <span className="text-xs text-muted line-clamp-1">{p!.tagline}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4 text-right">
+              <Link href="/peptides" className="text-sm text-primary font-semibold hover:underline">
+                Browse full Peptide Database →
+              </Link>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Back to blog */}
       <div className="mt-8 pt-8 border-t border-muted/10">
         <Link
@@ -200,9 +238,15 @@ function markdownToHtml(md: string): string {
     s
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      // External links — open in new tab
       .replace(
         /\[(.+?)\]\((https?:\/\/[^)\s]+)\)/g,
         '<a href="$2" rel="noopener noreferrer" target="_blank">$1</a>',
+      )
+      // Internal links starting with / — same tab, no rel
+      .replace(
+        /\[(.+?)\]\((\/[^)\s]*)\)/g,
+        '<a href="$2">$1</a>',
       );
 
   // 4. Process line-by-line to correctly handle headings, lists, and paragraphs

@@ -8,6 +8,7 @@ import { ClaimButton } from '@/components/business/ClaimButton';
 import { PhotoGalleryDisplay } from '@/components/business/PhotoGallery';
 import { ReviewForm } from '@/components/business/ReviewForm';
 import { ViewTracker } from '@/components/business/ViewTracker';
+import { TrustScoreBreakdown } from '@/components/business/TrustScoreBreakdown';
 import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
 import { getCategoryBySlug, getCategorySlug, CATEGORIES } from '@/lib/config/categories';
 import type { Business } from '@/lib/supabase/types';
@@ -720,25 +721,8 @@ async function BusinessDetailContent({
                 <LeadForm businessId={biz.id} businessName={biz.name} />
               </div>
 
-              {/* Trust Score */}
-              {biz.trust_score > 0 && (
-                <div className="bg-card rounded-2xl border border-muted/10 p-5">
-                  <h3 className="font-semibold text-sm text-text mb-3 flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-primary" />
-                    Trust Score
-                  </h3>
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-muted/10 rounded-full h-2 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70"
-                        style={{ width: `${biz.trust_score}%` }}
-                      />
-                    </div>
-                    <span className="text-lg font-bold text-text w-10 text-right">{biz.trust_score}</span>
-                  </div>
-                  <p className="text-xs text-muted mt-2">Based on verification, reviews & industry standing</p>
-                </div>
-              )}
+              {/* Trust Score Breakdown — only shown for verified businesses */}
+              {biz.is_verified && <TrustScoreBreakdown biz={biz} />}
 
               <NewsletterSignup />
             </div>

@@ -50,7 +50,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
             )}
           </div>
 
-          {business.trust_score > 0 && (
+          {business.is_verified && business.trust_score > 0 && (
             <div className="flex items-center gap-2 mb-2">
               <div className="flex-1 h-1.5 bg-muted/10 rounded-full overflow-hidden">
                 <div

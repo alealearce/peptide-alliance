@@ -78,6 +78,7 @@ export default function ClaimPage() {
   // Identity fields (name + role — no email/password, user is already authenticated)
   const [fullName, setFullName] = useState('');
   const [ownerTitle, setOwnerTitle] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -218,6 +219,15 @@ export default function ClaimPage() {
     }
     if (!ownerTitle) {
       setFormError(locale === 'es' ? 'Por favor selecciona tu cargo.' : 'Please select your title/role.');
+      setSubmitting(false);
+      return;
+    }
+    if (!agreedToTerms) {
+      setFormError(
+        locale === 'es'
+          ? 'Debes aceptar los Términos de Servicio para continuar.'
+          : 'You must agree to the Terms of Service to continue.'
+      );
       setSubmitting(false);
       return;
     }
@@ -822,6 +832,12 @@ export default function ClaimPage() {
             >
               {locale === 'es' ? 'Continuar →' : 'Continue →'}
             </Button>
+
+            <p className="text-center text-xs text-muted pt-1">
+              {locale === 'es'
+                ? '🧪 Una vez que tu negocio sea verificado, podrás agregar tu catálogo de productos desde el panel.'
+                : '🧪 Once your business is verified, you\'ll be able to add your full product catalog from the dashboard.'}
+            </p>
           </div>
         )}
 
@@ -899,9 +915,45 @@ export default function ClaimPage() {
               </label>
             </div>
 
+            {/* Terms agreement checkbox */}
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 shrink-0 accent-primary cursor-pointer"
+                />
+                <span className="text-sm text-text leading-relaxed">
+                  {locale === 'es' ? (
+                    <>
+                      Confirmo que soy un representante autorizado de este negocio, que el negocio existe y opera legalmente, y acepto los{' '}
+                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 font-semibold">
+                        Términos de Servicio
+                      </a>{' '}
+                      de Peptide Alliance, incluyendo las obligaciones de cumplimiento normativo, los descargos de responsabilidad y las políticas de contenido.
+                    </>
+                  ) : (
+                    <>
+                      I confirm that I am an authorized representative of this business, that the business is a real, legally operating entity, and I agree to the{' '}
+                      <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 font-semibold">
+                        Terms of Service
+                      </a>
+                      , including the business owner obligations, regulatory compliance requirements, content policies, and all disclaimers.
+                    </>
+                  )}
+                </span>
+              </label>
+              <p className="text-xs text-amber-700 mt-2 ml-7">
+                {locale === 'es'
+                  ? 'Las reclamaciones fraudulentas pueden resultar en la terminación permanente de la cuenta y acciones legales.'
+                  : 'Fraudulent claims may result in permanent account termination and legal action.'}
+              </p>
+            </div>
+
             {formError && <p className="text-red-500 text-sm">{formError}</p>}
 
-            <Button type="submit" disabled={submitting} className="w-full">
+            <Button type="submit" disabled={submitting || !agreedToTerms} className="w-full">
               {submitting
                 ? (locale === 'es' ? 'Enviando…' : 'Submitting…')
                 : mode === 'claim'

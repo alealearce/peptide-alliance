@@ -9,7 +9,10 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'upgrade' });
-  return { title: t('pageTitle') };
+  return {
+    title: t('pageTitle'),
+    alternates: { canonical: 'https://peptidealliance.io/upgrade' },
+  };
 }
 
 export default async function UpgradePage({
@@ -47,7 +50,6 @@ export default async function UpgradePage({
     t('freeFeature2'),
     t('freeFeature3'),
     t('freeFeature4'),
-    t('freeFeature5'),
   ];
 
   return (

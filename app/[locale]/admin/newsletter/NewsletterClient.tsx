@@ -92,7 +92,7 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
           Successfully delivered to <strong className="text-text">{sentCount}</strong> subscribers.
         </p>
         <a
-          href="/en/admin"
+          href="/admin"
           className="inline-block bg-primary text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition"
         >
           ← Back to Admin Dashboard
@@ -114,7 +114,7 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
           Once the draft is ready you&apos;ll receive a preview email with links to approve or edit it here.
         </p>
         <a
-          href="/en/admin"
+          href="/admin"
           className="inline-block text-primary underline underline-offset-2 font-semibold"
         >
           ← Back to Admin Dashboard
@@ -135,7 +135,7 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
 
       {/* ── Page header ─────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-3 mb-8">
-        <a href="/en/admin" className="text-sm text-muted hover:text-primary transition-colors">
+        <a href="/admin" className="text-sm text-muted hover:text-primary transition-colors">
           ← Admin
         </a>
         <span className="text-muted">/</span>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createAdminClient, createClient } from '@/lib/supabase/server';
 import { sendClaimConfirmation } from '@/lib/email/resend';
+import { recalculateTrustScore } from '@/lib/utils/recalculate-trust-score';
 
 const ClaimSchema = z.object({
   business_id: z.string().uuid(),
@@ -63,6 +64,9 @@ export async function POST(req: NextRequest) {
         businessName: biz.name,
       }).catch((err) => console.error('[business/claim] email error:', err));
     }
+
+    // Recalculate trust score — claiming a business earns +10 points
+    void recalculateTrustScore(business_id).catch((err) => console.error('[business/claim] trust score error:', err));
 
     return NextResponse.json({ ok: true });
   } catch (err) {

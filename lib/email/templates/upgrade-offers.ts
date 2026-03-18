@@ -109,7 +109,7 @@ export function upgradeBoostEmail({
           <p style="margin: 8px 0 0; color: #6B7280;">With a Featured listing, your business would appear first in those searches.</p>
         </div>
         <p>🔍 Top of search results<br>⭐ Homepage featured section<br>✅ Verified business badge</p>
-        <a href="${upgradeUrl}" style="${STYLE.btn}">Try Premium Free for 14 Days →</a>
+        <a href="${upgradeUrl}" style="${STYLE.btn}">Upgrade Your Listing →</a>
         <p style="${STYLE.footer}">InfoSylvita — Connecting the Latin community across Canada<br>
         <a href="${SITE}/en/unsubscribe" style="color:#9CA3AF;">Unsubscribe</a></p>
       </div>

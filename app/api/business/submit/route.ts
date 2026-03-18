@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createAdminClient, createClient } from '@/lib/supabase/server';
 import { cityToSlug } from '@/lib/utils/slug';
+import { recalculateTrustScore } from '@/lib/utils/recalculate-trust-score';
 
 const SubmitSchema = z.object({
   name: z.string().min(2).max(100),
@@ -94,7 +95,7 @@ export async function POST(req: NextRequest) {
       owner_title,
       subscription_tier: 'free' as const,
       review_count: 0,
-      trust_score: 50,
+      trust_score: 0,
       description_en: description || null,
       logo_url: logo_url || null,
       instagram: instagram || null,
@@ -119,6 +120,9 @@ export async function POST(req: NextRequest) {
 
     if (newBiz) {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+      // Calculate accurate initial trust score from submitted data
+      void recalculateTrustScore(newBiz.id).catch((err) => console.error('[business/submit] trust score error:', err));
 
       // Generate AI long description
       fetch(`${baseUrl}/api/business/long-description`, {

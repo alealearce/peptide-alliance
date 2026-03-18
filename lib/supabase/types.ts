@@ -152,8 +152,22 @@ export type Product = {
   name: string;
   product_type: 'peptide' | 'supplement' | 'pharmaceutical' | 'equipment' | 'service' | 'other';
   description: string | null;
+  sku: string | null;
+  price: number | null;
+  quantity_duration: string | null;
+  product_url: string | null;
   is_active: boolean;
   sort_order: number;
+  created_at: string;
+};
+
+export type BusinessBlogPost = {
+  id: string;
+  business_id: string;
+  title: string;
+  content: string;
+  auto_generated: boolean;
+  published_at: string;
   created_at: string;
 };
 
@@ -173,7 +187,8 @@ export type LabResult = {
   business_id: string;
   product_name: string | null;
   test_type: 'identity' | 'purity' | 'potency' | 'sterility' | 'endotoxin' | 'heavy_metals' | 'other';
-  result_url: string;
+  result_url: string | null;
+  description: string | null;
   testing_lab: string | null;
   test_date: string | null;
   verified_by_admin: boolean;

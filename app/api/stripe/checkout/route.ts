@@ -69,7 +69,6 @@ export async function POST(req: NextRequest) {
         },
       ],
       subscription_data: {
-        trial_period_days: 14,
         metadata: { businessId, tier, userId: user.id },
       },
       metadata: { businessId, tier, userId: user.id },

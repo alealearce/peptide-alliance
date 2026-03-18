@@ -7,11 +7,13 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 const nextConfig = {
   experimental: {
     instrumentationHook: true,
+    optimizeCss: true,
   },
   images: {
     remotePatterns: [
       { hostname: 'maps.googleapis.com' },
       { hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
     ],
   },
 
@@ -24,8 +26,8 @@ const nextConfig = {
     const csp = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://maps.googleapis.com https://www.googletagmanager.com https://*.vercel-insights.com",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self'",
       "img-src 'self' https: data: blob:",
       "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://*.sentry.io https://*.vercel-insights.com https://maps.googleapis.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",

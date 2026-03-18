@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/server';
 import { sendListingLiveEmail } from '@/lib/email/resend';
+import { recalculateTrustScore } from '@/lib/utils/recalculate-trust-score';
 
 const VALID_ACTIONS = ['publish_blog', 'delete_blog', 'approve_business', 'reject_business', 'delete_business', 'set_tier'] as const;
 type AdminAction = typeof VALID_ACTIONS[number];
@@ -76,6 +77,9 @@ export async function POST(req: NextRequest) {
             }).catch((err) => console.error('[admin/approve] activation email error:', err));
           }
         }
+
+        // Recalculate trust score — is_verified: true adds value
+        void recalculateTrustScore(id).catch((err) => console.error('[admin/approve] trust score error:', err));
         break;
       }
 
@@ -104,6 +108,9 @@ export async function POST(req: NextRequest) {
             is_verified: tier !== 'free',
           })
           .eq('id', id);
+
+        // Recalculate trust score — tier change directly affects the tier bonus
+        void recalculateTrustScore(id).catch((err) => console.error('[admin/set_tier] trust score error:', err));
         break;
       }
     }

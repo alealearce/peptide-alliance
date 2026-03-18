@@ -5,14 +5,18 @@ import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { UpgradeBanner } from '@/components/premium/UpgradeBanner';
 import { createBrowserClient } from '@/lib/supabase/client';
 import { lp } from '@/lib/utils/locale';
 import type { Business, Lead, Review } from '@/lib/supabase/types';
 import type { User } from '@supabase/supabase-js';
-import { Mail, Phone, Clock, Instagram, Facebook, Linkedin, Building2, ShieldCheck, TrendingUp, Star } from 'lucide-react';
+import { Mail, Phone, Clock, Instagram, Facebook, Linkedin, Building2, ShieldCheck, TrendingUp, Star, CreditCard, ExternalLink } from 'lucide-react';
 import { PhotoGalleryUpload } from '@/components/business/PhotoGallery';
 import { ReviewManagement } from '@/components/business/ReviewManagement';
+import { ProductCatalog } from '@/components/business/ProductCatalog';
+import { CertificationsManager } from '@/components/business/CertificationsManager';
+import { LabResultsManager } from '@/components/business/LabResultsManager';
+import { BusinessBlogManager } from '@/components/business/BusinessBlogManager';
+import { TieredUpgradeBanners } from '@/components/business/TieredUpgradeBanners';
 
 interface Props {
   user: User;
@@ -49,6 +53,29 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
   const [editExpiresAt, setEditExpiresAt] = useState(toDateInput(activeBiz?.expires_at));
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  const handleManageSubscription = async () => {
+    if (!activeBiz) return;
+    setPortalLoading(true);
+    try {
+      const res = await fetch('/api/stripe/portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ businessId: activeBiz.id }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error ?? 'Could not open billing portal. Please try again.');
+      }
+    } catch {
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -136,12 +163,42 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
 
       {activeBiz ? (
         <div className="space-y-6">
-          {/* Get Verified Banner — shown only for non-verified free listings */}
-          {!activeBiz.is_verified && activeBiz.subscription_tier === 'free' && (
-            <UpgradeBanner businessId={activeBiz.id} />
+          {/* Tiered upgrade banners */}
+          <TieredUpgradeBanners
+            tier={activeBiz.subscription_tier ?? 'free'}
+            businessId={activeBiz.id}
+          />
+
+          {/* Subscription management — only for paid tiers */}
+          {activeBiz.subscription_tier && activeBiz.subscription_tier !== 'free' && (
+            <div className="bg-card rounded-2xl border border-muted/10 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <CreditCard className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-text text-sm">
+                    {activeBiz.subscription_tier === 'verified' && 'Verified Plan — $49/month'}
+                    {activeBiz.subscription_tier === 'featured' && 'Featured Plan — $99/month'}
+                    {activeBiz.subscription_tier === 'industry_leader' && 'Industry Leader Plan — $499/month'}
+                  </p>
+                  <p className="text-xs text-muted mt-0.5">
+                    Manage your plan, update payment method, or cancel anytime
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleManageSubscription}
+                disabled={portalLoading}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-primary text-primary text-sm font-semibold hover:bg-primary/5 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex-shrink-0"
+              >
+                <ExternalLink className="w-4 h-4" />
+                {portalLoading ? 'Opening…' : 'Manage Subscription'}
+              </button>
+            </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Edit form */}
             <div className="bg-card rounded-2xl border border-muted/10 p-6 space-y-4">
               <div className="flex items-center justify-between">
@@ -250,30 +307,32 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
               </div>
             </div>
 
-            {/* Logo Upload */}
-            <div className="bg-card rounded-2xl border border-muted/10 p-6">
-              <PhotoGalleryUpload
-                businessId={activeBiz.id}
-                currentLogoUrl={activeBiz.logo_url}
-                locale={locale}
-              />
-            </div>
+            {/* Right column: Logo + Reviews + Leads stacked */}
+            <div className="flex flex-col gap-6">
+              {/* Logo Upload — compact */}
+              <div className="bg-card rounded-2xl border border-muted/10 p-4">
+                <PhotoGalleryUpload
+                  businessId={activeBiz.id}
+                  currentLogoUrl={activeBiz.logo_url}
+                  locale={locale}
+                />
+              </div>
 
-            {/* Reviews Management */}
-            <div className="bg-card rounded-2xl border border-muted/10 p-6">
-              <h2 className="font-heading font-bold text-lg text-text mb-4">
-                {locale === 'es' ? 'Reseñas' : 'Reviews'} ({(reviews[activeBiz.id] ?? []).length})
-              </h2>
-              <ReviewManagement
-                businessId={activeBiz.id}
-                reviews={reviews[activeBiz.id] ?? []}
-                canManage={true}
-                locale={locale}
-              />
-            </div>
+              {/* Reviews Management */}
+              <div className="bg-card rounded-2xl border border-muted/10 p-6">
+                <h2 className="font-heading font-bold text-lg text-text mb-4">
+                  {locale === 'es' ? 'Reseñas' : 'Reviews'} ({(reviews[activeBiz.id] ?? []).length})
+                </h2>
+                <ReviewManagement
+                  businessId={activeBiz.id}
+                  reviews={reviews[activeBiz.id] ?? []}
+                  canManage={true}
+                  locale={locale}
+                />
+              </div>
 
-            {/* Leads */}
-            <div className="bg-card rounded-2xl border border-muted/10 p-6">
+              {/* Leads */}
+              <div className="bg-card rounded-2xl border border-muted/10 p-6">
               <h2 className="font-heading font-bold text-lg text-text mb-4">
                 {t('leads')} ({bizLeads.length})
               </h2>
@@ -315,8 +374,33 @@ export function DashboardClient({ user, businesses, leads, reviews, locale }: Pr
                   ))}
                 </ul>
               )}
+              </div>
+            </div>{/* end right column */}
+          </div>{/* end 2-col grid */}
+
+          {/* Product Catalog — full width */}
+          <div className="bg-card rounded-2xl border border-muted/10 p-6">
+            <ProductCatalog businessId={activeBiz.id} />
+          </div>
+
+          {/* Certifications + Lab Results */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-card rounded-2xl border border-muted/10 p-6">
+              <CertificationsManager businessId={activeBiz.id} />
+            </div>
+            <div className="bg-card rounded-2xl border border-muted/10 p-6">
+              <LabResultsManager businessId={activeBiz.id} />
             </div>
           </div>
+
+          {/* Business Blog — Featured + Industry Leader */}
+          <div className="bg-card rounded-2xl border border-muted/10 p-6">
+            <BusinessBlogManager
+              businessId={activeBiz.id}
+              tier={activeBiz.subscription_tier ?? 'free'}
+            />
+          </div>
+
         </div>
       ) : (
         <div className="py-12">

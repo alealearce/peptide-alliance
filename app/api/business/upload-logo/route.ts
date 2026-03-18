@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/server';
 import { createClient } from '@/lib/supabase/server';
+import { recalculateTrustScore } from '@/lib/utils/recalculate-trust-score';
 
 export async function POST(req: NextRequest) {
   // Verify the user is authenticated
@@ -71,6 +72,9 @@ export async function POST(req: NextRequest) {
     console.error('[upload-logo] db update error:', updateError);
     return NextResponse.json({ error: 'Failed to save logo URL' }, { status: 500 });
   }
+
+  // Recalculate trust score — uploading a logo fills the has_logo profile field
+  void recalculateTrustScore(businessId).catch((err) => console.error('[upload-logo] trust score error:', err));
 
   return NextResponse.json({ url: publicUrl });
 }

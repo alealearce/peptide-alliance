@@ -11,8 +11,20 @@ import { createAdminClient } from '@/lib/supabase/server';
 import type { Business } from '@/lib/supabase/types';
 import type { Metadata } from 'next';
 import { SITE } from '@/lib/config/site';
+import { getPeptideBySlug } from '@/lib/config/peptides';
 
 const BASE = SITE.url;
+
+const FEATURED_PEPTIDES = [
+  { slug: 'bpc-157',     tag: 'Most Researched'  },
+  { slug: 'semaglutide', tag: 'FDA Approved'      },
+  { slug: 'cjc-1295',    tag: 'GH Secretagogue'  },
+  { slug: 'tirzepatide', tag: 'Dual GLP/GIP'      },
+  { slug: 'tb-500',      tag: 'Systemic Repair'   },
+  { slug: 'epithalon',   tag: 'Longevity'         },
+  { slug: 'ipamorelin',  tag: 'Cleanest GHRP'     },
+  { slug: 'ghk-cu',      tag: 'Anti-Aging'        },
+];
 
 // ISR: refresh featured section every hour
 export const revalidate = 3600;
@@ -23,7 +35,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: SITE.description,
     alternates: {
       canonical: BASE,
-      languages: { 'en': BASE, 'x-default': BASE },
     },
     openGraph: {
       title: `${SITE.name} — ${SITE.tagline}`,
@@ -69,6 +80,57 @@ export default async function HomePage() {
             Browse by Location
           </h2>
           <CityGrid />
+        </div>
+      </section>
+
+      {/* ── Peptide Database Feature Section ─────────────────────────────── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-2 block">
+              Research Hub
+            </span>
+            <h2 className="text-2xl font-heading font-bold text-text">
+              Peptide Database
+            </h2>
+            <p className="text-muted text-sm mt-1 max-w-lg">
+              Research summaries, use cases, dosing protocols, and verified North American sources — for every major peptide.
+            </p>
+          </div>
+          <Link href="/peptides" className="text-primary font-semibold text-sm hover:underline flex-shrink-0">
+            Browse all {`->`}
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {FEATURED_PEPTIDES.map(({ slug, tag }) => {
+            const p = getPeptideBySlug(slug);
+            if (!p) return null;
+            return (
+              <Link
+                key={slug}
+                href={`/peptides/${slug}`}
+                className="group flex flex-col gap-2 bg-card rounded-xl border border-muted/10 p-4 hover:border-primary/30 hover:shadow-sm transition-all"
+              >
+                <div className="flex items-start justify-between gap-1">
+                  <span className="font-heading font-bold text-text group-hover:text-primary transition-colors text-sm leading-tight">
+                    {p.name}
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-accent bg-accent/15 px-1.5 py-0.5 rounded flex-shrink-0">
+                    {tag}
+                  </span>
+                </div>
+                <p className="text-xs text-muted line-clamp-2 leading-relaxed">{p.tagline}</p>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="mt-6 text-center">
+          <Link
+            href="/peptides"
+            className="inline-block bg-primary/8 text-primary font-bold px-6 py-2.5 rounded-xl hover:bg-primary/15 transition-colors text-sm border border-primary/20"
+          >
+            View all 28 peptides in the database →
+          </Link>
         </div>
       </section>
 

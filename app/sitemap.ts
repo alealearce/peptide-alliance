@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { CATEGORIES } from '@/lib/config/categories';
+import { ALL_PEPTIDE_SLUGS } from '@/lib/config/peptides';
 import { createAdminClient } from '@/lib/supabase/server';
 
 const BASE = 'https://peptidealliance.io';
@@ -16,6 +17,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Search
   entries.push({ url: url('/search'), changeFrequency: 'daily', priority: 0.9 });
+
+  // Peptide Database index
+  entries.push({ url: url('/peptides'), changeFrequency: 'weekly', priority: 0.9 });
+
+  // Best peptide sources comparison
+  entries.push({ url: url('/best-peptide-sources'), changeFrequency: 'daily', priority: 0.85 });
+
+  // Static informational pages
+  entries.push({ url: url('/about'),   changeFrequency: 'monthly', priority: 0.7 });
+  entries.push({ url: url('/claim'),   changeFrequency: 'monthly', priority: 0.8 });
+  entries.push({ url: url('/upgrade'), changeFrequency: 'monthly', priority: 0.8 });
+  entries.push({ url: url('/terms'),   changeFrequency: 'yearly',  priority: 0.3 });
+  entries.push({ url: url('/privacy'), changeFrequency: 'yearly',  priority: 0.3 });
+
+  // Individual peptide pages
+  for (const slug of ALL_PEPTIDE_SLUGS) {
+    entries.push({ url: url(`/peptides/${slug}`), changeFrequency: 'weekly', priority: 0.8 });
+  }
 
   // Blog index
   entries.push({ url: url('/blog'), changeFrequency: 'weekly', priority: 0.8 });

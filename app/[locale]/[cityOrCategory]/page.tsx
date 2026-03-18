@@ -9,6 +9,17 @@ import { US_STATES, CA_PROVINCES } from '@/lib/config/geography';
 import type { Business } from '@/lib/supabase/types';
 import type { Metadata } from 'next';
 import { SITE } from '@/lib/config/site';
+import { getPeptideBySlug } from '@/lib/config/peptides';
+
+// Map business categories → relevant peptide slugs for cross-linking
+const CATEGORY_RELATED_PEPTIDES: Record<string, string[]> = {
+  peptide_brands:          ['bpc-157', 'tb-500', 'cjc-1295', 'ipamorelin', 'epithalon', 'ghk-cu'],
+  clinics:                 ['semaglutide', 'tirzepatide', 'cjc-1295', 'ipamorelin', 'sermorelin', 'pt-141', 'thymosin-alpha-1', 'bpc-157'],
+  compounding_pharmacies:  ['semaglutide', 'tirzepatide', 'sermorelin', 'bpc-157', 'pt-141', 'tesamorelin'],
+  research_labs:           ['bpc-157', 'tb-500', 'thymosin-alpha-1', 'ss-31', 'll-37', 'epithalon'],
+  wholesale_suppliers:     ['bpc-157', 'tb-500', 'cjc-1295', 'ipamorelin', 'semaglutide', 'ghk-cu'],
+  manufacturers:           ['bpc-157', 'tb-500', 'semaglutide', 'tirzepatide', 'thymosin-alpha-1', 'ss-31'],
+};
 
 interface Props {
   params: { locale: string; cityOrCategory: string };
@@ -32,7 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Browse verified ${label.toLowerCase()} across the US and Canada. Find trusted peptide businesses on ${SITE.name}.`,
       alternates: {
         canonical: `${BASE}/${cat.slug.en}`,
-        languages: { 'en': `${BASE}/${cat.slug.en}`, 'x-default': `${BASE}/${cat.slug.en}` },
       },
       openGraph: {
         title: `${label} — ${SITE.name}`,
@@ -54,7 +64,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `Find verified peptide businesses in ${cityName}. Clinics, compounding pharmacies, labs, and more on ${SITE.name}.`,
     alternates: {
       canonical: `${BASE}/${slug}`,
-      languages: { 'en': `${BASE}/${slug}`, 'x-default': `${BASE}/${slug}` },
     },
     openGraph: {
       title: `Peptide Businesses in ${cityName} — ${SITE.name}`,
@@ -391,6 +400,44 @@ async function CategoryPageContent({
           <p className="text-lg font-semibold">{t('noResults')}</p>
         </div>
       )}
+
+      {/* Related Peptides cross-link section */}
+      {(() => {
+        const slugs = CATEGORY_RELATED_PEPTIDES[cat.id] ?? [];
+        const peptides = slugs.map(s => getPeptideBySlug(s)).filter(Boolean);
+        if (peptides.length === 0) return null;
+        return (
+          <div className="mt-16 pt-12 border-t border-muted/10">
+            <div className="flex items-end justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-heading font-bold text-text">
+                  Peptides Relevant to {label}
+                </h2>
+                <p className="text-muted text-sm mt-1">
+                  Research these peptides in our database — including use cases, dosing, and verified sources.
+                </p>
+              </div>
+              <Link href="/peptides" className="text-sm text-primary font-semibold hover:underline flex-shrink-0">
+                Full database →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {peptides.slice(0, 8).map((p) => (
+                <Link
+                  key={p!.slug}
+                  href={`/peptides/${p!.slug}`}
+                  className="group flex flex-col gap-1.5 bg-card rounded-xl border border-muted/10 px-4 py-3 hover:border-primary/30 hover:shadow-sm transition-all"
+                >
+                  <span className="font-heading font-bold text-sm text-text group-hover:text-primary transition-colors">
+                    {p!.name}
+                  </span>
+                  <span className="text-xs text-muted line-clamp-2 leading-relaxed">{p!.tagline}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
