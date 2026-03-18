@@ -21,14 +21,14 @@ export const revalidate = 86400;
 const BASE = SITE.url;
 
 export async function generateMetadata({
-  params: { locale, slug },
+  params: { slug },
 }: {
   params: { locale: string; slug: string };
 }): Promise<Metadata> {
   const supabase = createAdminClient();
   const { data } = await supabase
     .from('blog_posts')
-    .select('meta_title_en, meta_title_es, meta_description_en, meta_description_es, published_at, title_en, title_es')
+    .select('meta_title_en, meta_description_en, published_at, title_en')
     .eq('slug', slug)
     .eq('is_published', true)
     .single();
