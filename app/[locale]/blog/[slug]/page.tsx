@@ -57,7 +57,7 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({
-  params: { locale, slug },
+  params: { slug },
 }: {
   params: { locale: string; slug: string };
 }) {
