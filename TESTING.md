@@ -16,9 +16,9 @@
 - [ ] "Featured Businesses" section shows empty-state CTA (no businesses yet)
 - [ ] Newsletter signup section is present and visible
 - [ ] CTA banner at bottom loads correctly
-- [ ] Navbar shows InfoSylvita logo + links
+- [ ] Navbar shows Peptide Alliance logo + links
 - [ ] Footer is visible with links
-- [ ] Chatbot button (Sylvita) is visible in bottom-right corner
+- [ ] Chatbot button (Peptide Alliance) is visible in bottom-right corner
 - [ ] Language switcher changes between EN ↔ ES correctly
 - [ ] All text is in the correct language per locale
 
@@ -69,14 +69,14 @@
 
 ### 1.8 Error & 404 Pages
 - [ ] Visit `/en/this-does-not-exist` → custom 404 page shows (not a blank Next.js error)
-- [ ] 404 page shows Sylvita mascot and links back to home
+- [ ] 404 page shows Peptide Alliance mascot and links back to home
 - [ ] English and Spanish 404 pages both work
 
 ### 1.9 SEO & Meta
-- [ ] `https://infosylvita.com/sitemap.xml` returns XML with 90+ URLs ✅ (verified)
-- [ ] `https://infosylvita.com/robots.txt` shows correct disallow rules ✅ (verified)
-- [ ] `https://infosylvita.com/opengraph-image` returns an image (200) ✅ (now fixed)
-- [ ] Paste `https://infosylvita.com/en` into https://opengraph.xyz — preview image shows
+- [ ] `https://peptidealliance.io/sitemap.xml` returns XML with 90+ URLs ✅ (verified)
+- [ ] `https://peptidealliance.io/robots.txt` shows correct disallow rules ✅ (verified)
+- [ ] `https://peptidealliance.io/opengraph-image` returns an image (200) ✅ (now fixed)
+- [ ] Paste `https://peptidealliance.io/en` into https://opengraph.xyz — preview image shows
 - [ ] Page `<title>` tags are correct in both EN and ES
 - [ ] `<html lang="...">` attribute is `en` on `/en` and `es` on `/es`
 
@@ -120,11 +120,11 @@
 
 - [ ] Chatbot button appears in bottom-right on all pages
 - [ ] Clicking it opens the chat window
-- [ ] InfoSylvita logo appears in the chat header
-- [ ] Send a message in Spanish: *"Hola Sylvita, busco un restaurante latino en Toronto"*
-  - Expected: Sylvita replies in Spanish with helpful info ✅ (verified in automated test)
-- [ ] Send a message in English: *"Hi Sylvita, what services do you offer?"*
-  - Expected: Sylvita replies in English maintaining her abuela persona
+- [ ] Peptide Alliance logo appears in the chat header
+- [ ] Send a message in Spanish: *"Hola Peptide Alliance, busco un restaurante latino en Toronto"*
+  - Expected: Peptide Alliance replies in Spanish with helpful info ✅ (verified in automated test)
+- [ ] Send a message in English: *"Hi Peptide Alliance, what services do you offer?"*
+  - Expected: Peptide Alliance replies in English maintaining her abuela persona
 - [ ] Typing indicator (3 dots) appears while waiting for response
 - [ ] Chat history scrolls correctly when multiple messages accumulate
 - [ ] Close (X) button closes the chat window
@@ -249,7 +249,7 @@
 ### 8.3 Stripe Webhook (Verify in Stripe Dashboard)
 - [ ] Go to Stripe Dashboard → Developers → Webhooks
 - [ ] Confirm `checkout.session.completed` event was received and processed (200 response)
-- [ ] Confirm endpoint URL is `https://infosylvita.com/api/stripe/webhook`
+- [ ] Confirm endpoint URL is `https://peptidealliance.io/api/stripe/webhook`
 
 ---
 
@@ -361,7 +361,7 @@ Quick checks via Supabase Dashboard → Table Editor (while viewing as anon):
 
 ## 15. PERFORMANCE & SEO FINAL CHECK
 
-- [ ] Run https://pagespeed.web.dev on `https://infosylvita.com/en`
+- [ ] Run https://pagespeed.web.dev on `https://peptidealliance.io/en`
   - Target: Performance ≥ 80, Accessibility ≥ 90
 - [ ] Run https://www.seobility.net/en/seocheck/ on the homepage
 - [ ] Check Google Search Console (after adding the property) — no crawl errors

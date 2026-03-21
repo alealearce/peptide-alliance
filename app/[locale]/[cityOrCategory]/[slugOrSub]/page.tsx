@@ -387,7 +387,7 @@ async function BusinessDetailContent({
                     <Star className="w-3.5 h-3.5" /> Featured
                   </span>
                 )}
-                {biz.is_verified && (
+                {(biz.subscription_tier === 'verified' || biz.subscription_tier === 'featured' || biz.subscription_tier === 'industry_leader') && (
                   <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
                     <CheckCircle className="w-3.5 h-3.5" /> Verified
                   </span>
@@ -721,8 +721,8 @@ async function BusinessDetailContent({
                 <LeadForm businessId={biz.id} businessName={biz.name} />
               </div>
 
-              {/* Trust Score Breakdown — only shown for verified businesses */}
-              {biz.is_verified && <TrustScoreBreakdown biz={biz} />}
+              {/* Trust Score Breakdown — only shown for paid tiers (verified/featured/industry_leader) */}
+              {(biz.subscription_tier === 'verified' || biz.subscription_tier === 'featured' || biz.subscription_tier === 'industry_leader') && <TrustScoreBreakdown biz={biz} />}
 
               <NewsletterSignup />
             </div>

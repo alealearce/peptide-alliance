@@ -110,7 +110,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href={lp(locale, '/')} className="font-heading font-extrabold text-2xl text-primary">
-            InfoSylvita
+            Peptide Alliance
           </Link>
           <h1 className="text-2xl font-heading font-bold text-text mt-4">
             Set a new password

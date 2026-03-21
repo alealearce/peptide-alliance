@@ -17,8 +17,9 @@ export function BusinessCard({ business }: BusinessCardProps) {
 
   const isIndustryLeader = business.subscription_tier === 'industry_leader';
   const isFeatured = business.subscription_tier === 'featured' || isIndustryLeader;
+  // Verified badge + trust score only display for paid tiers (verified/featured/industry_leader)
+  // is_verified in the DB just means admin-approved — does not grant the badge on free tier
   const isVerified = business.subscription_tier === 'verified' || isFeatured;
-  const showVerified = business.is_verified || isVerified;
 
   return (
     <Link href={`/${citySlug}/${business.slug}`}>
@@ -45,12 +46,12 @@ export function BusinessCard({ business }: BusinessCardProps) {
             <h3 className="font-heading font-bold text-text text-lg leading-tight line-clamp-2">
               {business.name}
             </h3>
-            {showVerified && (
+            {isVerified && (
               <Badge variant="verified_source">✓ Verified</Badge>
             )}
           </div>
 
-          {business.is_verified && business.trust_score > 0 && (
+          {isVerified && business.trust_score > 0 && (
             <div className="flex items-center gap-2 mb-2">
               <div className="flex-1 h-1.5 bg-muted/10 rounded-full overflow-hidden">
                 <div

@@ -25,7 +25,7 @@ IMPORTANT: If a user is frustrated, upset, complaining, has a technical issue, a
 
 Never invent specific business details, prices, or hours of operation. Do not provide medical advice.`;
 
-export async function chatWithSylvita(messages: ChatMessage[]): Promise<string> {
+export async function chatWithAssistant(messages: ChatMessage[]): Promise<string> {
   const response = await client.messages.create({
     model: 'claude-haiku-4-5',
     max_tokens: 400,
@@ -90,7 +90,7 @@ Respond in this exact JSON format:
   }
 }
 
-// ── Short Description Generator (for claim form "Let Sylvita write it") ──────
+// ── Short Description Generator (for claim form "Let AI write it") ──────
 
 interface ShortDescriptionResult {
   description: string;

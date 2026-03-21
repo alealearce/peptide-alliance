@@ -10,9 +10,9 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY')!;
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!;
-const FROM = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hola@infosylvita.com';
+const FROM = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hi@peptidealliance.io';
 const ADMIN_EMAIL = 'hi@arce.ca';
-const SITE = 'https://infosylvita.com';
+const SITE = 'https://peptidealliance.io';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
 const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
@@ -42,25 +42,25 @@ function getPostSpecs(): Array<{ type: string; topic: string; city: string; cate
   return [
     {
       type: 'City spotlight',
-      topic: `Best Latin restaurants in ${city} — InfoSylvita Guide`,
+      topic: `Best peptide therapy providers in ${city} — Peptide Alliance Guide`,
       city,
       category: 'comida',
     },
     {
       type: 'Category guide',
-      topic: `How to find a Latin immigration consultant in Canada`,
+      topic: `How to find a trusted peptide therapy provider in Canada`,
       city: 'Canada',
       category: 'servicios_profesionales',
     },
     {
       type: 'Community story',
-      topic: `Growing the Latin business community in ${city}`,
+      topic: `Growing the regenerative health community in ${city}`,
       city,
       category,
     },
     {
       type: 'Seasonal',
-      topic: `Latin events in Canada this ${season}`,
+      topic: `Regenerative health events in Canada this ${season}`,
       city: 'Canada',
       category: 'eventos',
     },
@@ -83,8 +83,8 @@ Deno.serve(async (req) => {
 - Target city: ${spec.city} (or national if applicable)
 - Category focus: ${spec.category}
 - Target length: 600-800 words
-- Include: natural keyword usage, 2-3 H2 subheadings (use ## prefix), a call to action linking to the relevant InfoSylvita directory page at https://infosylvita.com
-- Tone: warm, community-focused, bilingual audience (some readers prefer Spanish, some English)
+- Include: natural keyword usage, 2-3 H2 subheadings (use ## prefix), a call to action linking to the relevant Peptide Alliance directory page at https://peptidealliance.io
+- Tone: warm, community-focused, evidence-based, accessible to both practitioners and patients
 
 Return ONLY valid JSON (no markdown wrapper), exactly this structure:
 {
@@ -103,7 +103,7 @@ Return ONLY valid JSON (no markdown wrapper), exactly this structure:
       const message = await anthropic.messages.create({
         model: 'claude-haiku-4-5',
         max_tokens: 4000,
-        system: 'You are a bilingual content writer for InfoSylvita, a Latin business directory in Canada. Write warm, SEO-optimized content that serves the Latin community. Always write in a voice that feels like advice from a trusted community member, not a corporate blog. Return only valid JSON.',
+        system: 'You are a content writer for Peptide Alliance, a regenerative health directory in Canada. Write warm, SEO-optimized content that serves the peptide therapy and regenerative health community. Always write in a voice that feels like advice from a trusted expert, not a corporate blog. Return only valid JSON.',
         messages: [{ role: 'user', content: prompt }],
       });
 
@@ -157,7 +157,7 @@ Return ONLY valid JSON (no markdown wrapper), exactly this structure:
     await resend.emails.send({
       from: FROM,
       to: ADMIN_EMAIL,
-      subject: `InfoSylvita: ${generated.length} new blog posts ready for review`,
+      subject: `Peptide Alliance: ${generated.length} new blog posts ready for review`,
       html: `
         <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px">
           <h2 style="color:#2B5EBE">📝 New blog posts ready for review</h2>

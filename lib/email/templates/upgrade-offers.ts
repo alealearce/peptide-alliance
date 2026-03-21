@@ -2,7 +2,7 @@
 // Used by the send-upgrade-offers edge function.
 // Each function returns { subject, html } for use with Resend.
 
-const SITE = 'https://infosylvita.com';
+const SITE = 'https://peptidealliance.io';
 const STYLE = {
   wrapper: 'font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;',
   h2: 'font-family: Nunito, sans-serif; color: #2B5EBE; margin-bottom: 8px;',
@@ -29,7 +29,7 @@ export function upgradeLeadsEmail({
       subject: `¡Tienes ${leadCount} ${leadCount === 1 ? 'contacto nuevo' : 'contactos nuevos'}! Mejora para responder más rápido`,
       html: `
         <div style="${STYLE.wrapper}">
-          <h2 style="${STYLE.h2}">👵🏽 Hola desde InfoSylvita</h2>
+          <h2 style="${STYLE.h2}">🧬 Hola desde Peptide Alliance</h2>
           <p>Tu negocio <strong>${businessName}</strong> ha recibido <strong>${leadCount} ${leadCount === 1 ? 'consulta' : 'consultas'}</strong> en los últimos 30 días.</p>
           <div style="${STYLE.card}">
             <p style="margin:0; font-size: 32px; font-weight: 700; color: #2B5EBE;">${leadCount}</p>
@@ -38,7 +38,7 @@ export function upgradeLeadsEmail({
           <p>Con un perfil <strong>Premium</strong> recibirás una notificación por correo cada vez que alguien te contacte, para que puedas responder de inmediato.</p>
           <p>✅ Insignia verificada &nbsp; ✅ Notificaciones de consultas &nbsp; ✅ Informe mensual</p>
           <a href="${upgradeUrl}" style="${STYLE.btn}">Ver Mis Consultas y Mejorar →</a>
-          <p style="${STYLE.footer}">InfoSylvita — Conectando la comunidad latina en Canadá<br>
+          <p style="${STYLE.footer}">Peptide Alliance — The Standard in Regenerative Health<br>
           <a href="${SITE}/es/unsubscribe" style="color:#9CA3AF;">Cancelar suscripción</a></p>
         </div>
       `,
@@ -49,7 +49,7 @@ export function upgradeLeadsEmail({
     subject: `You have ${leadCount} new ${leadCount === 1 ? 'lead' : 'leads'}! Upgrade to respond faster`,
     html: `
       <div style="${STYLE.wrapper}">
-        <h2 style="${STYLE.h2}">👵🏽 Hello from InfoSylvita</h2>
+        <h2 style="${STYLE.h2}">🧬 Hello from Peptide Alliance</h2>
         <p>Your listing <strong>${businessName}</strong> has received <strong>${leadCount} ${leadCount === 1 ? 'inquiry' : 'inquiries'}</strong> in the last 30 days.</p>
         <div style="${STYLE.card}">
           <p style="margin:0; font-size: 32px; font-weight: 700; color: #2B5EBE;">${leadCount}</p>
@@ -58,7 +58,7 @@ export function upgradeLeadsEmail({
         <p>With a <strong>Premium</strong> listing, you'll get an email notification every time someone contacts you — so you can respond right away.</p>
         <p>✅ Verified badge &nbsp; ✅ Lead notifications &nbsp; ✅ Monthly report</p>
         <a href="${upgradeUrl}" style="${STYLE.btn}">See My Leads & Upgrade →</a>
-        <p style="${STYLE.footer}">InfoSylvita — Connecting the Latin community across Canada<br>
+        <p style="${STYLE.footer}">Peptide Alliance — The Standard in Regenerative Health<br>
         <a href="${SITE}/en/unsubscribe" style="color:#9CA3AF;">Unsubscribe</a></p>
       </div>
     `,
@@ -80,18 +80,18 @@ export function upgradeBoostEmail({
 }) {
   if (lang === 'es') {
     return {
-      subject: `Tu perfil en InfoSylvita podría ser visto por más personas`,
+      subject: `Tu perfil en Peptide Alliance podría ser visto por más personas`,
       html: `
         <div style="${STYLE.wrapper}">
-          <h2 style="${STYLE.h2}">👵🏽 Hola desde InfoSylvita</h2>
+          <h2 style="${STYLE.h2}">🧬 Hola desde Peptide Alliance</h2>
           <p>Tu negocio <strong>${businessName}</strong> está activo en el directorio, pero hay algo que quiero contarte.</p>
           <div style="${STYLE.card}">
-            <p style="margin:0; font-weight: 600; color: #374151;">En el último mes, <strong>${categorySearchCount} personas</strong> buscaron en tu categoría en InfoSylvita.</p>
+            <p style="margin:0; font-weight: 600; color: #374151;">En el último mes, <strong>${categorySearchCount} personas</strong> buscaron en tu categoría en Peptide Alliance.</p>
             <p style="margin: 8px 0 0; color: #6B7280;">Con un perfil Destacado, tu negocio aparecería primero en esas búsquedas.</p>
           </div>
           <p>🔍 Primero en resultados de búsqueda<br>⭐ Sección destacada en la página de inicio<br>✅ Insignia de negocio verificado</p>
           <a href="${upgradeUrl}" style="${STYLE.btn}">Prueba Premium Gratis 14 Días →</a>
-          <p style="${STYLE.footer}">InfoSylvita — Conectando la comunidad latina en Canadá<br>
+          <p style="${STYLE.footer}">Peptide Alliance — The Standard in Regenerative Health<br>
           <a href="${SITE}/es/unsubscribe" style="color:#9CA3AF;">Cancelar suscripción</a></p>
         </div>
       `,
@@ -99,18 +99,18 @@ export function upgradeBoostEmail({
   }
 
   return {
-    subject: `Your InfoSylvita listing could be seen by more people`,
+    subject: `Your Peptide Alliance listing could be seen by more people`,
     html: `
       <div style="${STYLE.wrapper}">
-        <h2 style="${STYLE.h2}">👵🏽 Hello from InfoSylvita</h2>
+        <h2 style="${STYLE.h2}">🧬 Hello from Peptide Alliance</h2>
         <p>Your listing <strong>${businessName}</strong> is live in the directory — but here's something to know.</p>
         <div style="${STYLE.card}">
-          <p style="margin:0; font-weight: 600; color: #374151;">Last month, <strong>${categorySearchCount} people</strong> searched in your category on InfoSylvita.</p>
+          <p style="margin:0; font-weight: 600; color: #374151;">Last month, <strong>${categorySearchCount} people</strong> searched in your category on Peptide Alliance.</p>
           <p style="margin: 8px 0 0; color: #6B7280;">With a Featured listing, your business would appear first in those searches.</p>
         </div>
         <p>🔍 Top of search results<br>⭐ Homepage featured section<br>✅ Verified business badge</p>
         <a href="${upgradeUrl}" style="${STYLE.btn}">Upgrade Your Listing →</a>
-        <p style="${STYLE.footer}">InfoSylvita — Connecting the Latin community across Canada<br>
+        <p style="${STYLE.footer}">Peptide Alliance — The Standard in Regenerative Health<br>
         <a href="${SITE}/en/unsubscribe" style="color:#9CA3AF;">Unsubscribe</a></p>
       </div>
     `,

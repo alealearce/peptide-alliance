@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// ─── InfoSylvita — Google Places Scraper ────────────────────────────────────
+// ─── Peptide Alliance — Google Places Scraper ────────────────────────────────────
 // Scrapes Google Places for Latin businesses by city + category and inserts
-// them into the InfoSylvita directory.
+// them into the Peptide Alliance directory.
 //
 // Usage:
 //   npm run scrape -- --city "Toronto" --category "servicios_profesionales"
@@ -331,7 +331,7 @@ async function generateDescription(name, city, category, subcategory) {
         max_tokens: 400,
         messages: [{
           role: 'user',
-          content: `Write two short business descriptions (2-3 sentences each) for "${name}", a ${subcategory} business in ${city}, Canada, listed under the "${category}" category on InfoSylvita (a Latin business directory).
+          content: `Write two short business descriptions (2-3 sentences each) for "${name}", a ${subcategory} business in ${city}, Canada, listed under the "${category}" category on Peptide Alliance (a peptide supplier directory).
 
 Return ONLY valid JSON:
 {"en": "English description here", "es": "Spanish description here"}
@@ -372,7 +372,7 @@ async function main() {
 
   const citySlug = cityToSlug(CITY);
 
-  console.log(`\n🔍 InfoSylvita Scraper`);
+  console.log(`\n🔍 Peptide Alliance Scraper`);
   console.log(`${'─'.repeat(50)}`);
   console.log(`  City:        ${CITY}, ${province}`);
   console.log(`  Category:    ${CATEGORY}`);
@@ -526,7 +526,7 @@ async function main() {
   console.log(`  Skipped:    ${existingIds.size} (already in DB)`);
   console.log(`  Inserted:   ${inserted}`);
   if (errors) console.log(`  Errors:     ${errors}`);
-  console.log(`\n  View: https://infosylvita.com/en/${citySlug}\n`);
+  console.log(`\n  View: https://peptidealliance.io/en/${citySlug}\n`);
 }
 
 function sleep(ms) {

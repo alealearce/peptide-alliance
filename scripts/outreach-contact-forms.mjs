@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ─── InfoSylvita — Two-Phase Business Outreach ──────────────────────────────
+// ─── Peptide Alliance — Two-Phase Business Outreach ──────────────────────────────
 // Phase 1: Extract email from website → send branded HTML email via Resend
 // Phase 2: For Phase 1 failures (no email found) → find contact form → submit
 //
@@ -53,12 +53,12 @@ function loadLog() {
 function saveLog(log) { writeFileSync(LOG_FILE, JSON.stringify(log, null, 2)); }
 
 // ── Message content ───────────────────────────────────────────────────────────
-const BASE_URL = 'https://infosylvita.com';
+const BASE_URL = 'https://peptidealliance.io';
 
 function claimUrl(bizId) { return `${BASE_URL}/en/claim?biz=${bizId}`; }
 
 function plainTextMessage(bizName, bizId) {
-  return `Hi! I'm Sylvita from InfoSylvita (infosylvita.com), a free directory for Latin-owned businesses across Canada.
+  return `Hi! We're Peptide Alliance (peptidealliance.io), a free peptide supplier directory.
 
 We've added your business "${bizName}" to our directory and wanted to let you know. It's completely free — no catch.
 
@@ -68,9 +68,9 @@ ${claimUrl(bizId)}
 If you'd prefer not to be listed, simply reply to this message and we'll remove you right away.
 
 Warm regards,
-Sylvita
-InfoSylvita — The Latin Business Directory in Canada
-hola@infosylvita.com`;
+Peptide Alliance
+Peptide Alliance — The peptide supplier directory
+hi@peptidealliance.io`;
 }
 
 function htmlEmail(bizName, bizId) {
@@ -84,12 +84,12 @@ function htmlEmail(bizName, bizId) {
       <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e8ddd0">
         <!-- Header -->
         <tr><td style="background:#2d5a3d;padding:28px 32px;text-align:center">
-          <div style="color:#f9f5f0;font-size:22px;font-weight:bold;letter-spacing:0.5px">🌿 InfoSylvita</div>
-          <div style="color:#a8c5a0;font-size:13px;margin-top:4px">The Latin Business Directory in Canada</div>
+          <div style="color:#f9f5f0;font-size:22px;font-weight:bold;letter-spacing:0.5px">🌿 Peptide Alliance</div>
+          <div style="color:#a8c5a0;font-size:13px;margin-top:4px">The peptide supplier directory</div>
         </td></tr>
         <!-- Body -->
         <tr><td style="padding:32px">
-          <p style="margin:0 0 16px;font-size:16px;color:#2c2c2c;line-height:1.6">Hi! I'm <strong>Sylvita</strong> from <a href="https://infosylvita.com" style="color:#2d5a3d">InfoSylvita</a>, a free directory for Latin-owned businesses across Canada.</p>
+          <p style="margin:0 0 16px;font-size:16px;color:#2c2c2c;line-height:1.6">Hi! We're <a href="https://peptidealliance.io" style="color:#2d5a3d">Peptide Alliance</a>, a free peptide supplier directory.</p>
           <p style="margin:0 0 16px;font-size:16px;color:#2c2c2c;line-height:1.6">We've added <strong>${bizName}</strong> to our directory and wanted to let you know. It's completely free — no catch.</p>
           <p style="margin:0 0 24px;font-size:16px;color:#2c2c2c;line-height:1.6">If you'd like to claim your listing, you can update your information, add photos, and connect with thousands of people in the Latin community across Canada:</p>
           <!-- CTA Button -->
@@ -102,7 +102,7 @@ function htmlEmail(bizName, bizId) {
         </td></tr>
         <!-- Footer -->
         <tr><td style="background:#f9f5f0;padding:20px 32px;border-top:1px solid #e8ddd0;text-align:center">
-          <p style="margin:0;font-size:13px;color:#888">Sylvita · InfoSylvita · <a href="mailto:hola@infosylvita.com" style="color:#2d5a3d">hola@infosylvita.com</a></p>
+          <p style="margin:0;font-size:13px;color:#888">Peptide Alliance · <a href="mailto:hi@peptidealliance.io" style="color:#2d5a3d">hi@peptidealliance.io</a></p>
           <p style="margin:6px 0 0;font-size:11px;color:#aaa">You received this because your business serves the Latin community. Reply to remove your listing.</p>
         </td></tr>
       </table>
@@ -174,9 +174,9 @@ async function tryFormOnPage(page, message) {
   if (DRY_RUN) return 'dry-run';
 
   try {
-    if (nameField) await nameField.fill('Sylvita from InfoSylvita', { timeout: 3000 });
-    if (subjectField) await subjectField.fill('Your business is listed on InfoSylvita', { timeout: 3000 });
-    await emailField.fill('hola@infosylvita.com', { timeout: 3000 });
+    if (nameField) await nameField.fill('Peptide Alliance', { timeout: 3000 });
+    if (subjectField) await subjectField.fill('Your business is listed on Peptide Alliance', { timeout: 3000 });
+    await emailField.fill('hi@peptidealliance.io', { timeout: 3000 });
     await messageField.fill(message, { timeout: 3000 });
     await submitBtn.click({ timeout: 5000 });
     await page.waitForTimeout(3000);
@@ -214,7 +214,7 @@ async function phase1(browser, biz) {
 // ── Phase 2: Email extraction + direct email ──────────────────────────────────
 const EMAIL_RE = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
 const SKIP_PREFIXES = ['noreply', 'no-reply', 'donotreply', 'bounce', 'mailer', 'postmaster', 'webmaster', 'admin', 'notifications', 'support@google', 'sentry'];
-const SKIP_DOMAINS = ['sentry.io', 'google.com', 'facebook.com', 'w3.org', 'schema.org', 'example.com', 'infosylvita.com'];
+const SKIP_DOMAINS = ['sentry.io', 'google.com', 'facebook.com', 'w3.org', 'schema.org', 'example.com', 'peptidealliance.io'];
 
 function isValidOutreachEmail(email) {
   const lower = email.toLowerCase();
@@ -283,9 +283,9 @@ async function sendEmail(to, bizName, bizId) {
       'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: `Sylvita from InfoSylvita <${process.env.RESEND_FROM_EMAIL}>`,
+      from: `Peptide Alliance <${process.env.RESEND_FROM_EMAIL}>`,
       to: [to],
-      subject: `Your business is listed on InfoSylvita 🌿`,
+      subject: `Your business is listed on Peptide Alliance 🌿`,
       html: htmlEmail(bizName, bizId),
       text: plainTextMessage(bizName, bizId),
     }),
@@ -350,7 +350,7 @@ async function main() {
     return e?.p1_result === 'sent' || e?.p2_result === 'sent';
   }).length;
 
-  console.log(`\n📬 InfoSylvita Outreach (${PHASE === 1 ? 'Phase 1 only' : PHASE === 2 ? 'Phase 2 only' : 'Both Phases'})`);
+  console.log(`\n📬 Peptide Alliance Outreach (${PHASE === 1 ? 'Phase 1 only' : PHASE === 2 ? 'Phase 2 only' : 'Both Phases'})`);
   console.log('─'.repeat(52));
   console.log(`  Total with websites: ${businesses.length}`);
   console.log(`  Already reached:     ${alreadyDone}`);

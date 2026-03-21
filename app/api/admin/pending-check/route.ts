@@ -30,16 +30,16 @@ export async function GET(req: NextRequest) {
   await resend.emails.send({
     from: FROM(),
     to: 'hi@arce.ca',
-    subject: `${count} business${count > 1 ? 'es' : ''} waiting for approval — InfoSylvita`,
+    subject: `${count} business${count > 1 ? 'es' : ''} waiting for approval — Peptide Alliance`,
     html: `
       <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px">
-        <h2 style="color:#2B5EBE;font-family:Nunito,sans-serif">Pending Business Approvals</h2>
-        <p>You have <strong>${count} business${count > 1 ? 'es' : ''}</strong> waiting for approval on InfoSylvita.</p>
-        <a href="https://infosylvita.com/en/admin"
-           style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">
+        <h2 style="color:#0A1F44;font-family:Inter,sans-serif">Pending Business Approvals</h2>
+        <p>You have <strong>${count} business${count > 1 ? 'es' : ''}</strong> waiting for approval on Peptide Alliance.</p>
+        <a href="https://peptidealliance.io/admin"
+           style="display:inline-block;background:#0A1F44;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">
           Review in Admin Panel →
         </a>
-        <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Automated notification</p>
+        <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Peptide Alliance — Automated notification</p>
       </div>
     `,
   });

@@ -10,7 +10,7 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!;
 const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY')!;
-const FROM = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hola@infosylvita.com';
+const FROM = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hi@peptidealliance.io';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
 const resend = new Resend(RESEND_API_KEY);
@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
         max_tokens: 150,
         messages: [{
           role: 'user',
-          content: `Give one specific, actionable business tip for a ${biz.subcategory} owner in Canada in 2-3 sentences. Focus on what Latin business owners can do to attract more local customers. Be warm and practical. ${lang === 'es' ? 'Respond in Spanish.' : 'Respond in English.'}`,
+          content: `Give one specific, actionable business tip for a ${biz.subcategory} provider in Canada in 2-3 sentences. Focus on what regenerative health practitioners can do to attract more patients. Be warm and practical. ${lang === 'es' ? 'Respond in Spanish.' : 'Respond in English.'}`,
         }],
       });
       tip = (tipMsg.content[0] as { text: string }).text ?? '';
@@ -185,8 +185,8 @@ function buildReportHtml({
         <p style="font-weight:600;color:#C4873A;margin:0 0 8px">💡 Consejo del mes</p>
         <p style="color:#374151;margin:0">${tip}</p>
       </div>
-      <a href="https://infosylvita.com/es/dashboard" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700">Ver Mi Panel →</a>
-      <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Conectando la comunidad latina en Canadá</p>
+      <a href="https://peptidealliance.io/es/dashboard" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700">Ver Mi Panel →</a>
+      <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Peptide Alliance — The Standard in Regenerative Health</p>
     </div>`;
   }
 
@@ -212,7 +212,7 @@ function buildReportHtml({
       <p style="font-weight:600;color:#C4873A;margin:0 0 8px">💡 Tip of the month</p>
       <p style="color:#374151;margin:0">${tip}</p>
     </div>
-    <a href="https://infosylvita.com/en/dashboard" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700">Go to My Dashboard →</a>
-    <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Connecting the Latin community across Canada</p>
+    <a href="https://peptidealliance.io/en/dashboard" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700">Go to My Dashboard →</a>
+    <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Peptide Alliance — The Standard in Regenerative Health</p>
   </div>`;
 }

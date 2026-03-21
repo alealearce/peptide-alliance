@@ -7,10 +7,10 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: locale === 'es' ? '¿Falta algo? — InfoSylvita' : 'Something Missing? — InfoSylvita',
+    title: locale === 'es' ? '¿Falta algo? — Peptide Alliance' : 'Something Missing? — Peptide Alliance',
     description: locale === 'es'
-      ? 'Sugiere una ciudad, categoría o tipo de negocio para el directorio InfoSylvita.'
-      : 'Suggest a city, category, or business type for the InfoSylvita directory.',
+      ? 'Sugiere una ciudad, categoría o tipo de negocio para el directorio Peptide Alliance.'
+      : 'Suggest a city, category, or business type for the Peptide Alliance directory.',
     robots: { index: false, follow: true },
   };
 }

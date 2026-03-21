@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'InfoSylvita — Latin Business Directory Canada';
+export const alt = 'Peptide Alliance — The Standard in Regenerative Health';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -10,7 +10,7 @@ export default function OgImage() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #2B5EBE 0%, #1a3d8e 100%)',
+          background: 'linear-gradient(135deg, #0A1F44 0%, #1a3d8e 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -31,7 +31,7 @@ export default function OgImage() {
         >
           <div
             style={{
-              fontSize: '80px',
+              fontSize: '72px',
               fontWeight: '800',
               color: 'white',
               letterSpacing: '-2px',
@@ -39,7 +39,7 @@ export default function OgImage() {
               marginBottom: '20px',
             }}
           >
-            InfoSylvita
+            Peptide Alliance
           </div>
 
           <div
@@ -51,7 +51,7 @@ export default function OgImage() {
               marginBottom: '40px',
             }}
           >
-            Tu directorio de negocios latinos en Canadá
+            The Standard in Regenerative Health
           </div>
 
           {/* URL pill */}
@@ -67,12 +67,12 @@ export default function OgImage() {
             }}
           >
             <div style={{ color: 'rgba(255,255,255,0.9)', fontSize: '20px' }}>
-              infosylvita.com
+              peptidealliance.io
             </div>
           </div>
         </div>
 
-        {/* Right: Sylvita mascot with phone */}
+        {/* Right: Logo */}
         <div
           style={{
             display: 'flex',
@@ -83,8 +83,8 @@ export default function OgImage() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://infosylvita.com/images/mascots/brand-logo.png"
-            alt="Sylvita"
+            src="https://peptidealliance.io/images/mascots/peptidealliancelogo.png"
+            alt="Peptide Alliance"
             width={400}
             height={520}
             style={{ objectFit: 'contain' }}

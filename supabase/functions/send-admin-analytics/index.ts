@@ -8,7 +8,7 @@ import { Resend } from 'https://esm.sh/resend@3';
 const SUPABASE_URL       = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY     = Deno.env.get('RESEND_API_KEY')!;
-const FROM               = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hola@infosylvita.com';
+const FROM               = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hi@peptidealliance.io';
 const ADMIN_EMAIL        = 'hi@arce.ca';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
   await resend.emails.send({
     from:    FROM,
     to:      ADMIN_EMAIL,
-    subject: `📊 InfoSylvita Analytics — ${monthName} ${year}`,
+    subject: `📊 Peptide Alliance Analytics — ${monthName} ${year}`,
     html,
   });
 
@@ -132,7 +132,7 @@ function buildEmail(stats: SearchStats, month: string, year: number): string {
 
   <!-- Header -->
   <div style="background:linear-gradient(135deg,#1b4332,#40916c);padding:32px 28px;color:#fff;">
-    <div style="font-size:13px;opacity:0.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">InfoSylvita Admin</div>
+    <div style="font-size:13px;opacity:0.7;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;">Peptide Alliance Admin</div>
     <h1 style="margin:0;font-size:26px;font-weight:800;">📊 Monthly Analytics</h1>
     <p style="margin:8px 0 0;opacity:0.85;font-size:15px;">${month} ${year}</p>
   </div>
@@ -226,7 +226,7 @@ function buildEmail(stats: SearchStats, month: string, year: number): string {
   <!-- Footer -->
   <div style="padding:18px 28px;background:#f9fafb;border-top:1px solid #e5e7eb;text-align:center;">
     <p style="margin:0;font-size:12px;color:#9ca3af;">
-      InfoSylvita · Automated admin report · ${month} ${year}
+      Peptide Alliance · Automated admin report · ${month} ${year}
     </p>
   </div>
 

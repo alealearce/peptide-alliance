@@ -6,7 +6,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!;
-const FROM_EMAIL = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hola@infosylvita.com';
+const FROM_EMAIL = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hi@peptidealliance.io';
 
 Deno.serve(async (req) => {
   if (req.method !== 'POST') {
@@ -58,11 +58,11 @@ Deno.serve(async (req) => {
       from: FROM_EMAIL,
       to: profile.email,
       reply_to: lead.email,
-      subject: `New message for ${biz.name} — InfoSylvita`,
+      subject: `New message for ${biz.name} — Peptide Alliance`,
       html: `
         <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
           <h2 style="color: #2B5EBE;">New message for ${biz.name}</h2>
-          <p>Someone found your listing on InfoSylvita and wants to connect!</p>
+          <p>Someone found your listing on Peptide Alliance and wants to connect!</p>
           <div style="background: #EAF4E8; border-radius: 12px; padding: 20px; margin: 20px 0;">
             <p><strong>From:</strong> ${lead.name}</p>
             <p><strong>Email:</strong> <a href="mailto:${lead.email}">${lead.email}</a></p>

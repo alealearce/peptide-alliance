@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { chatWithSylvita } from '@/lib/ai/claude';
+import { chatWithAssistant } from '@/lib/ai/claude';
 import type { ChatMessage } from '@/lib/ai/claude';
 import { createAdminClient } from '@/lib/supabase/server';
 import { sendEscalationEmail } from '@/lib/email/resend';
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     // Limit conversation history to last 10 messages
     const recent = messages.slice(-10);
-    const reply = await chatWithSylvita(recent);
+    const reply = await chatWithAssistant(recent);
 
     // ── Persist session and detect escalation ─────────────────────────────
     if (sessionId) {

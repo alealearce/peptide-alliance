@@ -56,40 +56,24 @@ export async function POST(req: NextRequest) {
     // Send welcome email
     const resend = getResend();
     const fromAddr = FROM();
-    const isEs = preferred_language === 'es';
 
     await resend.emails.send({
       from: fromAddr,
       to: email,
       replyTo: 'hi@arce.ca',
-      subject: isEs
-        ? '¡Bienvenido/a a InfoSylvita!'
-        : 'Welcome to InfoSylvita!',
-      html: isEs ? `
+      subject: 'Welcome to Peptide Alliance!',
+      html: `
         <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px">
-          <h2 style="color:#2B5EBE;font-family:Nunito,sans-serif">¡Bienvenido/a a la comunidad InfoSylvita!</h2>
-          <p>Gracias por suscribirte. Cada mes te enviaremos:</p>
-          <ul>
-            <li>🏪 Nuevos negocios latinos en Canadá</li>
-            <li>🎉 Eventos de la comunidad</li>
-            <li>💡 Consejos para dueños de negocios</li>
-            <li>🔍 Lo mejor del directorio</li>
-          </ul>
-          <a href="https://infosylvita.com/es" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">Explorar el Directorio →</a>
-          <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Conectando la comunidad latina en Canadá</p>
-        </div>
-      ` : `
-        <div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px">
-          <h2 style="color:#2B5EBE;font-family:Nunito,sans-serif">Welcome to the InfoSylvita community!</h2>
+          <h2 style="color:#0A1F44;font-family:Inter,sans-serif">Welcome to the Peptide Alliance community!</h2>
           <p>Thanks for subscribing. Each month we'll send you:</p>
           <ul>
-            <li>🏪 New Latin businesses in Canada</li>
-            <li>🎉 Community events</li>
-            <li>💡 Tips for business owners</li>
+            <li>🧬 Latest peptide research and insights</li>
+            <li>🏥 New verified suppliers and sources</li>
+            <li>💡 Tips for regenerative health</li>
             <li>🔍 The best of the directory</li>
           </ul>
-          <a href="https://infosylvita.com/en" style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">Explore the Directory →</a>
-          <p style="color:#9CA3AF;font-size:12px;margin-top:24px">InfoSylvita — Connecting the Latin community across Canada</p>
+          <a href="https://peptidealliance.io" style="display:inline-block;background:#0A1F44;color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px">Explore the Directory →</a>
+          <p style="color:#9CA3AF;font-size:12px;margin-top:24px">Peptide Alliance — The Standard in Regenerative Health</p>
         </div>
       `,
     });

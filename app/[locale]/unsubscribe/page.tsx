@@ -30,7 +30,7 @@ export default function UnsubscribePage() {
       <div className="max-w-md w-full bg-card rounded-3xl border border-muted/10 shadow-sm p-10 text-center">
         <Image
           src="/images/mascots/brand-logo.png"
-          alt="Sylvita"
+          alt="Peptide Alliance"
           width={80}
           height={80}
           className="object-contain mx-auto mb-6"

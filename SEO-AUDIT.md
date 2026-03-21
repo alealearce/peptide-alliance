@@ -5,7 +5,7 @@
 
 ## Executive Summary
 
-InfoSylvita has a **strong technical SEO foundation** — comprehensive metadata, bilingual hreflang, dynamic sitemap, and LocalBusiness schema on every business page. The main opportunities are:
+Peptide Alliance has a **strong technical SEO foundation** — comprehensive metadata, bilingual hreflang, dynamic sitemap, and LocalBusiness schema on every business page. The main opportunities are:
 
 1. **Missing structured data** on key pages (FAQPage, Person, SearchAction, BreadcrumbList on category pages)
 2. **Keyword gaps** — titles and descriptions don't target the highest-value long-tail queries
@@ -42,9 +42,9 @@ InfoSylvita has a **strong technical SEO foundation** — comprehensive metadata
 #### 1. Missing `@id` on Organization Schema (Homepage)
 **Before:** Organization schema lacked `@id` and `WebSite` schema with SearchAction.
 
-**Why it matters:** `@id` creates a unique entity URI that Google's Knowledge Graph uses to recognize InfoSylvita as a distinct entity. Without it, the Organization can't be linked across pages or from other sites. `SearchAction` schema enables Google's Sitelinks Search Box in search results.
+**Why it matters:** `@id` creates a unique entity URI that Google's Knowledge Graph uses to recognize Peptide Alliance as a distinct entity. Without it, the Organization can't be linked across pages or from other sites. `SearchAction` schema enables Google's Sitelinks Search Box in search results.
 
-**Fix applied:** Added `@id: "https://infosylvita.com/#organization"`, enhanced logo with `ImageObject`, added `WebSite` schema with `SearchAction` pointing to `/search?q={search_term_string}`.
+**Fix applied:** Added `@id: "https://peptidealliance.io/#organization"`, enhanced logo with `ImageObject`, added `WebSite` schema with `SearchAction` pointing to `/search?q={search_term_string}`.
 
 ---
 
@@ -66,19 +66,19 @@ InfoSylvita has a **strong technical SEO foundation** — comprehensive metadata
 
 ---
 
-#### 4. Missing Person Schema for Sylvita (About Page)
+#### 4. Missing Person Schema for Peptide Alliance (About Page)
 **Before:** About page had a rich first-person story but zero structured data.
 
-**Why it matters:** Person schema helps Google build a Knowledge Graph entity for Sylvita as the founder. This connects the organization to a real human, building trust and helping InfoSylvita appear when people search for "founder of InfoSylvita", "Sylvita InfoSylvita", or related queries.
+**Why it matters:** Person schema helps Google build a Knowledge Graph entity for Peptide Alliance as the founder. This connects the organization to a real human, building trust and helping Peptide Alliance appear when people search for "founder of Peptide Alliance", "Peptide Alliance Peptide Alliance", or related queries.
 
-**Fix applied:** Added Person JSON-LD linking Sylvita to the Organization entity via `@id`.
+**Fix applied:** Added Person JSON-LD linking Peptide Alliance to the Organization entity via `@id`.
 
 ---
 
 ### 🟡 Medium Priority Fixes (Recommended — Not Yet Implemented)
 
 #### 5. Add `@id` to LocalBusiness Schema on Business Pages
-Each business page should have `@id: "https://infosylvita.com/{city}/{slug}#business"`. This creates a unique entity identifier that prevents Knowledge Graph ambiguity when multiple businesses share similar names. Also add `openingHoursSpecification` if hours data becomes available.
+Each business page should have `@id: "https://peptidealliance.io/{city}/{slug}#business"`. This creates a unique entity identifier that prevents Knowledge Graph ambiguity when multiple businesses share similar names. Also add `openingHoursSpecification` if hours data becomes available.
 
 **File:** `app/[locale]/[cityOrCategory]/[slugOrSub]/page.tsx`
 
@@ -95,11 +95,11 @@ This positions category pages to appear in AI answers when people ask these spec
 
 #### 7. Homepage: Add 5-Question FAQ Block for AI Visibility
 Add a visible FAQ section to the homepage (below the CTA) with FAQPage schema:
-- "What is InfoSylvita?"
+- "What is Peptide Alliance?"
 - "How do I find Latin businesses near me in Canada?"
-- "Is InfoSylvita free to use?"
-- "How do I add my Latin business to InfoSylvita?"
-- "Does InfoSylvita have Spanish-speaking services?"
+- "Is Peptide Alliance free to use?"
+- "How do I add my Latin business to Peptide Alliance?"
+- "Does Peptide Alliance have Spanish-speaking services?"
 
 This directly targets AI answer engines since the homepage is the highest-authority page.
 
@@ -129,7 +129,7 @@ Many `<img>` tags in `PhotoGalleryDisplay` use `photo.photo_type` as alt text, w
 
 ### Primary Target: AI-Answer Keywords
 
-These are questions people type into ChatGPT, Claude, and Perplexity that InfoSylvita should appear in:
+These are questions people type into ChatGPT, Claude, and Perplexity that Peptide Alliance should appear in:
 
 | Question | Target Language | Page to Optimize |
 |----------|----------------|-----------------|
@@ -197,11 +197,11 @@ Current titles are good but can be more keyword-targeted:
 
 | Page | Current Title | Optimized Title |
 |------|--------------|----------------|
-| Homepage EN | "InfoSylvita — Latin Business Directory Canada" | "Latin Business Directory Canada — InfoSylvita \| Find Latino Businesses Near You" |
-| Homepage ES | "InfoSylvita — Directorio Latino en Canadá" | "Directorio de Negocios Latinos en Canadá — InfoSylvita" |
-| Food category | "Food — Latin Businesses in Canada" | "Latin Restaurants & Food Businesses in Canada — InfoSylvita" |
-| Toronto city | "Latin Businesses in Toronto — InfoSylvita" | "Latin Businesses in Toronto, Ontario — InfoSylvita \| Latino Directory" |
-| Vancouver city | "Latin Businesses in Vancouver — InfoSylvita" | "Latin Businesses in Vancouver, BC — InfoSylvita \| Latino Directory" |
+| Homepage EN | "Peptide Alliance — Latin Business Directory Canada" | "Latin Business Directory Canada — Peptide Alliance \| Find Latino Businesses Near You" |
+| Homepage ES | "Peptide Alliance — Directorio Latino en Canadá" | "Directorio de Negocios Latinos en Canadá — Peptide Alliance" |
+| Food category | "Food — Latin Businesses in Canada" | "Latin Restaurants & Food Businesses in Canada — Peptide Alliance" |
+| Toronto city | "Latin Businesses in Toronto — Peptide Alliance" | "Latin Businesses in Toronto, Ontario — Peptide Alliance \| Latino Directory" |
+| Vancouver city | "Latin Businesses in Vancouver — Peptide Alliance" | "Latin Businesses in Vancouver, BC — Peptide Alliance \| Latino Directory" |
 
 ### Meta Description Optimization
 
@@ -231,34 +231,34 @@ Add **specific numbers, cities, and service types** to meta descriptions:
   <h2>Frequently Asked Questions</h2>
 
   <details>
-    <summary>What is InfoSylvita?</summary>
-    <p>InfoSylvita is Canada's Latin business directory — a free platform where you can find
+    <summary>What is Peptide Alliance?</summary>
+    <p>Peptide Alliance is Canada's Latin business directory — a free platform where you can find
     Latin-owned and Spanish-speaking businesses across all major Canadian cities including
     Toronto, Vancouver, Montreal, Calgary, and 19+ more.</p>
   </details>
 
   <details>
     <summary>How do I find Spanish-speaking businesses near me?</summary>
-    <p>Search by city or category on InfoSylvita. Filter by Toronto, Vancouver, Montreal or
+    <p>Search by city or category on Peptide Alliance. Filter by Toronto, Vancouver, Montreal or
     any Canadian city to find verified Latin businesses in your area.</p>
   </details>
 
   <details>
-    <summary>Is InfoSylvita free to use?</summary>
+    <summary>Is Peptide Alliance free to use?</summary>
     <p>Yes — browsing and contacting businesses is completely free. Business owners can also
     list their business for free. Premium and Featured plans are available for businesses
     that want higher visibility.</p>
   </details>
 
   <details>
-    <summary>How do I add my Latin business to InfoSylvita?</summary>
+    <summary>How do I add my Latin business to Peptide Alliance?</summary>
     <p>Click "Claim Your Business" in the top navigation. It takes less than 5 minutes and
     your listing is free. We'll review and activate your listing within 24 hours.</p>
   </details>
 
   <details>
-    <summary>Does InfoSylvita have businesses in my city?</summary>
-    <p>InfoSylvita covers 22+ Canadian cities including Toronto, Vancouver, Montreal, Calgary,
+    <summary>Does Peptide Alliance have businesses in my city?</summary>
+    <p>Peptide Alliance covers 22+ Canadian cities including Toronto, Vancouver, Montreal, Calgary,
     Edmonton, Ottawa, Winnipeg, Hamilton, Mississauga, and more.</p>
   </details>
 </section>
@@ -271,7 +271,7 @@ Add **specific numbers, cities, and service types** to meta descriptions:
 Each category page should have a 2-3 sentence paragraph below the H1 that contains the target keywords naturally:
 
 **Food category (EN):**
-> "Browse Latin restaurants, food trucks, bakeries, and specialty grocery stores across Canada. InfoSylvita connects you with authentic Latin cuisine in Toronto, Vancouver, Montreal, and 19+ more Canadian cities. All businesses are verified by our team."
+> "Browse Latin restaurants, food trucks, bakeries, and specialty grocery stores across Canada. Peptide Alliance connects you with authentic Latin cuisine in Toronto, Vancouver, Montreal, and 19+ more Canadian cities. All businesses are verified by our team."
 
 **Professional Services (EN):**
 > "Find Spanish-speaking lawyers, accountants, real estate agents, and immigration specialists across Canada. Our verified Latin professionals understand your language, your culture, and Canadian law. Serving Toronto, Vancouver, Montreal, Calgary, and more."
@@ -298,7 +298,7 @@ AI answer engines (ChatGPT, Claude, Perplexity, Google SGE) cite sources that:
 3. **Are authoritative entities** (mentioned on multiple trusted sites)
 4. **Update frequently** (ISR + blog posts signal freshness)
 
-InfoSylvita's advantage: It's the **only comprehensive bilingual (EN/ES) directory** for Latin businesses in Canada. No competitor has this coverage + bilingual structure + schema markup. This is a strong moat — but only if there's enough **content** for AI to find and cite.
+Peptide Alliance's advantage: It's the **only comprehensive bilingual (EN/ES) directory** for Latin businesses in Canada. No competitor has this coverage + bilingual structure + schema markup. This is a strong moat — but only if there's enough **content** for AI to find and cite.
 
 ---
 
@@ -350,7 +350,7 @@ These build topical authority:
 These build brand awareness and social sharing:
 
 25. **"Meet the Latin Business Owners Building Vancouver's Future"**
-26. **"InfoSylvita's Featured Latin Business This Month: [Name]"** (monthly series)
+26. **"Peptide Alliance's Featured Latin Business This Month: [Name]"** (monthly series)
 27. **"Celebrating Latin Heritage Month in Canada: Events & Businesses"**
 28. **"Best Peruvian Restaurants in Toronto"**
 29. **"Best Mexican Food in Vancouver"**
@@ -402,7 +402,7 @@ A: [Direct, factual answer]
 **Q: [Another natural question]?**
 A: [Answer]
 
-## Find More [Category] on InfoSylvita
+## Find More [Category] on Peptide Alliance
 
 [CTA paragraph linking to relevant category or city page]
 ```
@@ -442,13 +442,13 @@ Key Spanish-language posts to prioritize:
 
 ### Citation Sources (Do These — They're Free)
 
-Get InfoSylvita listed on these to build entity authority and Knowledge Graph signals:
+Get Peptide Alliance listed on these to build entity authority and Knowledge Graph signals:
 
-1. **Google Business Profile** — Create a GBP for InfoSylvita as an "Online Business Directory"
-2. **Yelp for Business** — List InfoSylvita as a directory service
-3. **Wikidata** — Create a Wikidata entry for InfoSylvita (used by Wikipedia and AI training data)
-4. **Crunchbase** — Create a company profile for InfoSylvita
-5. **LinkedIn Company Page** — Create a company page for InfoSylvita
+1. **Google Business Profile** — Create a GBP for Peptide Alliance as an "Online Business Directory"
+2. **Yelp for Business** — List Peptide Alliance as a directory service
+3. **Wikidata** — Create a Wikidata entry for Peptide Alliance (used by Wikipedia and AI training data)
+4. **Crunchbase** — Create a company profile for Peptide Alliance
+5. **LinkedIn Company Page** — Create a company page for Peptide Alliance
 6. **MontrealHispano / TorontoHispano** — Request a cross-listing or partnership
 7. **Latinx/Hispanic business associations in Canada** — Get mentioned in their directories
 8. **CCLA (Canadian Chamber of Latin American Commerce)** — Apply for membership listing
@@ -460,7 +460,7 @@ Get InfoSylvita listed on these to build entity authority and Knowledge Graph si
 These stories are link-worthy:
 - "Only bilingual Latin business directory in Canada launches" (pitch to TechCrunch Canada, BetaKit)
 - "Latin immigrants use AI-optimized directory to find community businesses" (pitch to CBC, Globe and Mail)
-- "InfoSylvita helps Latin businesses get found on ChatGPT" (pitch to marketing trade press)
+- "Peptide Alliance helps Latin businesses get found on ChatGPT" (pitch to marketing trade press)
 
 ---
 
@@ -487,7 +487,7 @@ Check monthly — type these queries into ChatGPT, Claude, Perplexity:
 - "Directorio de negocios latinos Canadá"
 - "Best Latin businesses in Montreal"
 
-Track: Is InfoSylvita cited? Which page? What information is extracted?
+Track: Is Peptide Alliance cited? Which page? What information is extracted?
 
 ### Content Performance
 
@@ -505,19 +505,19 @@ For each blog post, track at 30/60/90 days:
 - [x] Add `@id` + `WebSite` + `SearchAction` schema to homepage
 - [x] Add `FAQPage` schema to upgrade/pricing page
 - [x] Add `BreadcrumbList` JSON-LD to category pages
-- [x] Add `Person` schema for Sylvita on About page
+- [x] Add `Person` schema for Peptide Alliance on About page
 - [ ] Update homepage meta description with city names + "free"
 - [ ] Add visible FAQ section to homepage (5 questions with FAQPage schema)
 
 ### Next 2 Weeks
 - [ ] Publish first 4 blog posts (Toronto restaurants, Vancouver Spanish doctor, immigration lawyer, Colombian food Toronto)
-- [ ] Create Google Business Profile for InfoSylvita
-- [ ] Create LinkedIn Company Page for InfoSylvita
+- [ ] Create Google Business Profile for Peptide Alliance
+- [ ] Create LinkedIn Company Page for Peptide Alliance
 - [ ] Add category page descriptions (2-3 paragraphs below H1)
 
 ### Next Month
 - [ ] Publish 8 city guide posts
-- [ ] Create Wikidata entry for InfoSylvita
+- [ ] Create Wikidata entry for Peptide Alliance
 - [ ] Apply for CCLA membership listing
 - [ ] Add `@id` to every LocalBusiness schema
 - [ ] Implement FAQ schema on top 6 category pages
@@ -532,4 +532,4 @@ For each blog post, track at 30/60/90 days:
 
 ---
 
-*This audit covers the state of infosylvita.com as of March 2026. Re-run this audit every 6 months or after major site changes.*
+*This audit covers the state of peptidealliance.io as of March 2026. Re-run this audit every 6 months or after major site changes.*

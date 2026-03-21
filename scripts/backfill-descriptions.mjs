@@ -38,7 +38,7 @@ async function generateDescription(name, city, category, subcategory) {
         max_tokens: 400,
         messages: [{
           role: 'user',
-          content: `Write two short business descriptions (2-3 sentences each) for "${name}", a ${subcategory} business in ${city}, Canada, listed under the "${category}" category on InfoSylvita (a Latin business directory).\n\nReturn ONLY valid JSON:\n{"en": "English description here", "es": "Spanish description here"}\n\nBe warm, professional, and community-focused. Do not make up specific details — keep it general enough to be accurate.`,
+          content: `Write two short business descriptions (2-3 sentences each) for "${name}", a ${subcategory} business in ${city}, Canada, listed under the "${category}" category on Peptide Alliance (a peptide supplier directory).\n\nReturn ONLY valid JSON:\n{"en": "English description here", "es": "Spanish description here"}\n\nBe warm, professional, and community-focused. Do not make up specific details — keep it general enough to be accurate.`,
         }],
       }),
     });

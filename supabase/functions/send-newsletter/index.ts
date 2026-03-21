@@ -17,8 +17,8 @@ const SUPABASE_URL         = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY       = Deno.env.get('RESEND_API_KEY')!;
 const ANTHROPIC_API_KEY    = Deno.env.get('ANTHROPIC_API_KEY')!;
-const FROM                 = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hola@infosylvita.com';
-const SITE                 = 'https://infosylvita.com';
+const FROM                 = Deno.env.get('RESEND_FROM_EMAIL') ?? 'hi@peptidealliance.io';
+const SITE                 = 'https://peptidealliance.io';
 const ADMIN_EMAIL          = 'hi@arce.ca';
 
 const supabase  = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
     .limit(3);
 
   const bizList = newBusinesses?.map((b) => `${b.name} (${b.city}, ${b.province})`).join(', ')
-    ?? 'various Latin businesses across Canada';
+    ?? 'various peptide and regenerative health providers';
 
   // ── 2. Get subscriber count ────────────────────────────────────────────────
   const { count: subscriberCount } = await supabase
@@ -57,10 +57,10 @@ Deno.serve(async (req) => {
     .eq('subscribed', true);
 
   // ── 3. Generate content with Claude ───────────────────────────────────────
-  let subject_en = `InfoSylvita Newsletter — ${monthEN} ${year}`;
-  let body_en    = `Hello from InfoSylvita! Discover the latest Latin businesses in Canada this ${monthEN}. Visit us at ${SITE}`;
-  let subject_es = `Boletín InfoSylvita — ${monthES} ${year}`;
-  let body_es    = `¡Hola desde InfoSylvita! Descubre los últimos negocios latinos en Canadá este ${monthES}. Visítanos en ${SITE}`;
+  let subject_en = `Peptide Alliance Newsletter — ${monthEN} ${year}`;
+  let body_en    = `Hello from Peptide Alliance! Discover the latest in regenerative health this ${monthEN}. Visit us at ${SITE}`;
+  let subject_es = `Boletín Peptide Alliance — ${monthES} ${year}`;
+  let body_es    = `¡Hola desde Peptide Alliance! Descubre lo último en salud regenerativa este ${monthES}. Visítanos en ${SITE}`;
 
   try {
     const message = await anthropic.messages.create({
@@ -68,16 +68,16 @@ Deno.serve(async (req) => {
       max_tokens: 2000,
       messages: [{
         role: 'user',
-        content: `Generate a monthly newsletter for InfoSylvita for ${monthEN} ${year}.
+        content: `Generate a monthly newsletter for Peptide Alliance for ${monthEN} ${year}.
 
-Featured new businesses this month: ${bizList}
+Featured new providers this month: ${bizList}
 
 Include:
-1. A warm greeting from Sylvita (the community abuela mascot)
-2. 3 featured new businesses added this month (names: ${bizList})
-3. One tip for Latin business owners in Canada
-4. One tip for people looking for Latin services in Canada
-5. A closing CTA to explore InfoSylvita
+1. A warm greeting welcoming readers
+2. 3 featured new providers added this month (names: ${bizList})
+3. One tip for regenerative health practitioners
+4. One tip for people looking for peptide therapy services
+5. A closing CTA to explore Peptide Alliance
 
 Keep it warm, concise, community-focused. Under 400 words per language.
 
@@ -180,7 +180,7 @@ function buildAdminPreviewEmail({
 
   <!-- Admin header -->
   <div style="background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border-radius:12px 12px 0 0;padding:24px 28px;">
-    <p style="margin:0;font-size:12px;opacity:0.7;text-transform:uppercase;letter-spacing:0.08em;">InfoSylvita Admin</p>
+    <p style="margin:0;font-size:12px;opacity:0.7;text-transform:uppercase;letter-spacing:0.08em;">Peptide Alliance Admin</p>
     <h1 style="margin:6px 0 4px;font-size:22px;font-weight:800;">📋 Newsletter Draft Ready</h1>
     <p style="margin:0;opacity:0.85;font-size:14px;">${monthEN} ${year} &nbsp;·&nbsp; ${subscriberCount} subscribers</p>
   </div>
@@ -214,18 +214,18 @@ function buildAdminPreviewEmail({
         <strong>Subject:</strong> ${subject_en}
       </p>
 
-      <h2 style="color:#2B5EBE;margin:0 0 16px;font-size:20px;">InfoSylvita — ${monthEN} ${year}</h2>
+      <h2 style="color:#2B5EBE;margin:0 0 16px;font-size:20px;">Peptide Alliance — ${monthEN} ${year}</h2>
 
       ${bodyHtml}
 
       <div style="margin:24px 0">
         <span style="display:inline-block;background:#2B5EBE;color:white;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;">
-          Explore InfoSylvita →
+          Explore Peptide Alliance →
         </span>
       </div>
 
       <p style="color:#9CA3AF;font-size:12px;border-top:1px solid #e5e7eb;padding-top:16px;margin-top:8px;">
-        InfoSylvita — Connecting the Latin community across Canada<br>
+        Peptide Alliance — The Standard in Regenerative Health<br>
         <span style="color:#d1d5db;">Unsubscribe</span>
       </p>
     </div>

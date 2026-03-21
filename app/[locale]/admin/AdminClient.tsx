@@ -209,7 +209,7 @@ export default function AdminClient({ blogDrafts: init_drafts, pendingBizs: init
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = `infosylvita-businesses-${new Date().toISOString().split('T')[0]}.csv`;
+    a.href = url; a.download = `peptide-alliance-businesses-${new Date().toISOString().split('T')[0]}.csv`;
     a.click(); URL.revokeObjectURL(url);
   };
 
@@ -217,7 +217,7 @@ export default function AdminClient({ blogDrafts: init_drafts, pendingBizs: init
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-12">
       <div>
         <h1 className="text-3xl font-heading font-extrabold text-text">Admin Dashboard</h1>
-        <p className="text-muted text-sm mt-1">InfoSylvita internal management</p>
+        <p className="text-muted text-sm mt-1">Peptide Alliance internal management</p>
       </div>
 
       {/* Stats row */}
@@ -342,7 +342,7 @@ export default function AdminClient({ blogDrafts: init_drafts, pendingBizs: init
           )}
         </h2>
         {chatSessions.length === 0 ? (
-          <EmptyState text="No conversations yet. They will appear here as users chat with Sylvita." />
+          <EmptyState text="No conversations yet. They will appear here as users chat with the assistant." />
         ) : (
           <div className="bg-card rounded-2xl border border-muted/10 divide-y divide-muted/10">
             {chatSessions.map((session) => {

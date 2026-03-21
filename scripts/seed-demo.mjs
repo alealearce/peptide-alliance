@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ─── InfoSylvita — Demo seed script ──────────────────────────────────────────
+// ─── Peptide Alliance — Demo seed script ──────────────────────────────────────────
 // Run: node scripts/seed-demo.mjs
 import { createClient } from '@supabase/supabase-js';
 
@@ -30,9 +30,9 @@ const subStarted = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
 
 // ─── TEST USERS ──────────────────────────────────────────────────────────────
 const TEST_USERS = [
-  { email: 'maria.garcia@infosylvita-test.com', name: 'Maria Garcia',   lang: 'es', key: 'maria' },
-  { email: 'carlos.lopez@infosylvita-test.com',  name: 'Carlos López',  lang: 'es', key: 'carlos' },
-  { email: 'ana.martinez@infosylvita-test.com',  name: 'Ana Martínez',  lang: 'en', key: 'ana' },
+  { email: 'maria.garcia@peptidealliance-test.io', name: 'Maria Garcia',   lang: 'es', key: 'maria' },
+  { email: 'carlos.lopez@peptidealliance-test.io',  name: 'Carlos López',  lang: 'es', key: 'carlos' },
+  { email: 'ana.martinez@peptidealliance-test.io',  name: 'Ana Martínez',  lang: 'en', key: 'ana' },
 ];
 
 // ─── BUSINESSES (36 total — 6 per category × 6 categories) ──────────────────
@@ -426,7 +426,7 @@ const BUSINESSES = [
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log('🌮 InfoSylvita Demo Seed Starting...\n');
+  console.log('🌮 Peptide Alliance Demo Seed Starting...\n');
 
   // ── 1. Create / verify users ─────────────────────────────────────────────
   console.log('👤 Creating test users...');
@@ -486,7 +486,7 @@ async function main() {
   console.log(`Businesses inserted: ${ok} ✓   ${fail > 0 ? fail + ' ✗' : ''}`);
   console.log('\n🔑 TEST USER LOGINS (all share same password)');
   console.log('─'.repeat(60));
-  console.log(`Login URL : https://infosylvita.com/en/login`);
+  console.log(`Login URL : https://peptidealliance.io/en/login`);
   console.log(`Password  : ${PASSWORD}`);
   console.log('─'.repeat(60));
   for (const u of TEST_USERS) {
@@ -514,7 +514,7 @@ async function main() {
       ? new Date(b.expires_at).toLocaleDateString('en-CA', { year:'numeric', month:'short', day:'numeric' })
       : '';
     const preview = r.slug
-      ? `https://infosylvita.com/en/business/${r.slug}`
+      ? `https://peptidealliance.io/en/business/${r.slug}`
       : '';
     const row = [
       b.name,
@@ -529,7 +529,7 @@ async function main() {
       'Yes',
       emailOf(b.owner),
       PASSWORD,
-      'https://infosylvita.com/en/login',
+      'https://peptidealliance.io/en/login',
       preview,
       expiry,
     ];

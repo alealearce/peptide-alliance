@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase/server';
-import { sendLeadNotification } from '@/lib/email/resend';
+import { sendLeadNotification, sendLeadAdminNotification } from '@/lib/email/resend';
 import { z } from 'zod';
 import { rateLimit } from '@/lib/rateLimit';
 
@@ -65,24 +65,37 @@ export async function POST(req: NextRequest) {
       .eq('id', businessId)
       .single();
 
-    if (biz?.claimed_by) {
+    const isClaimed = !!biz?.claimed_by;
+
+    if (isClaimed) {
       const { data: profile } = await supabase
         .from('profiles')
         .select('email')
-        .eq('id', biz.claimed_by)
+        .eq('id', biz!.claimed_by)
         .single();
 
       if (profile?.email) {
-        await sendLeadNotification({
+        void sendLeadNotification({
           ownerEmail: profile.email,
-          businessName: biz.name,
+          businessName: biz!.name,
           leadName: name,
           leadEmail: email,
           leadPhone: phone,
           message,
-        }).catch((err) => console.error('Email send error:', err));
+        }).catch((err) => console.error('[leads] owner email error:', err));
       }
     }
+
+    // Always notify admin — includes a flag if business is unclaimed
+    void sendLeadAdminNotification({
+      businessName: biz?.name ?? 'Unknown Business',
+      businessId,
+      leadName: name,
+      leadEmail: email,
+      leadPhone: phone,
+      message,
+      isClaimed,
+    }).catch((err) => console.error('[leads] admin notification error:', err));
 
     return NextResponse.json({ success: true });
   } catch (err) {

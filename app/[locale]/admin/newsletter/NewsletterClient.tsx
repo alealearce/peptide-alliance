@@ -262,7 +262,7 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
             {/* Mock email header bar */}
             <div className="bg-gray-100 border-b border-border px-4 py-2.5 space-y-0.5">
               <p className="text-xs text-muted">
-                <span className="font-semibold text-gray-600">From:</span> hola@infosylvita.com
+                <span className="font-semibold text-gray-600">From:</span> hi@peptidealliance.io
               </p>
               <p className="text-xs text-muted truncate">
                 <span className="font-semibold text-gray-600">Subject:</span>{' '}
@@ -273,7 +273,7 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
             {/* Email body */}
             <div className="bg-white p-5 overflow-y-auto max-h-[600px]">
               <h2 style={{ color: '#2B5EBE', marginBottom: 14, fontSize: 19, fontWeight: 700 }}>
-                InfoSylvita — {previewMonth} {year}
+                Peptide Alliance — {previewMonth} {year}
               </h2>
 
               {previewBody
@@ -295,15 +295,13 @@ export default function NewsletterClient({ draft, subscriberCount, sentCount, er
                   fontWeight: 700,
                   fontSize: 14,
                 }}>
-                  {previewLang === 'es' ? 'Explorar InfoSylvita →' : 'Explore InfoSylvita →'}
+                  {previewLang === 'es' ? 'Explore Peptide Alliance →' : 'Explore Peptide Alliance →'}
                 </span>
               </div>
 
               <p style={{ color: '#9CA3AF', fontSize: 11, borderTop: '1px solid #e5e7eb', paddingTop: 12 }}>
-                InfoSylvita —{' '}
-                {previewLang === 'es'
-                  ? 'Conectando la comunidad latina en Canadá'
-                  : 'Connecting the Latin community across Canada'}
+                Peptide Alliance —{' '}
+                The Standard in Regenerative Health
                 <br />
                 <span style={{ color: '#d1d5db' }}>
                   {previewLang === 'es' ? 'Cancelar suscripción' : 'Unsubscribe'}

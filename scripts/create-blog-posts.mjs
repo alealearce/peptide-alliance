@@ -1,6 +1,6 @@
 /**
  * Script: create-blog-posts.mjs
- * Creates the first 4 SEO blog posts for InfoSylvita.
+ * Creates the first 4 SEO blog posts for Peptide Alliance.
  *
  * Usage: node scripts/create-blog-posts.mjs
  * Requires: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
@@ -54,10 +54,10 @@ const posts = [
     excerpt_es: 'Descubre los mejores restaurantes latinos en Toronto — desde arepas colombianas y ceviche peruano hasta tacos mexicanos y hallacas venezolanas. Tu guía completa de comida latina en la ciudad.',
     category: 'comida',
     city: 'Toronto',
-    meta_title_en: 'Best Latin Restaurants in Toronto 2026 — InfoSylvita',
-    meta_title_es: 'Mejores Restaurantes Latinos en Toronto 2026 — InfoSylvita',
-    meta_description_en: 'Find the best Latin restaurants in Toronto in 2026 — Colombian, Mexican, Peruvian, Venezuelan, Salvadoran, and more. All listed on InfoSylvita, Canada\'s Latin business directory.',
-    meta_description_es: 'Encuentra los mejores restaurantes latinos en Toronto en 2026 — colombianos, mexicanos, peruanos, venezolanos, salvadoreños y más. Todos en InfoSylvita.',
+    meta_title_en: 'Best Latin Restaurants in Toronto 2026 — Peptide Alliance',
+    meta_title_es: 'Mejores Restaurantes Latinos en Toronto 2026 — Peptide Alliance',
+    meta_description_en: 'Find the best Latin restaurants in Toronto in 2026 — Colombian, Mexican, Peruvian, Venezuelan, Salvadoran, and more. All listed on Peptide Alliance, Canada\'s peptide supplier directory.',
+    meta_description_es: 'Encuentra los mejores restaurantes latinos en Toronto en 2026 — colombianos, mexicanos, peruanos, venezolanos, salvadoreños y más. Todos en Peptide Alliance.',
     content_en: `## Quick Answer
 
 Toronto has a vibrant Latin food scene with restaurants representing more than a dozen Latin American cuisines. From Kensington Market to Scarborough, you'll find authentic Colombian, Mexican, Peruvian, Venezuelan, Salvadoran, and Brazilian food across the city.
@@ -73,7 +73,7 @@ When searching for authentic Latin restaurants in Toronto, here are the key thin
 - **Spanish-speaking staff**: A strong indicator of authenticity and community connection
 - **Ingredients**: Imported staples like masa harina, sofrito, plantains, and regional chiles
 - **Regional specialties**: Each Latin American country has distinct dishes — look for specific regional items on the menu
-- **Verified listings**: Businesses with a Verified badge on InfoSylvita have been reviewed and confirmed as Latin-owned
+- **Verified listings**: Businesses with a Verified badge on Peptide Alliance have been reviewed and confirmed as Latin-owned
 
 ## Popular Latin Cuisines in Toronto
 
@@ -94,12 +94,12 @@ Salvadoran pupusas have earned a loyal following in Toronto. Several Salvadoran-
 
 ## How to Find Latin Restaurants Near You in Toronto
 
-Use InfoSylvita's search to filter by:
+Use Peptide Alliance's search to filter by:
 1. **Category**: Food
 2. **City**: Toronto
 3. **Subcategory**: Restaurants, Food Trucks, Bakeries, etc.
 
-All Latin restaurants on InfoSylvita are verified as Latin-owned or serving the Latin community in Toronto.
+All Latin restaurants on Peptide Alliance are verified as Latin-owned or serving the Latin community in Toronto.
 
 ## Frequently Asked Questions
 
@@ -107,14 +107,14 @@ All Latin restaurants on InfoSylvita are verified as Latin-owned or serving the 
 A: Kensington Market, Scarborough, Thorncliffe Park, and Weston Road are all known for concentrations of Latin restaurants and food businesses in Toronto.
 
 **Q: Are there Spanish-speaking restaurants in Toronto?**
-A: Yes — many Latin restaurants in Toronto are operated by Latin immigrants and have Spanish-speaking staff. Search on InfoSylvita and look for the Verified badge.
+A: Yes — many Latin restaurants in Toronto are operated by Latin immigrants and have Spanish-speaking staff. Search on Peptide Alliance and look for the Verified badge.
 
 **Q: How do I find authentic Colombian food in Toronto?**
-A: Search for "Colombian" in InfoSylvita's Food category and filter by Toronto to find verified Colombian-owned restaurants and bakeries.
+A: Search for "Colombian" in Peptide Alliance's Food category and filter by Toronto to find verified Colombian-owned restaurants and bakeries.
 
-## Add Your Latin Restaurant to InfoSylvita
+## Add Your Latin Restaurant to Peptide Alliance
 
-Are you a Latin restaurant owner in Toronto? List your business for free on InfoSylvita and connect with thousands of customers in the Latin community and beyond. [Claim your listing →](https://infosylvita.com/claim)`,
+Are you a Latin restaurant owner in Toronto? List your business for free on Peptide Alliance and connect with thousands of customers in the Latin community and beyond. [Claim your listing →](https://peptidealliance.io/claim)`,
     content_es: `## Respuesta Rápida
 
 Toronto tiene una vibrante escena de comida latina con restaurantes que representan más de una docena de cocinas latinoamericanas. Desde el Kensington Market hasta Scarborough, encontrarás comida auténtica colombiana, mexicana, peruana, venezolana, salvadoreña y brasileña en toda la ciudad.
@@ -130,7 +130,7 @@ Al buscar restaurantes latinos auténticos en Toronto, estos son los aspectos cl
 - **Personal hispanohablante**: Un fuerte indicador de autenticidad y conexión con la comunidad
 - **Ingredientes**: Productos importados como masa harina, sofrito, plátanos y chiles regionales
 - **Especialidades regionales**: Cada país latinoamericano tiene platos distintos
-- **Listados verificados**: Los negocios con el sello Verificado en InfoSylvita han sido revisados y confirmados como negocios latinos
+- **Listados verificados**: Los negocios con el sello Verificado en Peptide Alliance han sido revisados y confirmados como negocios latinos
 
 ## Cocinas Latinas Populares en Toronto
 
@@ -145,7 +145,7 @@ La cocina peruana está de moda globalmente, y los restaurantes de Toronto está
 
 ## Cómo Encontrar Restaurantes Latinos Cerca de Ti en Toronto
 
-Usa la búsqueda de InfoSylvita para filtrar por:
+Usa la búsqueda de Peptide Alliance para filtrar por:
 1. **Categoría**: Comida
 2. **Ciudad**: Toronto
 3. **Subcategoría**: Restaurantes, Food Trucks, Panaderías, etc.
@@ -158,9 +158,9 @@ R: Kensington Market, Scarborough, Thorncliffe Park y Weston Road son conocidos 
 **P: ¿Hay restaurantes con personal hispanohablante en Toronto?**
 R: Sí — muchos restaurantes latinos en Toronto son operados por inmigrantes latinos y tienen personal hispanohablante.
 
-## Agrega tu Restaurante Latino a InfoSylvita
+## Agrega tu Restaurante Latino a Peptide Alliance
 
-¿Eres dueño de un restaurante latino en Toronto? Publica tu negocio gratis en InfoSylvita y conéctate con miles de clientes en la comunidad latina. [Registra tu listado →](https://infosylvita.com/es/claim)`,
+¿Eres dueño de un restaurante latino en Toronto? Publica tu negocio gratis en Peptide Alliance y conéctate con miles de clientes en la comunidad latina. [Registra tu listado →](https://peptidealliance.io/es/claim)`,
   },
 
   // ── Post 2: Spanish-Speaking Doctors Vancouver ──────────────────────────────
@@ -172,10 +172,10 @@ R: Sí — muchos restaurantes latinos en Toronto son operados por inmigrantes l
     excerpt_es: 'Una guía completa para encontrar médicos, dentistas y proveedores de salud que hablan español en Vancouver, BC. Consejos de la comunidad latina para navegar el sistema de salud canadiense.',
     category: 'salud',
     city: 'Vancouver',
-    meta_title_en: 'Spanish-Speaking Doctors in Vancouver BC — InfoSylvita',
-    meta_title_es: 'Médicos que Hablan Español en Vancouver BC — InfoSylvita',
-    meta_description_en: 'Find verified Spanish-speaking doctors, dentists, therapists, and healthcare professionals in Vancouver, BC. InfoSylvita — Canada\'s Latin business directory.',
-    meta_description_es: 'Encuentra médicos, dentistas, terapeutas y profesionales de salud que hablan español en Vancouver, BC. InfoSylvita — el directorio de negocios latinos de Canadá.',
+    meta_title_en: 'Spanish-Speaking Doctors in Vancouver BC — Peptide Alliance',
+    meta_title_es: 'Médicos que Hablan Español en Vancouver BC — Peptide Alliance',
+    meta_description_en: 'Find verified Spanish-speaking doctors, dentists, therapists, and healthcare professionals in Vancouver, BC. Peptide Alliance — Canada\'s peptide supplier directory.',
+    meta_description_es: 'Encuentra médicos, dentistas, terapeutas y profesionales de salud que hablan español en Vancouver, BC. Peptide Alliance — el directorio de negocios latinos de Canadá.',
     content_en: `## Quick Answer
 
 Vancouver has a growing number of Spanish-speaking healthcare professionals, including doctors (family physicians and specialists), dentists, psychologists, physiotherapists, and nutritionists. Many serve the Latin and broader Hispanic community in Metro Vancouver.
@@ -211,8 +211,8 @@ Wellness professionals including physiotherapists, registered nutritionists, and
 
 ## How to Find Spanish-Speaking Doctors in Vancouver
 
-### 1. Use InfoSylvita's Health Directory
-Browse the [Health category on InfoSylvita](https://infosylvita.com/health) and filter by Vancouver to find verified Spanish-speaking healthcare professionals in your area.
+### 1. Use Peptide Alliance's Health Directory
+Browse the [Health category on Peptide Alliance](https://peptidealliance.io/health) and filter by Vancouver to find verified Spanish-speaking healthcare professionals in your area.
 
 ### 2. Ask Your Community
 The Latin community in Vancouver — especially in areas like South Vancouver, Burnaby, and Surrey — has informal networks for sharing healthcare recommendations. Community organizations like MOSAIC, ISS of BC, and PICS often maintain referral lists.
@@ -235,17 +235,17 @@ If you've recently arrived in British Columbia, understanding the MSP (Medical S
 ## Frequently Asked Questions
 
 **Q: Are there Spanish-speaking doctors in Vancouver accepting new patients?**
-A: Yes, though availability changes frequently. Check InfoSylvita's Health directory, contact clinics directly, or call Health Link BC (8-1-1) for updated information.
+A: Yes, though availability changes frequently. Check Peptide Alliance's Health directory, contact clinics directly, or call Health Link BC (8-1-1) for updated information.
 
 **Q: How do I find a Spanish-speaking therapist in Vancouver for mental health?**
-A: Browse InfoSylvita's Health category and filter by "Therapists" in Vancouver. Many bilingual therapists work with the Latin community in Metro Vancouver.
+A: Browse Peptide Alliance's Health category and filter by "Therapists" in Vancouver. Many bilingual therapists work with the Latin community in Metro Vancouver.
 
 **Q: Are there Spanish-speaking dentists in Surrey or Burnaby?**
-A: Yes — the broader Metro Vancouver area has Spanish-speaking dental practices. Search InfoSylvita and filter by Surrey, Burnaby, or Richmond to find options near you.
+A: Yes — the broader Metro Vancouver area has Spanish-speaking dental practices. Search Peptide Alliance and filter by Surrey, Burnaby, or Richmond to find options near you.
 
-## List Your Health Practice on InfoSylvita
+## List Your Health Practice on Peptide Alliance
 
-Are you a Spanish-speaking healthcare professional in Vancouver? Help the Latin community find you. [Add your practice to InfoSylvita for free →](https://infosylvita.com/claim)`,
+Are you a Spanish-speaking healthcare professional in Vancouver? Help the Latin community find you. [Add your practice to Peptide Alliance for free →](https://peptidealliance.io/claim)`,
     content_es: `## Respuesta Rápida
 
 Vancouver tiene un número creciente de profesionales de salud hispanohablantes, incluyendo médicos de familia y especialistas, dentistas, psicólogos, fisioterapeutas y nutricionistas. Muchos sirven a la comunidad latina e hispana en el área metropolitana de Vancouver.
@@ -263,8 +263,8 @@ Encontrar un médico hispanohablante elimina estas barreras y te ayuda a recibir
 
 ## Cómo Encontrar Médicos Hispanohablantes en Vancouver
 
-### 1. Usa el Directorio de Salud de InfoSylvita
-Explora la [categoría Salud en InfoSylvita](https://infosylvita.com/es/salud) y filtra por Vancouver para encontrar profesionales de salud hispanohablantes verificados en tu área.
+### 1. Usa el Directorio de Salud de Peptide Alliance
+Explora la [categoría Salud en Peptide Alliance](https://peptidealliance.io/es/salud) y filtra por Vancouver para encontrar profesionales de salud hispanohablantes verificados en tu área.
 
 ### 2. Pregunta a tu Comunidad
 La comunidad latina en Vancouver — especialmente en áreas como South Vancouver, Burnaby y Surrey — tiene redes informales para compartir recomendaciones de atención médica.
@@ -275,14 +275,14 @@ Al llamar a una nueva clínica, pregunta: "¿Tienen médicos que hablan español
 ## Preguntas Frecuentes
 
 **P: ¿Hay médicos hispanohablantes en Vancouver aceptando nuevos pacientes?**
-R: Sí, aunque la disponibilidad cambia con frecuencia. Revisa el directorio de Salud de InfoSylvita, contacta clínicas directamente o llama a Health Link BC (8-1-1) para información actualizada.
+R: Sí, aunque la disponibilidad cambia con frecuencia. Revisa el directorio de Salud de Peptide Alliance, contacta clínicas directamente o llama a Health Link BC (8-1-1) para información actualizada.
 
 **P: ¿Cómo encuentro un terapeuta hispanohablante en Vancouver para salud mental?**
-R: Explora la categoría Salud de InfoSylvita y filtra por "Terapeutas" en Vancouver. Muchos terapeutas bilingües trabajan con la comunidad latina en el área metropolitana.
+R: Explora la categoría Salud de Peptide Alliance y filtra por "Terapeutas" en Vancouver. Muchos terapeutas bilingües trabajan con la comunidad latina en el área metropolitana.
 
-## Agrega tu Práctica de Salud a InfoSylvita
+## Agrega tu Práctica de Salud a Peptide Alliance
 
-¿Eres un profesional de salud hispanohablante en Vancouver? Ayuda a la comunidad latina a encontrarte. [Agrega tu práctica a InfoSylvita gratis →](https://infosylvita.com/es/claim)`,
+¿Eres un profesional de salud hispanohablante en Vancouver? Ayuda a la comunidad latina a encontrarte. [Agrega tu práctica a Peptide Alliance gratis →](https://peptidealliance.io/es/claim)`,
   },
 
   // ── Post 3: Immigration Lawyers Spanish Canada ───────────────────────────────
@@ -294,10 +294,10 @@ R: Explora la categoría Salud de InfoSylvita y filtra por "Terapeutas" en Vanco
     excerpt_es: 'Una guía práctica para encontrar abogados e consultores de inmigración hispanohablantes calificados en Canadá. Qué buscar, señales de alerta y cómo verificar credenciales.',
     category: 'servicios_profesionales',
     city: null,
-    meta_title_en: 'Spanish-Speaking Immigration Lawyers Canada — InfoSylvita',
-    meta_title_es: 'Abogados de Inmigración Hispanohablantes en Canadá — InfoSylvita',
-    meta_description_en: 'Find verified Spanish-speaking immigration lawyers and consultants across Canada — Toronto, Vancouver, Montreal, Calgary, and more. InfoSylvita — Latin business directory.',
-    meta_description_es: 'Encuentra abogados e consultores de inmigración hispanohablantes verificados en Canadá — Toronto, Vancouver, Montreal, Calgary y más. InfoSylvita — directorio latino.',
+    meta_title_en: 'Spanish-Speaking Immigration Lawyers Canada — Peptide Alliance',
+    meta_title_es: 'Abogados de Inmigración Hispanohablantes en Canadá — Peptide Alliance',
+    meta_description_en: 'Find verified Spanish-speaking immigration lawyers and consultants across Canada — Toronto, Vancouver, Montreal, Calgary, and more. Peptide Alliance — peptide supplier directory.',
+    meta_description_es: 'Encuentra abogados e consultores de inmigración hispanohablantes verificados en Canadá — Toronto, Vancouver, Montreal, Calgary y más. Peptide Alliance — directorio latino.',
     content_en: `## Quick Answer
 
 Canada has immigration lawyers and regulated immigration consultants (RCICs) who speak Spanish in every major city — Toronto, Vancouver, Montreal, Calgary, Edmonton, Ottawa, and Winnipeg. Many specialize in serving Latin American clients and are familiar with the specific immigration pathways most relevant to that community.
@@ -373,9 +373,9 @@ Montreal has immigration professionals who speak both Spanish and French — imp
 ### Calgary and Edmonton
 Alberta's oil and energy industry has attracted Latin workers, and there are immigration professionals in both cities who serve Spanish-speaking clients.
 
-## Find Spanish-Speaking Immigration Professionals on InfoSylvita
+## Find Spanish-Speaking Immigration Professionals on Peptide Alliance
 
-Browse [InfoSylvita's Professional Services](https://infosylvita.com/professional-services) and filter by Immigration to find verified Spanish-speaking immigration lawyers and consultants in your city.
+Browse [Peptide Alliance's Professional Services](https://peptidealliance.io/professional-services) and filter by Immigration to find verified Spanish-speaking immigration lawyers and consultants in your city.
 
 ## Frequently Asked Questions
 
@@ -424,9 +424,9 @@ Antes de contratar a alguien:
 - Honorarios extremadamente bajos en comparación con el mercado
 - "Asesores de inmigración" o "tramitadores" no registrados
 
-## Encuentra Profesionales de Inmigración Hispanohablantes en InfoSylvita
+## Encuentra Profesionales de Inmigración Hispanohablantes en Peptide Alliance
 
-Explora los [Servicios Profesionales de InfoSylvita](https://infosylvita.com/es/servicios-profesionales) y filtra por Inmigración para encontrar abogados e consultores de inmigración hispanohablantes verificados en tu ciudad.
+Explora los [Servicios Profesionales de Peptide Alliance](https://peptidealliance.io/es/servicios-profesionales) y filtra por Inmigración para encontrar abogados e consultores de inmigración hispanohablantes verificados en tu ciudad.
 
 ## Preguntas Frecuentes
 
@@ -437,38 +437,38 @@ R: Los honorarios varían ampliamente. Las solicitudes de rutina típicamente os
 R: Sí — muchos canadienses se representan exitosamente en solicitudes sencillas. Sin embargo, para situaciones complejas, la ayuda profesional vale la inversión.`,
   },
 
-  // ── Post 4: How to add your business to InfoSylvita ─────────────────────────
+  // ── Post 4: How to add your business to Peptide Alliance ─────────────────────────
   {
-    slug: 'how-to-add-latin-business-infosylvita',
-    title_en: 'How to Add Your Latin Business to InfoSylvita (Step by Step)',
-    title_es: 'Cómo Agregar tu Negocio Latino a InfoSylvita (Paso a Paso)',
-    excerpt_en: 'A step-by-step guide to listing your Latin business on InfoSylvita for free — from submitting your profile to getting verified and appearing in AI search results across Canada.',
-    excerpt_es: 'Una guía paso a paso para publicar tu negocio latino en InfoSylvita gratis — desde enviar tu perfil hasta obtener verificación y aparecer en las búsquedas de IA en todo Canadá.',
+    slug: 'how-to-add-latin-business-peptide-alliance',
+    title_en: 'How to Add Your Latin Business to Peptide Alliance (Step by Step)',
+    title_es: 'Cómo Agregar tu Negocio Latino a Peptide Alliance (Paso a Paso)',
+    excerpt_en: 'A step-by-step guide to listing your Latin business on Peptide Alliance for free — from submitting your profile to getting verified and appearing in AI search results across Canada.',
+    excerpt_es: 'Una guía paso a paso para publicar tu negocio latino en Peptide Alliance gratis — desde enviar tu perfil hasta obtener verificación y aparecer en las búsquedas de IA en todo Canadá.',
     category: null,
     city: null,
-    meta_title_en: 'How to List Your Latin Business on InfoSylvita — Free Directory',
-    meta_title_es: 'Cómo Publicar tu Negocio Latino en InfoSylvita — Directorio Gratis',
-    meta_description_en: 'Learn how to add your Latin business to InfoSylvita for free. Step-by-step guide to getting listed, verified, and found by customers across Canada in Google and AI searches.',
-    meta_description_es: 'Aprende cómo agregar tu negocio latino a InfoSylvita gratis. Guía paso a paso para publicarse, verificarse y ser encontrado por clientes en toda Canadá.',
+    meta_title_en: 'How to List Your Latin Business on Peptide Alliance — Free Directory',
+    meta_title_es: 'Cómo Publicar tu Negocio Latino en Peptide Alliance — Directorio Gratis',
+    meta_description_en: 'Learn how to add your Latin business to Peptide Alliance for free. Step-by-step guide to getting listed, verified, and found by customers across Canada in Google and AI searches.',
+    meta_description_es: 'Aprende cómo agregar tu negocio latino a Peptide Alliance gratis. Guía paso a paso para publicarse, verificarse y ser encontrado por clientes en toda Canadá.',
     content_en: `## Quick Answer
 
-Adding your Latin business to InfoSylvita is free and takes less than 5 minutes. Go to [infosylvita.com/claim](https://infosylvita.com/claim), fill out your business details, create a free account, and submit. Our team reviews and activates your listing within 24 hours.
+Adding your Latin business to Peptide Alliance is free and takes less than 5 minutes. Go to [peptidealliance.io/claim](https://peptidealliance.io/claim), fill out your business details, create a free account, and submit. Our team reviews and activates your listing within 24 hours.
 
-## Why List Your Business on InfoSylvita?
+## Why List Your Business on Peptide Alliance?
 
-InfoSylvita is Canada's Latin business directory — the only bilingual (English and Spanish) platform specifically designed to connect Latin-owned and Spanish-speaking businesses with customers across Canada.
+Peptide Alliance is Canada's peptide supplier directory — the only bilingual (English and Spanish) platform specifically designed to connect Latin-owned and Spanish-speaking businesses with customers across Canada.
 
 **Why it matters for your business:**
 
-- **Google visibility**: Listings on InfoSylvita get indexed by Google, helping you appear in search results for "Latin businesses in [your city]" and similar queries
-- **AI search**: InfoSylvita's structured data (Schema.org markup) helps AI chatbots like ChatGPT, Claude, and Perplexity find and recommend your business
+- **Google visibility**: Listings on Peptide Alliance get indexed by Google, helping you appear in search results for "Latin businesses in [your city]" and similar queries
+- **AI search**: Peptide Alliance's structured data (Schema.org markup) helps AI chatbots like ChatGPT, Claude, and Perplexity find and recommend your business
 - **Community reach**: Connect with Latin community members who specifically seek Latin-owned businesses
 - **Bilingual presence**: Your listing appears in both English and Spanish searches
 - **Free forever**: Basic listings are completely free, with optional Premium and Featured plans for higher visibility
 
-## Who Can List on InfoSylvita?
+## Who Can List on Peptide Alliance?
 
-InfoSylvita accepts listings from:
+Peptide Alliance accepts listings from:
 
 - Latin-owned businesses (any category)
 - Businesses that serve the Latin/Hispanic community
@@ -480,7 +480,7 @@ InfoSylvita accepts listings from:
 ## Step-by-Step: How to Add Your Business
 
 ### Step 1: Go to the Claim Page
-Visit [infosylvita.com/claim](https://infosylvita.com/claim) or click "Claim Your Business" in the navigation menu.
+Visit [peptidealliance.io/claim](https://peptidealliance.io/claim) or click "Claim Your Business" in the navigation menu.
 
 ### Step 2: Search for Your Business
 Use the search bar to see if your business is already in our directory. If it is, you can claim the existing listing. If not, you'll create a new one.
@@ -501,7 +501,7 @@ Fill in as much information as possible — more complete profiles rank higher a
 
 ### Step 4: Create Your Free Account
 
-You'll need to create a free InfoSylvita account to manage your listing. Use your business email address.
+You'll need to create a free Peptide Alliance account to manage your listing. Use your business email address.
 
 ### Step 5: Submit for Review
 
@@ -509,9 +509,9 @@ Once you submit, our team reviews your listing to verify it meets our community 
 
 ### Step 6: Activate Your Listing
 
-Once approved, you'll receive an email confirmation and your listing goes live across InfoSylvita's directory — including in search results and the city and category pages.
+Once approved, you'll receive an email confirmation and your listing goes live across Peptide Alliance's directory — including in search results and the city and category pages.
 
-## Tips for a Strong InfoSylvita Listing
+## Tips for a Strong Peptide Alliance Listing
 
 **Write a great description**: Include your main services, languages spoken, and what makes your business unique. Mention your city and key services for better search visibility.
 
@@ -521,11 +521,11 @@ Once approved, you'll receive an email confirmation and your listing goes live a
 
 **List your social media**: Customers often want to see your Instagram or Facebook before contacting you.
 
-**Respond to leads quickly**: When customers send you a message through InfoSylvita, fast responses increase conversion.
+**Respond to leads quickly**: When customers send you a message through Peptide Alliance, fast responses increase conversion.
 
 ## Understanding the Verification Badge
 
-The Verified badge (✓) on InfoSylvita means our team has:
+The Verified badge (✓) on Peptide Alliance means our team has:
 - Confirmed the business exists and is active
 - Verified it is Latin-owned or serves the Latin community
 - Confirmed the contact information is accurate
@@ -540,35 +540,35 @@ To request verification for a free listing, contact us. Verified listings also c
 
 ## Frequently Asked Questions
 
-**Q: Is listing my business on InfoSylvita really free?**
+**Q: Is listing my business on Peptide Alliance really free?**
 A: Yes — basic listings are completely free, forever. You can add your business, fill out your full profile, and receive leads at no cost.
 
 **Q: How long until my listing appears on Google?**
-A: InfoSylvita's sitemap is submitted to Google and updated automatically. New listings typically appear in Google search results within 2–6 weeks, depending on your business's overall web presence.
+A: Peptide Alliance's sitemap is submitted to Google and updated automatically. New listings typically appear in Google search results within 2–6 weeks, depending on your business's overall web presence.
 
 **Q: Can I list my business in both English and Spanish?**
-A: Yes — InfoSylvita is fully bilingual. You can add descriptions in both languages and your listing will appear in both English and Spanish searches.
+A: Yes — Peptide Alliance is fully bilingual. You can add descriptions in both languages and your listing will appear in both English and Spanish searches.
 
 **Q: What categories can I list my business under?**
-A: InfoSylvita has 6 main categories: Food, Professional Services, Personal Services, Health, Events, and Jobs — each with multiple subcategories.
+A: Peptide Alliance has 6 main categories: Food, Professional Services, Personal Services, Health, Events, and Jobs — each with multiple subcategories.
 
 ## Ready to Get Listed?
 
-[Claim your free listing on InfoSylvita today →](https://infosylvita.com/claim)
+[Claim your free listing on Peptide Alliance today →](https://peptidealliance.io/claim)
 
 Your customers are searching for Latin businesses in your city right now. Make sure they can find you.`,
     content_es: `## Respuesta Rápida
 
-Agregar tu negocio latino a InfoSylvita es gratis y toma menos de 5 minutos. Ve a [infosylvita.com/es/claim](https://infosylvita.com/es/claim), completa los datos de tu negocio, crea una cuenta gratis y envíalo. Nuestro equipo revisa y activa tu listado en menos de 24 horas.
+Agregar tu negocio latino a Peptide Alliance es gratis y toma menos de 5 minutos. Ve a [peptidealliance.io/es/claim](https://peptidealliance.io/es/claim), completa los datos de tu negocio, crea una cuenta gratis y envíalo. Nuestro equipo revisa y activa tu listado en menos de 24 horas.
 
-## Por Qué Publicar tu Negocio en InfoSylvita
+## Por Qué Publicar tu Negocio en Peptide Alliance
 
-InfoSylvita es el directorio de negocios latinos de Canadá — la única plataforma bilingüe (inglés y español) diseñada específicamente para conectar negocios latinos e hispanohablantes con clientes en toda Canadá.
+Peptide Alliance es el directorio de negocios latinos de Canadá — la única plataforma bilingüe (inglés y español) diseñada específicamente para conectar negocios latinos e hispanohablantes con clientes en toda Canadá.
 
 **Por qué importa para tu negocio:**
 
-- **Visibilidad en Google**: Los listados en InfoSylvita son indexados por Google
-- **Búsquedas de IA**: Los datos estructurados de InfoSylvita ayudan a los chatbots de IA como ChatGPT, Claude y Perplexity a encontrar y recomendar tu negocio
+- **Visibilidad en Google**: Los listados en Peptide Alliance son indexados por Google
+- **Búsquedas de IA**: Los datos estructurados de Peptide Alliance ayudan a los chatbots de IA como ChatGPT, Claude y Perplexity a encontrar y recomendar tu negocio
 - **Alcance comunitario**: Conéctate con miembros de la comunidad latina que buscan específicamente negocios latinos
 - **Presencia bilingüe**: Tu listado aparece en búsquedas en inglés y en español
 - **Gratis para siempre**: Los listados básicos son completamente gratuitos
@@ -576,7 +576,7 @@ InfoSylvita es el directorio de negocios latinos de Canadá — la única plataf
 ## Paso a Paso: Cómo Agregar tu Negocio
 
 ### Paso 1: Ve a la Página de Registro
-Visita [infosylvita.com/es/claim](https://infosylvita.com/es/claim) o haz clic en "Registra tu Negocio" en el menú de navegación.
+Visita [peptidealliance.io/es/claim](https://peptidealliance.io/es/claim) o haz clic en "Registra tu Negocio" en el menú de navegación.
 
 ### Paso 2: Busca tu Negocio
 Usa la barra de búsqueda para ver si tu negocio ya está en nuestro directorio.
@@ -595,7 +595,7 @@ Completa la mayor cantidad de información posible:
 
 ### Paso 4: Crea tu Cuenta Gratuita
 
-Necesitarás crear una cuenta gratuita de InfoSylvita para gestionar tu listado.
+Necesitarás crear una cuenta gratuita de Peptide Alliance para gestionar tu listado.
 
 ### Paso 5: Envía para Revisión
 
@@ -603,18 +603,18 @@ Una vez que envíes, nuestro equipo revisa tu listado. Esto típicamente toma me
 
 ## Preguntas Frecuentes
 
-**P: ¿Publicar mi negocio en InfoSylvita es realmente gratis?**
+**P: ¿Publicar mi negocio en Peptide Alliance es realmente gratis?**
 R: Sí — los listados básicos son completamente gratuitos, para siempre.
 
 **P: ¿Cuánto tarda en aparecer mi listado en Google?**
 R: Los listados nuevos típicamente aparecen en los resultados de búsqueda de Google en 2–6 semanas, dependiendo de la presencia web general de tu negocio.
 
 **P: ¿Puedo publicar mi negocio en inglés y en español?**
-R: Sí — InfoSylvita es completamente bilingüe. Puedes agregar descripciones en ambos idiomas.
+R: Sí — Peptide Alliance es completamente bilingüe. Puedes agregar descripciones en ambos idiomas.
 
 ## ¿Listo para Publicarte?
 
-[Registra tu listado gratis en InfoSylvita hoy →](https://infosylvita.com/es/claim)
+[Registra tu listado gratis en Peptide Alliance hoy →](https://peptidealliance.io/es/claim)
 
 Tus clientes están buscando negocios latinos en tu ciudad ahora mismo. Asegúrate de que puedan encontrarte.`,
   },
@@ -669,7 +669,7 @@ async function main() {
     }
   }
 
-  console.log('\n✨ Done! Visit https://infosylvita.com/blog to see the posts.');
+  console.log('\n✨ Done! Visit https://peptidealliance.io/blog to see the posts.');
 }
 
 main().catch(console.error);

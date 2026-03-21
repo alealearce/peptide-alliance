@@ -380,3 +380,95 @@ export async function sendClaimConfirmation({
     `,
   });
 }
+
+// ── Admin notification: new listing claim pending review ──────────────────
+
+export async function sendClaimAdminNotification({
+  claimantEmail,
+  claimantName,
+  businessName,
+  businessId,
+  ownerTitle,
+}: {
+  claimantEmail: string;
+  claimantName?: string | null;
+  businessName: string;
+  businessId: string;
+  ownerTitle: string;
+}) {
+  const adminUrl = `${SITE.url}/admin`;
+  const displayName = claimantName || claimantEmail;
+
+  await getResend().emails.send({
+    from: FROM(),
+    to: SITE.adminEmail,
+    replyTo: claimantEmail,
+    subject: `🏢 New claim pending approval — ${businessName}`,
+    html: `
+      <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
+        <h2 style="color: ${COLORS.primary}; font-family: sans-serif;">🏢 New Business Claim — Action Required</h2>
+        <p>Someone has claimed a listing on ${SITE.name} and is waiting for your approval.</p>
+        <div style="background: ${COLORS.bg}; border-radius: 12px; padding: 20px; margin: 20px 0; border-left: 4px solid ${COLORS.primary};">
+          <p style="margin: 0 0 8px;"><strong>Business:</strong> ${businessName}</p>
+          <p style="margin: 0 0 8px;"><strong>Claimed by:</strong> ${displayName}</p>
+          <p style="margin: 0 0 8px;"><strong>Email:</strong> <a href="mailto:${claimantEmail}">${claimantEmail}</a></p>
+          <p style="margin: 0 0 8px;"><strong>Their title:</strong> ${ownerTitle}</p>
+          <p style="margin: 0;"><strong>Business ID:</strong> <code style="font-size: 12px; color: #6B7280;">${businessId}</code></p>
+        </div>
+        <p style="color: #6B7280;">The listing is currently <strong>inactive</strong> and will stay hidden until you approve it.</p>
+        <a href="${adminUrl}"
+           style="display: inline-block; background: ${COLORS.primary}; color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; margin-top: 8px;">
+          Review in Admin Panel
+        </a>
+        <p style="color: #9CA3AF; font-size: 13px; margin-top: 16px;">
+          You can reply directly to this email to contact ${displayName}.
+        </p>
+        ${emailFooter}
+      </div>
+    `,
+  });
+}
+
+// ── Admin notification: new lead received ─────────────────────────────────
+
+export async function sendLeadAdminNotification({
+  businessName,
+  businessId,
+  leadName,
+  leadEmail,
+  leadPhone,
+  message,
+  isClaimed,
+}: {
+  businessName: string;
+  businessId: string;
+  leadName: string;
+  leadEmail: string;
+  leadPhone?: string;
+  message: string;
+  isClaimed: boolean;
+}) {
+  await getResend().emails.send({
+    from: FROM(),
+    to: SITE.adminEmail,
+    replyTo: leadEmail,
+    subject: `📩 New lead for ${businessName} — ${SITE.name}`,
+    html: `
+      <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
+        <h2 style="color: ${COLORS.primary}; font-family: sans-serif;">📩 New Lead Received</h2>
+        ${!isClaimed ? `<div style="background: #FEF3C7; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; color: #92400E;">⚠️ <strong>This business is unclaimed.</strong> The lead was not forwarded to an owner — follow up yourself or reach out to the lead.</div>` : ''}
+        <div style="background: ${COLORS.bg}; border-radius: 12px; padding: 20px; margin: 16px 0; border-left: 4px solid ${COLORS.primary};">
+          <p style="margin: 0 0 8px;"><strong>Business:</strong> ${businessName}</p>
+          <p style="margin: 0 0 8px;"><strong>Business ID:</strong> <code style="font-size: 12px; color: #6B7280;">${businessId}</code></p>
+          <p style="margin: 0 0 8px;"><strong>From:</strong> ${leadName}</p>
+          <p style="margin: 0 0 8px;"><strong>Email:</strong> <a href="mailto:${leadEmail}">${leadEmail}</a></p>
+          ${leadPhone ? `<p style="margin: 0 0 8px;"><strong>Phone:</strong> ${leadPhone}</p>` : ''}
+          <p style="margin: 0 0 4px;"><strong>Message:</strong></p>
+          <p style="margin: 0; color: #374151; background: white; padding: 12px; border-radius: 8px; border: 1px solid #E5E7EB;">${message}</p>
+        </div>
+        <p style="color: #9CA3AF; font-size: 13px;">Reply to this email to contact ${leadName} directly.</p>
+        ${emailFooter}
+      </div>
+    `,
+  });
+}

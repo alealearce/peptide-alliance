@@ -81,7 +81,7 @@ export default async function UpgradeSuccessPage({
           <div className="relative">
             <Image
               src="/images/mascots/brand-logo.png"
-              alt="Sylvita celebrating"
+              alt="Peptide Alliance"
               width={120}
               height={120}
               className="object-contain drop-shadow-lg"

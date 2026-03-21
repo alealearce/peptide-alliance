@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     // Hash the IP for PIPEDA/GDPR compliance — no raw PII stored
     const forwarded = req.headers.get('x-forwarded-for');
     const rawIp = forwarded ? forwarded.split(',')[0].trim() : 'unknown';
-    const salt = process.env.IP_HASH_SALT ?? 'infosylvita-default-salt';
+    const salt = process.env.IP_HASH_SALT ?? 'peptide-alliance-default-salt';
     const hashedIp = rawIp !== 'unknown'
       ? createHash('sha256').update(rawIp + salt).digest('hex').slice(0, 16)
       : 'unknown';

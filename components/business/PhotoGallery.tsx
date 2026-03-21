@@ -129,7 +129,7 @@ export function PhotoGalleryDisplay({ photos }: PhotoGalleryDisplayProps) {
             className="max-w-full max-h-[90vh] rounded-2xl object-contain"
           />
           <span className="absolute bottom-8 right-8 text-white/40 text-xs font-medium">
-            infosylvita.com
+            peptidealliance.io
           </span>
         </div>
       )}
@@ -143,7 +143,7 @@ export function PhotoGalleryDisplay({ photos }: PhotoGalleryDisplayProps) {
           >
             <img src={photo.url} alt={photo.photo_type} className="w-full h-full object-cover" />
             <span className="absolute bottom-1 right-1 text-white/50 text-[8px] font-medium drop-shadow-sm">
-              infosylvita.com
+              peptidealliance.io
             </span>
           </button>
         ))}

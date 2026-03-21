@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createAdminClient, createClient } from '@/lib/supabase/server';
-import { sendClaimConfirmation } from '@/lib/email/resend';
+import { sendClaimConfirmation, sendClaimAdminNotification } from '@/lib/email/resend';
 import { recalculateTrustScore } from '@/lib/utils/recalculate-trust-score';
 
 const ClaimSchema = z.object({
@@ -57,12 +57,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to claim business' }, { status: 500 });
     }
 
-    // Send confirmation email (fire-and-forget — don't block the response)
+    // Send confirmation to claimant + admin notification (fire-and-forget)
     if (user.email) {
       void sendClaimConfirmation({
         ownerEmail: user.email,
         businessName: biz.name,
-      }).catch((err) => console.error('[business/claim] email error:', err));
+      }).catch((err) => console.error('[business/claim] confirmation email error:', err));
+
+      // Look up full name from profile for the admin notification
+      const { data: claimantProfile } = await admin
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+
+      void sendClaimAdminNotification({
+        claimantEmail: user.email,
+        claimantName: claimantProfile?.full_name ?? null,
+        businessName: biz.name,
+        businessId: business_id,
+        ownerTitle: owner_title,
+      }).catch((err) => console.error('[business/claim] admin notification error:', err));
     }
 
     // Recalculate trust score — claiming a business earns +10 points

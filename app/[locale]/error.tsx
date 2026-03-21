@@ -19,7 +19,7 @@ export default function Error({
         Something went wrong
       </h2>
       <p className="text-muted max-w-sm mb-8">
-        Sylvita ran into an issue. Try refreshing or come back later.
+        Something went wrong. Try refreshing or come back later.
       </p>
       <button
         onClick={reset}
