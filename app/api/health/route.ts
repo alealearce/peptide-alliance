@@ -12,7 +12,7 @@ export async function GET() {
       }
     );
 
-    if (!res.ok) throw new Error(`Supabase returned ${res.status}`);
+    if (res.status >= 500) throw new Error(`Supabase returned ${res.status}`);
 
     return NextResponse.json(
       { status: 'ok', db: 'connected', ts: new Date().toISOString() },
