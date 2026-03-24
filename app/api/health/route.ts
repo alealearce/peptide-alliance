@@ -4,15 +4,10 @@ export const runtime = 'nodejs';
 
 export async function GET() {
   try {
-    // Ping Supabase REST API — checks DB reachability without needing RLS access
+    // Ping Supabase health endpoint — no API key required, not affected by anon key restrictions
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/`,
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/health`,
       {
-        headers: {
-          apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
-        },
-        // Short timeout so we fail fast if DB is unreachable
         signal: AbortSignal.timeout(5000),
       }
     );
